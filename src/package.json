@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "parcel",
-    "build": "parcel build --dist-dir ./../dist --log-level verbose --no-optimize"
+    "build": "rm -rf ./../dist && parcel build --dist-dir ./../dist --log-level verbose --no-optimize --no-content-hash --no-source-maps"
   },
   "source": "index.html",
   "devDependencies": {
