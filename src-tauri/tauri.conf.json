@@ -7,7 +7,8 @@
     "distDir": "../dist",
     "devPath": "../dist",
     "beforeDevCommand": "",
-    "beforeBuildCommand": ""
+    "beforeBuildCommand": "",
+    "withGlobalTauri": true
   },
   "tauri": {
     "bundle": {
@@ -49,13 +50,31 @@
       "active": false
     },
     "allowlist": {
-      "all": true
+      "fs": {
+        "all": true,
+        "readTextFile": true,
+        "readBinaryFile": true,
+        "writeFile": true,
+        "writeBinaryFile": true,
+        "readDir": true,
+        "copyFile": true,
+        "createDir": true,
+        "removeDir": true,
+        "removeFile": true,
+        "renameFile": true
+      },
+      "os": {
+        "all": true
+      },
+      "path": {
+        "all": true
+      }
     },
     "windows": [
       {
         "title": "Progress",
         "width": 800,
-        "height": 600,
+        "height": 900,
         "resizable": true,
         "fullscreen": false
       }

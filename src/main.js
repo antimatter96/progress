@@ -129,7 +129,7 @@ function parseTimings(s) {
 }
 
 
-let num = /^\d+:[0-5]\d$/
+let num = /^\d+:[0-5]\d$/;
 function logSubmit(event) {
   event.preventDefault();
   let value = document.getElementById('minutes').value;
@@ -146,12 +146,37 @@ function logSubmit(event) {
   }
 }
 
-const form = document.getElementById('form');
-form.addEventListener('submit', logSubmit);
+// const form = document.getElementById('form');
+// form.addEventListener('submit', logSubmit);
 
-```
-<form id="form">
-<textarea id='minutes' form="form" rows="10", cols="6" required></textarea>
-  <button type='submit'>Yes</button>
-</form>
-```
+
+// <form id="form">
+// <textarea id='minutes' form="form" rows="10", cols="6" required></textarea>
+//  <button type='submit'>Yes</button>
+// </form>
+
+
+import { createDir } from "@tauri-apps/api/fs";
+import { homeDir } from "@tauri-apps/api/path";
+
+async function makeSureItExists() {
+  try {
+    let AhomeDir = await homeDir();
+    let AdataDir = AhomeDir + ".tauri_progres";
+    let Acreated = await createDir(AdataDir);
+    console.log(Acreated);
+  } catch(e) {
+    console.log(e);
+  }
+}
+
+async function main() {
+
+  let as = await window.__TAURI__.path.currentDir();
+  console.log(as);
+  let ff = await window.__TAURI__.fs.readDir(as);
+
+  console.log(ff);
+}
+
+makeSureItExists();
