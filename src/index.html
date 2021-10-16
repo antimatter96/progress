@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style.css">
-    <title>Vite App</title>
-  </head>
-  <body class="max-w-screen-md mx-auto my-10 px-1">
-    <div id="app" class="containter shadow-sm py-5 px-5 border-grey-50">
-      <include src="./header.html"></include>
-      <hr class="my-5 border-amber-900">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style.css">
+  <title>Progress</title>
+</head>
+
+<body class="max-w-screen-md mx-auto my-5 px-1">
+  <include src="./alerts.html"></include>
+  <div id="app" class="containter shadow-sm py-5 px-5 border-grey-50">
+    <include src="./header.html"></include>
+    <hr class="my-5 border-amber-900">
+    <include src="./form.html"></include>
+    <div id="weeks">
       <include src="./week.html"></include>
-
-      <hr class="my-5 border-amber-900">
-      <include src="./form.html"></include>
-      <div class="flex justify-between">
-      </div>
-      
-      <div>
-
-      </div>
-
+      <include src="./week.html"></include>
     </div>
-    <script type="module" src="./main.js"></script>
-  </body>
+  </div>
+  <script type="module" src="./main.js"></script>
+</body>
+
 </html>

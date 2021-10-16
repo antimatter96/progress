@@ -1035,15 +1035,12 @@ class $b46492c29258f7b6$var$Week {
 function $b46492c29258f7b6$var$parseTimings(s) {
     let videos = [];
 }
-let $b46492c29258f7b6$var$num = /^\d+:[0-5]\d$/;
-function $b46492c29258f7b6$var$logSubmit(event) {
-    event.preventDefault();
-    let value = document.getElementById('minutes').value;
-    console.log(value.length);
-    for(let i = 0; i < value.length; i++)console.log(i, value[i]);
-    let arr = value.split(/\s/ig);
-    for(let i1 = 0; i1 < arr.length; i1++)console.log(arr[i1].length, arr[i1].match($b46492c29258f7b6$var$num));
-}
+// const form = document.getElementById('form');
+// form.addEventListener('submit', logSubmit);
+// <form id="form">
+// <textarea id='minutes' form="form" rows="10", cols="6" required></textarea>
+//  <button type='submit'>Yes</button>
+// </form>
 async function $b46492c29258f7b6$var$makeSureItExists() {
     try {
         let AhomeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
@@ -1054,12 +1051,82 @@ async function $b46492c29258f7b6$var$makeSureItExists() {
         console.log(e);
     }
 }
-async function $b46492c29258f7b6$var$main() {
-    let as = await window.__TAURI__.path.currentDir();
-    console.log(as);
-    let ff = await window.__TAURI__.fs.readDir(as);
-    console.log(ff);
+// makeSureItExists();
+class $b46492c29258f7b6$var$FormHandler {
+    constructor(){
+        this.titleInput = document.getElementById('input-title');
+        this.activities = document.getElementById('input-activities');
+        this.tutorials = document.getElementById('input-tutorials');
+        this.assignments = document.getElementById('input-assignments');
+        this.factor = document.getElementById('input-factor');
+        this.videoLength = document.getElementById('input-videos');
+        console.log(this.titleInput);
+        console.log(this.titleInput, this.activities, this.tutorials, this.assignments);
+        console.log(this.factor);
+        console.log(this.videoLength);
+    }
+    validate() {
+        let errors = [];
+        console.log("titleInput", this.titleInput.value);
+        console.log("activities", this.activities.value);
+        console.log("tutorials", this.tutorials.value);
+        console.log("assignments", this.assignments.value);
+        console.log("factor", this.factor.value);
+        console.log("videoLength", this.videoLength.value);
+        [
+            this.titleInput
+        ].forEach((ele)=>{
+            let title = ele.value;
+            if (title.trim().length == 0) errors.push(`Title is required`);
+        });
+        [
+            this.activities,
+            this.tutorials,
+            this.assignments
+        ].forEach((ele)=>{
+            let val = parseInt(ele.value, 10);
+            if (Number.isInteger(val) && val >= 0) ;
+            else errors.push(`'${ele.dataset.name}' should be a non-negative integer`);
+        });
+        [
+            this.factor
+        ].forEach((ele)=>{
+            let val = parseFloat(ele.value, 10);
+            if (Number.isFinite(val) && val >= 0) ;
+            else errors.push(`'${ele.dataset.name}' should be a non-negative number`);
+        });
+        //    let num = /^\d+:[0-5]\d$/;
+        // let value = document.getElementById('minutes').value;
+        // console.log(value.length);
+        // for(let i = 0; i < value.length; i++) {
+        //   console.log(i, value[i]);
+        // }
+        // let arr = value.split(/\s/ig);
+        // for(let i = 0; i < arr.length; i++) {
+        //   console.log(arr[i].length, (arr[i].match(num)));
+        // }
+        return errors;
+    }
+    submit() {
+    }
 }
-$b46492c29258f7b6$var$makeSureItExists();
+window.onload = function() {
+    let formOpenBtn = document.getElementById('open-form');
+    let formCloseBtn = document.getElementById('close-form');
+    let formEnclosure = document.getElementById('form-enclosure');
+    console.log(formOpenBtn, formCloseBtn, formEnclosure);
+    formOpenBtn.addEventListener('click', ()=>{
+        formEnclosure.style.display = 'block';
+    });
+    formCloseBtn.addEventListener('click', ()=>{
+        formEnclosure.style.display = 'none';
+    });
+    let f = new $b46492c29258f7b6$var$FormHandler();
+    const form = document.getElementById('add-form');
+    form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        console.log(f.validate());
+    });
+};
 
 

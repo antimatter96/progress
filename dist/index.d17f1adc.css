@@ -1,3 +1,206 @@
+/* purgecss start ignore */
+
+/* @font-face {
+    font-family: 'WorkSans-BlackItalic';
+    src: url('WorkSans-BlackItalic.woff2') format('woff2'),
+        url('WorkSans-BlackItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+} */
+
+@font-face {
+  font-family: 'WorkSans-Black';
+
+  src: url('WorkSans-Black.1ebc9aaf.woff2') format('woff2'),
+        url('WorkSans-Black.55cb1a13.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WorkSans-Bold';
+
+  src: url('WorkSans-Bold.aae6ddf6.woff2') format('woff2'),
+        url('WorkSans-Bold.37faf93a.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WorkSans-ExtraBold';
+
+  src: url('WorkSans-ExtraBold.2e79d3bb.woff2') format('woff2'),
+        url('WorkSans-ExtraBold.53b0f2d2.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+
+  font-display: swap;
+}
+
+/* @font-face {
+    font-family: 'WorkSans-BoldItalic';
+    src: url('WorkSans-BoldItalic.woff2') format('woff2'),
+        url('WorkSans-BoldItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+} */
+
+/* @font-face {
+    font-family: 'WorkSans-ExtraBoldItalic';
+    src: url('WorkSans-ExtraBoldItalic.woff2') format('woff2'),
+        url('WorkSans-ExtraBoldItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+} */
+
+@font-face {
+  font-family: 'WorkSans-Light';
+
+  src: url('WorkSans-Light.6295d7d2.woff2') format('woff2'),
+        url('WorkSans-Light.ca6996ab.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+
+  font-display: swap;
+}
+
+/* @font-face {
+    font-family: 'WorkSans-ExtraLightItalic';
+    src: url('WorkSans-ExtraLightItalic.woff2') format('woff2'),
+        url('WorkSans-ExtraLightItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+} */
+
+/* @font-face {
+    font-family: 'WorkSans-Italic';
+    src: url('WorkSans-Italic.woff2') format('woff2'),
+        url('WorkSans-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+} */
+
+@font-face {
+  font-family: 'WorkSans-ExtraLight';
+
+  src: url('WorkSans-ExtraLight.76a4ed2f.woff2') format('woff2'),
+        url('WorkSans-ExtraLight.b3051e58.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+
+  font-display: swap;
+}
+
+/* @font-face {
+    font-family: 'WorkSans-LightItalic';
+    src: url('WorkSans-LightItalic.woff2') format('woff2'),
+        url('WorkSans-LightItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+} */
+
+/* @font-face {
+    font-family: 'WorkSans-MediumItalic';
+    src: url('WorkSans-MediumItalic.woff2') format('woff2'),
+        url('WorkSans-MediumItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+} */
+
+@font-face {
+  font-family: 'WorkSans-Regular';
+
+  src: url('WorkSans-Regular.7f5eee68.woff2') format('woff2'),
+        url('WorkSans-Regular.b5e1ba88.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WorkSans-Medium';
+
+  src: url('WorkSans-Medium.3735d32d.woff2') format('woff2'),
+        url('WorkSans-Medium.12dbfdbe.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WorkSans-SemiBold';
+
+  src: url('WorkSans-SemiBold.f1c2dbaf.woff2') format('woff2'),
+        url('WorkSans-SemiBold.0afae153.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WorkSans-Thin';
+
+  src: url('WorkSans-Thin.b4583bcb.woff2') format('woff2'),
+        url('WorkSans-Thin.d79f8b0a.woff') format('woff');
+
+  font-weight: normal;
+
+  font-style: normal;
+
+  font-display: swap;
+}
+
+/* @font-face {
+    font-family: 'WorkSans-ThinItalic';
+    src: url('WorkSans-ThinItalic.woff2') format('woff2'),
+        url('WorkSans-ThinItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+} */
+
+/* @font-face {
+    font-family: 'WorkSans-SemiBoldItalic';
+    src: url('WorkSans-SemiBoldItalic.woff2') format('woff2'),
+        url('WorkSans-SemiBoldItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+ */
+
+/* purgecss end ignore */
+
 /*! tailwindcss v2.2.17 | MIT License | https://tailwindcss.com */
 
 /*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
@@ -204,7 +407,8 @@ Correct the inability to style clickable types in iOS and Safari.
 
 button,
 [type='button'],
-[type='reset'] {
+[type='reset'],
+[type='submit'] {
   -webkit-appearance: button;
 }
 
@@ -328,7 +532,7 @@ ul {
  */
 
 html {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
+  font-family: WorkSans-Regular; /* 1 */
   line-height: 1.5; /* 2 */
 }
 
@@ -577,6 +781,11 @@ video {
   margin-right: auto;
 }
 
+.-mx-3 {
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+}
+
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -585,11 +794,6 @@ video {
 .my-5 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-}
-
-.my-10 {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
 }
 
 .mt-0 {
@@ -612,8 +816,28 @@ video {
   margin-top: 2rem;
 }
 
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
 .ml-2 {
   margin-left: 0.5rem;
+}
+
+.ml-3 {
+  margin-left: 0.75rem;
 }
 
 .block {
@@ -648,12 +872,28 @@ video {
   width: 1.5rem;
 }
 
+.w-12 {
+  width: 3rem;
+}
+
 .w-auto {
   width: auto;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-1\/3 {
+  width: 33.333333%;
+}
+
 .w-full {
   width: 100%;
+}
+
+.max-w-sm {
+  max-width: 24rem;
 }
 
 .max-w-md {
@@ -670,6 +910,14 @@ video {
 
 .max-w-screen-md {
   max-width: 768px;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.border-collapse {
+  border-collapse: collapse;
 }
 
 @-webkit-keyframes spin {
@@ -738,12 +986,26 @@ video {
   }
 }
 
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.appearance-none {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 .flex-col {
@@ -762,8 +1024,20 @@ video {
   align-items: center;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
 }
 
 .gap-6 {
@@ -780,6 +1054,14 @@ video {
   --tw-divide-y-reverse: 0;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
   border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
 }
 
 .rounded-sm {
@@ -812,6 +1094,10 @@ video {
 
 .border {
   border-width: 1px;
+}
+
+.border-t-2 {
+  border-top-width: 2px;
 }
 
 .border-b-2 {
@@ -863,9 +1149,44 @@ video {
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
 }
 
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
+}
+
+.bg-sky-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(125, 211, 252, var(--tw-bg-opacity));
+}
+
+.bg-green-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(132, 204, 22, var(--tw-bg-opacity));
+}
+
 .bg-lime-500 {
   --tw-bg-opacity: 1;
   background-color: rgba(132, 204, 22, var(--tw-bg-opacity));
+}
+
+.bg-lime-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(101, 163, 13, var(--tw-bg-opacity));
+}
+
+.bg-yellow-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(234, 179, 8, var(--tw-bg-opacity));
+}
+
+.bg-amber-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(251, 191, 36, var(--tw-bg-opacity));
+}
+
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
 }
 
 .bg-gray-100 {
@@ -888,12 +1209,20 @@ video {
   background-color: rgba(228, 228, 231, var(--tw-bg-opacity));
 }
 
+.fill-current {
+  fill: currentColor;
+}
+
 .p-1 {
   padding: 0.25rem;
 }
 
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-4 {
+  padding: 1rem;
 }
 
 .px-0 {
@@ -906,6 +1235,16 @@ video {
   padding-right: 0.25rem;
 }
 
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -916,9 +1255,9 @@ video {
   padding-right: 1.5rem;
 }
 
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .px-0\.5 {
@@ -926,9 +1265,24 @@ video {
   padding-right: 0.125rem;
 }
 
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .py-5 {
@@ -946,8 +1300,45 @@ video {
   padding-bottom: 3rem;
 }
 
+.pt-1 {
+  padding-top: 0.25rem;
+}
+
+.pt-2 {
+  padding-top: 0.5rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
+}
+
+.pt-5 {
+  padding-top: 1.25rem;
+}
+
 .pb-2 {
   padding-bottom: 0.5rem;
+}
+
+.pb-5 {
+  padding-bottom: 1.25rem;
+}
+
+.pb-6 {
+  padding-bottom: 1.5rem;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .text-base {
@@ -984,8 +1375,32 @@ video {
   font-weight: 500;
 }
 
+.font-semibold {
+  font-weight: 600;
+}
+
 .font-bold {
   font-weight: 700;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.leading-6 {
+  line-height: 1.5rem;
+}
+
+.leading-none {
+  line-height: 1;
+}
+
+.leading-tight {
+  line-height: 1.25;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em;
 }
 
 .text-black {
@@ -1001,6 +1416,26 @@ video {
 .text-indigo-600 {
   --tw-text-opacity: 1;
   color: rgba(79, 70, 229, var(--tw-text-opacity));
+}
+
+.text-blue-500 {
+  --tw-text-opacity: 1;
+  color: rgba(59, 130, 246, var(--tw-text-opacity));
+}
+
+.text-green-500 {
+  --tw-text-opacity: 1;
+  color: rgba(132, 204, 22, var(--tw-text-opacity));
+}
+
+.text-yellow-500 {
+  --tw-text-opacity: 1;
+  color: rgba(234, 179, 8, var(--tw-text-opacity));
+}
+
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgba(239, 68, 68, var(--tw-text-opacity));
 }
 
 .text-gray-500 {
@@ -1106,11 +1541,56 @@ video {
 }
 
 body {
+  font-family: WorkSans-Regular;
   background-color: #f9fafe;
 }
 
 #nav {
   box-shadow: rgba(3 27 78 / 10%) 0 2px 4px;
+}
+
+.dispay-label {
+  margin-right: 0.25rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  .dispay-label {
+    margin-right: 0.75rem;
+  }
+}
+
+.dispay-data {
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.dispay-container {
+  margin-top: 1rem;
+  display: flex;
+  align-items: baseline;
+  --tw-text-opacity: 1;
+  color: rgba(0, 0, 0, var(--tw-text-opacity));
+}
+
+.video-time {
+  bottom: 0.5rem;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  width: auto;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 @media (min-width: 640px) {
