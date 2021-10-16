@@ -1,4 +1,6 @@
-export class FormHandler {
+const minuteSeconds = /^\d+:[0-5]\d$/;
+
+class FormHandler {
   constructor() {
     this.titleInput = document.getElementById("input-title");
 
@@ -9,7 +11,7 @@ export class FormHandler {
     this.factor = document.getElementById("input-factor");
     this.assignmentTime = document.getElementById("input-assignment-time");
 
-    this.videoLength = document.getElementById("input-videos");
+    this.videos = document.getElementById("input-videos");
 
     console.log(this.titleInput);
 
@@ -18,10 +20,10 @@ export class FormHandler {
       this.activities,
       this.tutorials,
       this.assignments,
-      this.videoLength
+      this.videos
     );
     console.log(this.factor);
-    console.log(this.videoLength);
+    console.log(this.videos);
   }
 
   validate() {
@@ -32,7 +34,7 @@ export class FormHandler {
     console.log("tutorials", this.tutorials.value);
     console.log("assignments", this.assignments.value);
     console.log("factor", this.factor.value);
-    console.log("videoLength", this.videoLength.value);
+    console.log("videos", this.videos.value);
     console.log("assignmentTime", this.assignmentTime.value);
 
 
@@ -60,28 +62,73 @@ export class FormHandler {
       }
     });
 
-    //    let num = /^\d+:[0-5]\d$/;
+    let value = this.videos.value;
+    let arr = value.trim().split(/\s/ig);
 
-    // let value = document.getElementById('minutes').value;
-    // console.log(value.length);
-
-    // for(let i = 0; i < value.length; i++) {
-    //   console.log(i, value[i]);
-    // }
-
-    // let arr = value.split(/\s/ig);
-
-    // for(let i = 0; i < arr.length; i++) {
-    //   console.log(arr[i].length, (arr[i].match(num)));
-    // }
+    for(let i = 0; i < arr.length; i++) {
+      if (arr[i].length > 0 && !arr[i].match(minuteSeconds)) {
+        errors.push(`- '${arr[i]}' is not a valid video time`)
+      }
+    }
 
     return errors;
   }
 
+  /**
+    name = "Sample Week 1";
+    factor = 1;
+    solvableTime = 20;
+
+    solvable = {
+      activities: { total: 3, left: 3 },
+      tutorials: { total: 2, left: 2 },
+      practice: { total: 1, left: 1 },
+      graded: { total: 1, left: 1 },
+    };
+
+    videos = [{ m: 40, s: 10, seen: false }];
+   */
   submit() {
     let input = {
-      
+      name: this.titleInput.value.trim(),
+      factor: parseFloat(this.factor.value, 10),
+      solvableTime: parseInt(this.assignmentTime.value, 10),
+
+      solvable: {
+        activities: { total: parseInt(this.activities.value, 10), left: 3 },
+        tutorials: { total: parseInt(this.tutorials.value, 10), left: 2 },
+        practice: { total: 0, left: 0 },
+        graded: { total: parseInt(this.assignments.value, 10), left: 1 },
+      },
+
+      videos : [],
     }
 
+    if (parseInt(this.assignments.value, 10) > 1) {
+      input.solvable.practice = parseInt(this.assignments.value, 10) - 1;
+    }
+
+    Object.keys(input.solvable).forEach((key) => {
+      input.solvable[key].left = input.solvable[key].total;
+    })
+
+    let value = this.videos.value;
+    let arr = value.trim().split(/\s/ig);
+
+    for(let i = 0; i < arr.length; i++) {
+      if (arr[i].length === 0) {
+        continue;
+      }
+      let split = arr[i].split(':')
+      input.videos.push({
+        m: parseInt(split[0], 10),
+        s: parseInt(split[1], 10),
+        seen: false,
+      });
+    }
+
+    return input;
   }
 }
+
+export { FormHandler }

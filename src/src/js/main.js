@@ -1,5 +1,6 @@
 import { AlertHandler } from "./alerts"
 import { FormHandler } from './form'
+import { Week } from "./week";
 import { WeekManager } from './week_manager'
 
 function parseTimings(s) {
@@ -26,20 +27,39 @@ window.onload = async function () {
 
   alerts.hideAll();
 
-  
   const form = document.getElementById("add-form");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     let errors = f.validate();
 
-    alerts.show('error', errors.join('\n'));
+    if (errors.length > 0) {
+      alerts.show('error', errors.join('\n'));
+    } else {
+      let weekInput = f.submit();
+      console.log(weekInput);
+
+      let w = new Week(weekInput);
+      console.log(w);
+
+      let sss = JSON.stringify(w);
+      console.log(sss);
+
+      let w2 = new Week(JSON.parse(sss));
+      console.log(w2);
+
+
+      console.log(Week.Validate(JSON.parse(sss)));
+    }
   });
 
 
+  try {
+    let exists = await WeekManager.ensureFileExists();
+    console.log(exists);
+  } catch(error) {
+    console.log(console.error());
+    alerts.show('error', error, 20000)
+  }
 
-
-
-  let exists = await WeekManager.ensureFileExists();
-  console.log(exists);
 };

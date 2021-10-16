@@ -1,21 +1,19 @@
 {
   "name": "calc",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "dev": "parcel",
     "build": "rm -rf ./../dist && parcel build --dist-dir ./../dist --log-level verbose --no-optimize --no-content-hash --no-source-maps"
   },
   "source": "src/index.html",
-  "devDependencies": {
-    "autoprefixer": "^10.3.7",
-    "postcss": "^8.3.9",
-    "tailwindcss": "^2.2.17"
-  },
   "dependencies": {
-    "@tailwindcss/forms": "^0.3.4",
+    "@parcel/reporter-bundle-analyzer": "^2.0.0",
     "parcel": "^2.0.0",
+    "postcss": "^8.3.9",
     "posthtml": "^0.16.5",
     "posthtml-include": "^1.7.2",
+    "tailwindcss": "^2.2.17",
     "uuid": "^8.3.2"
-  }
+  },
+  "license": "MIT"
 }

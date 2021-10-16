@@ -29,6 +29,7 @@ class $086d5838aee8ae00$export$a99aab2a736cea3e {
 }
 
 
+const $7b79fc2448b3b35e$var$minuteSeconds = /^\d+:[0-5]\d$/;
 class $7b79fc2448b3b35e$export$ca95ea95faa89f36 {
     constructor(){
         this.titleInput = document.getElementById("input-title");
@@ -37,11 +38,11 @@ class $7b79fc2448b3b35e$export$ca95ea95faa89f36 {
         this.assignments = document.getElementById("input-assignments");
         this.factor = document.getElementById("input-factor");
         this.assignmentTime = document.getElementById("input-assignment-time");
-        this.videoLength = document.getElementById("input-videos");
+        this.videos = document.getElementById("input-videos");
         console.log(this.titleInput);
-        console.log(this.titleInput, this.activities, this.tutorials, this.assignments, this.videoLength);
+        console.log(this.titleInput, this.activities, this.tutorials, this.assignments, this.videos);
         console.log(this.factor);
-        console.log(this.videoLength);
+        console.log(this.videos);
     }
     validate() {
         let errors = [];
@@ -50,7 +51,7 @@ class $7b79fc2448b3b35e$export$ca95ea95faa89f36 {
         console.log("tutorials", this.tutorials.value);
         console.log("assignments", this.assignments.value);
         console.log("factor", this.factor.value);
-        console.log("videoLength", this.videoLength.value);
+        console.log("videos", this.videos.value);
         console.log("assignmentTime", this.assignmentTime.value);
         [
             this.titleInput
@@ -75,21 +76,274 @@ class $7b79fc2448b3b35e$export$ca95ea95faa89f36 {
             if (Number.isFinite(val) && val >= 0) ;
             else errors.push(`- '${ele.dataset.name}' should be a non-negative number`);
         });
-        //    let num = /^\d+:[0-5]\d$/;
-        // let value = document.getElementById('minutes').value;
-        // console.log(value.length);
-        // for(let i = 0; i < value.length; i++) {
-        //   console.log(i, value[i]);
-        // }
-        // let arr = value.split(/\s/ig);
-        // for(let i = 0; i < arr.length; i++) {
-        //   console.log(arr[i].length, (arr[i].match(num)));
-        // }
+        let value = this.videos.value;
+        let arr = value.trim().split(/\s/ig);
+        for(let i = 0; i < arr.length; i++)if (arr[i].length > 0 && !arr[i].match($7b79fc2448b3b35e$var$minuteSeconds)) errors.push(`- '${arr[i]}' is not a valid video time`);
         return errors;
     }
-    submit() {
+    /**
+    name = "Sample Week 1";
+    factor = 1;
+    solvableTime = 20;
+
+    solvable = {
+      activities: { total: 3, left: 3 },
+      tutorials: { total: 2, left: 2 },
+      practice: { total: 1, left: 1 },
+      graded: { total: 1, left: 1 },
+    };
+
+    videos = [{ m: 40, s: 10, seen: false }];
+   */ submit() {
         let input = {
+            name: this.titleInput.value.trim(),
+            factor: parseFloat(this.factor.value, 10),
+            solvableTime: parseInt(this.assignmentTime.value, 10),
+            solvable: {
+                activities: {
+                    total: parseInt(this.activities.value, 10),
+                    left: 3
+                },
+                tutorials: {
+                    total: parseInt(this.tutorials.value, 10),
+                    left: 2
+                },
+                practice: {
+                    total: 0,
+                    left: 0
+                },
+                graded: {
+                    total: parseInt(this.assignments.value, 10),
+                    left: 1
+                }
+            },
+            videos: []
         };
+        if (parseInt(this.assignments.value, 10) > 1) input.solvable.practice = parseInt(this.assignments.value, 10) - 1;
+        Object.keys(input.solvable).forEach((key)=>{
+            input.solvable[key].left = input.solvable[key].total;
+        });
+        let value = this.videos.value;
+        let arr = value.trim().split(/\s/ig);
+        for(let i = 0; i < arr.length; i++){
+            if (arr[i].length === 0) continue;
+            let split = arr[i].split(':');
+            input.videos.push({
+                m: parseInt(split[0], 10),
+                s: parseInt(split[1], 10),
+                seen: false
+            });
+        }
+        return input;
+    }
+}
+
+
+// Unique ID creation requires a high quality random # generator. In the browser we therefore
+// require the crypto API and do not support built-in fallback to lower quality random number
+// generators (like Math.random()).
+var $0ecd02ab43ca5860$var$getRandomValues;
+var $0ecd02ab43ca5860$var$rnds8 = new Uint8Array(16);
+function $0ecd02ab43ca5860$export$2e2bcd8739ae039() {
+    // lazy load so that environments that need to polyfill have a chance to do so
+    if (!$0ecd02ab43ca5860$var$getRandomValues) {
+        // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
+        // find the complete implementation of crypto (msCrypto) on IE11.
+        $0ecd02ab43ca5860$var$getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
+        if (!$0ecd02ab43ca5860$var$getRandomValues) throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+    }
+    return $0ecd02ab43ca5860$var$getRandomValues($0ecd02ab43ca5860$var$rnds8);
+}
+
+
+var $62199fa2dd5b7127$export$2e2bcd8739ae039 = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
+
+
+function $573f36ad48eeb240$var$validate(uuid) {
+    return typeof uuid === 'string' && $62199fa2dd5b7127$export$2e2bcd8739ae039.test(uuid);
+}
+var $573f36ad48eeb240$export$2e2bcd8739ae039 = $573f36ad48eeb240$var$validate;
+
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */ var $24cec342d7cb7658$var$byteToHex = [];
+for(var $24cec342d7cb7658$var$i = 0; $24cec342d7cb7658$var$i < 256; ++$24cec342d7cb7658$var$i)$24cec342d7cb7658$var$byteToHex.push(($24cec342d7cb7658$var$i + 256).toString(16).substr(1));
+function $24cec342d7cb7658$var$stringify(arr) {
+    var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    // Note: Be careful editing this code!  It's been tuned for performance
+    // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+    var uuid = ($24cec342d7cb7658$var$byteToHex[arr[offset + 0]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 1]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 2]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 3]] + '-' + $24cec342d7cb7658$var$byteToHex[arr[offset + 4]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 5]] + '-' + $24cec342d7cb7658$var$byteToHex[arr[offset + 6]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 7]] + '-' + $24cec342d7cb7658$var$byteToHex[arr[offset + 8]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 9]] + '-' + $24cec342d7cb7658$var$byteToHex[arr[offset + 10]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 11]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 12]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 13]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 14]] + $24cec342d7cb7658$var$byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
+    // of the following:
+    // - One or more input array values don't map to a hex octet (leading to
+    // "undefined" in the uuid)
+    // - Invalid input values for the RFC `version` or `variant` fields
+    if (!$573f36ad48eeb240$export$2e2bcd8739ae039(uuid)) throw TypeError('Stringified UUID is invalid');
+    return uuid;
+}
+var $24cec342d7cb7658$export$2e2bcd8739ae039 = $24cec342d7cb7658$var$stringify;
+
+
+function $300e172487e56da3$var$v4(options, buf, offset) {
+    options = options || {
+    };
+    var rnds = options.random || (options.rng || $0ecd02ab43ca5860$export$2e2bcd8739ae039)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+    rnds[6] = rnds[6] & 15 | 64;
+    rnds[8] = rnds[8] & 63 | 128; // Copy bytes to buffer, if provided
+    if (buf) {
+        offset = offset || 0;
+        for(var i = 0; i < 16; ++i)buf[offset + i] = rnds[i];
+        return buf;
+    }
+    return $24cec342d7cb7658$export$2e2bcd8739ae039(rnds);
+}
+var $300e172487e56da3$export$2e2bcd8739ae039 = $300e172487e56da3$var$v4;
+
+
+
+class $47e4cbed47ec5d75$export$fca4f8121099df57 {
+    name = "Sample Week 1";
+    factor = 1;
+    solvableTime = 20;
+    solvable = {
+        activities: {
+            total: 3,
+            left: 3
+        },
+        tutorials: {
+            total: 2,
+            left: 2
+        },
+        practice: {
+            total: 1,
+            left: 1
+        },
+        graded: {
+            total: 1,
+            left: 1
+        }
+    };
+    videos = [
+        {
+            m: 40,
+            s: 10,
+            seen: false
+        }
+    ];
+    constructor(input){
+        this.id = input.id ? input.id : $300e172487e56da3$export$2e2bcd8739ae039();
+        this.name = input.name;
+        this.factor = parseFloat(input.factor, 10);
+        this.solvableTime = input.solvableTime;
+        this.videos = [];
+        this.videos = input.videos.map((video)=>{
+            return {
+                m: parseInt(video.m, 10),
+                s: parseInt(video.s, 10),
+                seen: Boolean(video.seen)
+            };
+        });
+        this.solvable = {
+            activities: {
+                total: parseInt(input.solvable.activities.total, 10),
+                left: parseInt(input.solvable.activities.left, 10)
+            },
+            tutorials: {
+                total: parseInt(input.solvable.tutorials.total, 10),
+                left: parseInt(input.solvable.tutorials.left, 10)
+            },
+            practice: {
+                total: parseInt(input.solvable.practice.total, 10),
+                left: parseInt(input.solvable.practice.left, 10)
+            },
+            graded: {
+                total: parseInt(input.solvable.graded.total, 10),
+                left: parseInt(input.solvable.graded.left, 10)
+            }
+        };
+    }
+    markVideoSeen(i) {
+        this.videos[i].seen = true;
+    }
+    markVideoLeft(i) {
+        this.videos[i].seen = false;
+    }
+    markSolvableDone(type) {
+        if (this.solvable[type].left <= 0) throw new Error("Already done");
+        this.solvable[type].left -= 1;
+    }
+    markSolvableNotDone(type) {
+        if (this.solvable[type].left + 1 > this.solvable[type].total) throw new Error("Already done");
+        this.solvable[type].left += 1;
+    }
+    getTotalMinutes() {
+        let m = 0;
+        let s = 0;
+        this.videos.forEach((video)=>{
+            m += video.m;
+            s += video.s;
+        });
+        m += s / 60;
+        let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
+            return prev + data.total;
+        }, 0);
+        m += this.solvableTime * solvableCount;
+        m /= this.factor * 60;
+        return m;
+    }
+    validateSelf() {
+    }
+    getLeftMinutes() {
+        let m = 0;
+        let s = 0;
+        this.videos.forEach((video)=>{
+            if (!video.seen) {
+                m += video.m;
+                s += video.s;
+            }
+        });
+        m += s / 60;
+        let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
+            return prev + data.left;
+        }, 0);
+        m += this.solvableTime * solvableCount;
+        m /= this.factor * 60;
+        return m;
+    }
+    getPercentage() {
+        let p = this.getTotalMinutes();
+        let l = this.getLeftMinutes();
+        let e = p - l;
+        return 100 * (e / p);
+    }
+    static Validate(input) {
+        if (!input.id || !input.name) throw new Error(`${input.id} ${input.name}`);
+        if (!Number.isFinite(input.factor) || !Number.isInteger(input.solvableTime)) throw new Error();
+        input.videos.forEach((video)=>{
+            if (!Number.isInteger(video.m) || !Number.isInteger(video.s)) throw new Error();
+            if (video.s < 0 || video.s >= 60) throw new Error();
+            if (video.m < 0) throw new Error();
+        });
+        [
+            "activities",
+            "tutorials",
+            "practice",
+            "graded"
+        ].forEach((key)=>{
+            let total = input.solvable[key].total;
+            let left = input.solvable[key].left;
+            if (!Number.isInteger(total) || !Number.isInteger(left)) throw new Error();
+            if (total < 0 || left < 0 || left > total) throw new Error();
+        });
+    }
+    static Parse(input) {
+        try {
+            $47e4cbed47ec5d75$export$fca4f8121099df57.Validate(input);
+            return new $47e4cbed47ec5d75$export$fca4f8121099df57(input);
+        } catch (e) {
+            return null;
+        }
     }
 }
 
@@ -1018,17 +1272,31 @@ var $836f855d1b318ba1$export$ffb5f4729a158638 = Object.freeze({
 class $2dbb63a87f5e4f55$export$f160779312cf57d5 {
     constructor(){
     }
-    loadLocal() {
+    async loadLocal() {
+        try {
+            let homeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
+            let file = homeDir + ".tauri_progres/data.json";
+            let text = await $b2e3b9fd017c80e7$export$43caf9889c228507(file);
+            console.log(text);
+        } catch (e) {
+            throw e;
+        }
     }
     static async ensureFileExists() {
         // Create or read folder
+        let homeDir;
         try {
-            let homeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
+            homeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
             let dataDir = homeDir + ".tauri_progres";
             let created = await $b2e3b9fd017c80e7$export$4368d992c4eafac0(dataDir);
-            console.log(created);
+            console.log("Created", created);
         } catch (e) {
             console.log(e);
+            if (typeof e == 'string' && e.includes("os error 17")) ;
+            else {
+                console.log(e);
+                throw e;
+            }
         }
         // Folder now exists
         try {
@@ -1037,7 +1305,21 @@ class $2dbb63a87f5e4f55$export$f160779312cf57d5 {
             let text = await $b2e3b9fd017c80e7$export$43caf9889c228507(file);
             console.log(text);
         } catch (e1) {
-            console.log(e1);
+            if (typeof e1 == 'string' && e1.includes("os error 2")) // no file exists, create now
+            try {
+                let homeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
+                let path = homeDir + ".tauri_progres/data.json";
+                let text = await $b2e3b9fd017c80e7$export$efccba1c4a2ef57b({
+                    contents: "",
+                    path: path
+                });
+            } catch (error) {
+                throw error;
+            }
+            else {
+                console.log(e1);
+                throw e1;
+            }
         }
     }
 }
@@ -1064,10 +1346,26 @@ window.onload = async function() {
     form.addEventListener("submit", (e)=>{
         e.preventDefault();
         let errors = f.validate();
-        alerts.show('error', errors.join('\n'));
+        if (errors.length > 0) alerts.show('error', errors.join('\n'));
+        else {
+            let weekInput = f.submit();
+            console.log(weekInput);
+            let w = new $47e4cbed47ec5d75$export$fca4f8121099df57(weekInput);
+            console.log(w);
+            let sss = JSON.stringify(w);
+            console.log(sss);
+            let w2 = new $47e4cbed47ec5d75$export$fca4f8121099df57(JSON.parse(sss));
+            console.log(w2);
+            console.log($47e4cbed47ec5d75$export$fca4f8121099df57.Validate(JSON.parse(sss)));
+        }
     });
-    let exists = await $2dbb63a87f5e4f55$export$f160779312cf57d5.ensureFileExists();
-    console.log(exists);
+    try {
+        let exists = await $2dbb63a87f5e4f55$export$f160779312cf57d5.ensureFileExists();
+        console.log(exists);
+    } catch (error) {
+        console.log(console.error());
+        alerts.show('error', error, 20000);
+    }
 };
 
 

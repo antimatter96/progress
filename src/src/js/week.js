@@ -1,7 +1,6 @@
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 
 export class Week {
-  _id = "";
   name = "Sample Week 1";
   factor = 1;
   solvableTime = 20;
@@ -15,8 +14,8 @@ export class Week {
 
   videos = [{ m: 40, s: 10, seen: false }];
 
-  constructor(input, existingUUID) {
-    this.id = existingUUID ? existingUUID : uuid();
+  constructor(input) {
+    this.id = input.id ? input.id : uuid();
     this.name = input.name;
     this.factor = parseFloat(input.factor, 10);
     this.solvableTime = input.solvableTime;
@@ -32,20 +31,20 @@ export class Week {
 
     this.solvable = {
       activities: {
-        total: parseInt(input.activiyCount.total, 10),
-        left: parseInt(input.activiyCount.left, 10),
+        total: parseInt(input.solvable.activities.total, 10),
+        left: parseInt(input.solvable.activities.left, 10),
       },
       tutorials: {
-        total: parseInt(input.tutorialCount.total, 10),
-        left: parseInt(input.tutorialCount.left, 10),
+        total: parseInt(input.solvable.tutorials.total, 10),
+        left: parseInt(input.solvable.tutorials.left, 10),
       },
       practice: {
-        total: parseInt(input.practiceCount.total, 10),
-        left: parseInt(input.practiceCount.left, 10),
+        total: parseInt(input.solvable.practice.total, 10),
+        left: parseInt(input.solvable.practice.left, 10),
       },
       graded: {
-        total: parseInt(input.gradedCount.total, 10),
-        left: parseInt(input.gradedCount.left, 10),
+        total: parseInt(input.solvable.graded.total, 10),
+        left: parseInt(input.solvable.graded.left, 10),
       },
     };
   }
@@ -94,7 +93,7 @@ export class Week {
     return m;
   }
 
-  validateSelf()
+  validateSelf() {}
 
   getLeftMinutes() {
     let m = 0;
@@ -130,47 +129,47 @@ export class Week {
   }
 
   static Validate(input) {
-    if ( !input.id  || this.name ) {
+    if (!input.id || !input.name) {
+      throw new Error( `${input.id} ${input.name}` );
+    }
+
+    if (!Number.isFinite(input.factor) || !Number.isInteger(input.solvableTime)) {
       throw new Error();
     }
 
-    if ( !Number.isFinite(this.factor)  || !Number.isInteger(this.solvableTime)) {
-      throw new Error();
-    }
-
-    input.videos.map((video) => {
-      if ( !Number.isInteger(video.m)  || !Number.isInteger(video.s)) {
+    input.videos.forEach((video) => {
+      if (!Number.isInteger(video.m) || !Number.isInteger(video.s)) {
         throw new Error();
       }
 
-      if(video.s < 0 || video.s >= 60) {
-
+      if (video.s < 0 || video.s >= 60) {
+        throw new Error();
       }
 
-      if(video.m < 0) {
-
+      if (video.m < 0) {
+        throw new Error();
       }
     });
 
-    ['activiyCount', 'tutorialCount', 'practiceCount', 'gradedCount'].forEach((key) => {
-      let total = input[key].total;
-      let left = input[key].left;
+    ["activities", "tutorials", "practice", "graded"].forEach((key) => {
+      let total = input.solvable[key].total;
+      let left = input.solvable[key].left;
 
-      if ( !Number.isInteger(total)  || !Number.isInteger(left)) {
+      if (!Number.isInteger(total) || !Number.isInteger(left)) {
         throw new Error();
       }
 
       if (total < 0 || left < 0 || left > total) {
         throw new Error();
       }
-    })
+    });
   }
 
   static Parse(input) {
     try {
       Week.Validate(input);
-      return new Week(input)
-    } catch(e) {
+      return new Week(input);
+    } catch (e) {
       return null;
     }
   }

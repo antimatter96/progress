@@ -18,7 +18,7 @@ body {
 }
 
 .dispay-data {
-  @apply text-5xl font-bold tracking-tight;
+  @apply text-4xl font-bold tracking-tight;
 }
 
 .dispay-container {
@@ -30,9 +30,8 @@ body {
 }
 
 .video-time.act-time {
-  @apply w-4/12 mx-5 my-3 text-2xl font-bold text-white bottom-2 shadow;
+  @apply w-5/12 mx-1 my-2 text-2xl font-bold text-white bottom-2 shadow;
 }
-
 
 .alert-container {
   @apply w-full p-4 overflow-x-auto text-center rounded-md;
@@ -44,4 +43,12 @@ body {
 
 .alert-logo-container {
   @apply flex items-center justify-center w-3/12;
+}
+
+.basic-input {
+  @apply block w-full px-4 py-3 leading-tight text-gray-900 bg-white border border-trueGray-400 appearance-none focus:outline-none invalid:border-red-500 focus:border-gray-900;
+}
+
+.basic-label {
+  @apply block mb-1 mt-2 font-bold text-gray-700 uppercase;
 }

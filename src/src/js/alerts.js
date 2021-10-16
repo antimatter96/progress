@@ -1,4 +1,4 @@
-export class AlertHandler {
+class AlertHandler {
   constructor() {
     this.ok = document.getElementById("alert-ok");
     this.info = document.getElementById("alert-info");
@@ -29,3 +29,5 @@ export class AlertHandler {
   }
 
 }
+
+export { AlertHandler}
