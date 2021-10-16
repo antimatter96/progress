@@ -5,7 +5,7 @@
       <h2 class="block pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8">
         Add a new week </h2>
       <button id="close-form"
-        class="w-auto p-2 my-2 text-base font-medium text-white bg-lime-500 border-lime-400 rounded-full">
+        class="w-auto p-2 my-2 text-base font-medium text-white bg-red-500 border-red-400 rounded-full">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
         </svg>
@@ -19,7 +19,7 @@
             <label class="block mb-2 text-md font-bold tracking-wide text-gray-700 uppercase" for="grid-email">
               Title
             </label>
-            <input id='input-title' required
+            <input id='input-title'
               class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               type="text" placeholder="Maths Week 1">
           </div>
@@ -30,7 +30,7 @@
             <label class="text-center block mb-1 mt-2 text-md font-bold text-gray-700 uppercase" for="grid-first-name">
               Activities
             </label>
-            <input id='input-activities' data-name='Activities' required
+            <input id='input-activities' data-name='Activities'
               class="text-center block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 appearance-none focus:outline-none focus:bg-white"
               id="grid-first-name" type="number" min="0" step="1" placeholder="1">
           </div>
@@ -60,6 +60,15 @@
             <input id='input-factor' data-name='Factor' required
               class="text-center block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 appearance-none focus:outline-none focus:bg-white"
               id="grid-first-name" type="number" min="0.05" step="0.05" placeholder="0.75">
+          </div>
+
+          <div class="px-1 w-1/2">
+            <label class="text-center block mb-1 mt-2 text-md font-bold text-gray-700 uppercase" for="grid-first-name">
+              Time per Assignment
+            </label>
+            <input id='input-assignment-time' data-name='Assignment Time' required
+              class="text-center block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 appearance-none focus:outline-none focus:bg-white"
+              id="grid-first-name" type="number" min="0" step="5" placeholder="0.75">
           </div>
         </div>
 
