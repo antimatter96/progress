@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style.css">
+  <title>Progress</title>
+</head>
+
+<body class="max-w-screen-md mx-auto my-5 px-1">
+  <include src="./src/html_components/alerts.html"></include>
+  <div id="app" class="containter shadow-sm py-5 px-5 border-grey-50">
+    <include src="./src/html_components/header.html"></include>
+    <hr class="my-5 border-amber-900">
+    <include src="./src/html_components/form.html"></include>
+    <div id="weeks">
+      <include src="./src/html_components/week.html"></include>
+      <include src="./src/html_components/week.html"></include>
+    </div>
+  </div>
+  <script type="module" src="./js/main.js"></script>
+</body>
+
+</html>

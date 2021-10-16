@@ -1,3 +1,99 @@
+class $086d5838aee8ae00$export$a99aab2a736cea3e {
+    constructor(){
+        this.ok = document.getElementById("alert-ok");
+        this.info = document.getElementById("alert-info");
+        this.warning = document.getElementById("alert-warning");
+        this.error = document.getElementById("alert-error");
+        console.log(this.ok, this.info, this.warning, this.error);
+        this.all = [
+            this.ok,
+            this.info,
+            this.warning,
+            this.error
+        ];
+    }
+    hideAll() {
+        this.all.forEach((ele)=>{
+            ele.style.display = "none;";
+        });
+    }
+    show(type, message, timeout) {
+        let target = this[type];
+        console.log(target);
+        target.style.display = "block";
+        target.getElementsByClassName('actual-text')[0].innerText = message;
+        setTimeout(()=>{
+            this.hideAll();
+        }, timeout);
+    }
+}
+
+
+class $7b79fc2448b3b35e$export$ca95ea95faa89f36 {
+    constructor(){
+        this.titleInput = document.getElementById("input-title");
+        this.activities = document.getElementById("input-activities");
+        this.tutorials = document.getElementById("input-tutorials");
+        this.assignments = document.getElementById("input-assignments");
+        this.factor = document.getElementById("input-factor");
+        this.assignmentTime = document.getElementById("input-assignment-time");
+        this.videoLength = document.getElementById("input-videos");
+        console.log(this.titleInput);
+        console.log(this.titleInput, this.activities, this.tutorials, this.assignments, this.videoLength);
+        console.log(this.factor);
+        console.log(this.videoLength);
+    }
+    validate() {
+        let errors = [];
+        console.log("titleInput", this.titleInput.value);
+        console.log("activities", this.activities.value);
+        console.log("tutorials", this.tutorials.value);
+        console.log("assignments", this.assignments.value);
+        console.log("factor", this.factor.value);
+        console.log("videoLength", this.videoLength.value);
+        console.log("assignmentTime", this.assignmentTime.value);
+        [
+            this.titleInput
+        ].forEach((ele)=>{
+            let title = ele.value;
+            if (title.trim().length == 0) errors.push(`- Title is required`);
+        });
+        [
+            this.activities,
+            this.tutorials,
+            this.assignments,
+            this.assignmentTime
+        ].forEach((ele)=>{
+            let val = parseInt(ele.value, 10);
+            if (Number.isInteger(val) && val >= 0) ;
+            else errors.push(`- '${ele.dataset.name}' should be a non-negative integer`);
+        });
+        [
+            this.factor
+        ].forEach((ele)=>{
+            let val = parseFloat(ele.value, 10);
+            if (Number.isFinite(val) && val >= 0) ;
+            else errors.push(`- '${ele.dataset.name}' should be a non-negative number`);
+        });
+        //    let num = /^\d+:[0-5]\d$/;
+        // let value = document.getElementById('minutes').value;
+        // console.log(value.length);
+        // for(let i = 0; i < value.length; i++) {
+        //   console.log(i, value[i]);
+        // }
+        // let arr = value.split(/\s/ig);
+        // for(let i = 0; i < arr.length; i++) {
+        //   console.log(arr[i].length, (arr[i].match(num)));
+        // }
+        return errors;
+    }
+    submit() {
+        let input = {
+        };
+    }
+}
+
+
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -919,147 +1015,59 @@ var $836f855d1b318ba1$export$ffb5f4729a158638 = Object.freeze({
 
 
 
-class $b46492c29258f7b6$var$Week {
-    name = "Sample Week 1";
-    factor = 1;
-    solvableTime = 20;
-    solvable = {
-        activities: {
-            total: 3,
-            left: 3
-        },
-        tutorials: {
-            total: 2,
-            left: 2
-        },
-        practice: {
-            total: 1,
-            left: 1
-        },
-        graded: {
-            total: 1,
-            left: 1
+class $2dbb63a87f5e4f55$export$f160779312cf57d5 {
+    constructor(){
+    }
+    loadLocal() {
+    }
+    static async ensureFileExists() {
+        // Create or read folder
+        try {
+            let homeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
+            let dataDir = homeDir + ".tauri_progres";
+            let created = await $b2e3b9fd017c80e7$export$4368d992c4eafac0(dataDir);
+            console.log(created);
+        } catch (e) {
+            console.log(e);
         }
-    };
-    videos = [
-        {
-            m: 40,
-            s: 10,
-            seen: false
+        // Folder now exists
+        try {
+            let homeDir1 = await $836f855d1b318ba1$export$342063e11d6c3cad();
+            let file = homeDir1 + ".tauri_progres/data.json";
+            let text = await $b2e3b9fd017c80e7$export$43caf9889c228507(file);
+            console.log(text);
+        } catch (e1) {
+            console.log(e1);
         }
-    ];
-    constructor(input){
-        this.name = input.name;
-        this.factor = input.factor;
-        this.solvableTime = input.solvableTime;
-        this.videos = [];
-        this.videos = input.videos.map((video)=>{
-            return {
-                m: video.m,
-                s: video.s,
-                seen: false
-            };
-        });
-        this.solvable = {
-            activities: {
-                total: input.activiyCount,
-                left: input.activiyCount
-            },
-            tutorials: {
-                total: input.tutorialCount,
-                left: input.tutorialCount
-            },
-            practice: {
-                total: input.practiceCount,
-                left: input.practiceCount
-            },
-            graded: {
-                total: input.gradedCount,
-                left: input.gradedCount
-            }
-        };
-    }
-    markVideoSeen(i) {
-        this.videos[i].seen = true;
-    }
-    markVideoLeft(i) {
-        this.videos[i].seen = false;
-    }
-    markSolvableDone(type) {
-        if (this.solvable[type].left <= 0) throw new Error("Already done");
-        this.solvable[type].left -= 1;
-    }
-    markSolvableNotDone(type) {
-        if (this.solvable[type].left + 1 > this.solvable[type].total) throw new Error("Already done");
-        this.solvable[type].left += 1;
-    }
-    getTotalMinutes() {
-        let m = 0;
-        let s = 0;
-        this.videos.forEach((video)=>{
-            m += video.m;
-            s += video.s;
-        });
-        m += s / 60;
-        let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
-            return prev + data.total;
-        }, 0);
-        m += this.solvableTime * solvableCount;
-        m /= this.factor * 60;
-        return m;
-    }
-    getLeftMinutes() {
-        let m = 0;
-        let s = 0;
-        this.videos.forEach((video)=>{
-            if (!video.seen) {
-                m += video.m;
-                s += video.s;
-            }
-        });
-        m += s / 60;
-        let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
-            return prev + data.left;
-        }, 0);
-        m += this.solvableTime * solvableCount;
-        m /= this.factor * 60;
-        return m;
-    }
-    getPercentage() {
-        let p = this.getTotalMinutes();
-        let l = this.getLeftMinutes();
-        let e = p - l;
-        return 100 * (e / p);
     }
 }
-function $b46492c29258f7b6$var$parseTimings(s) {
+
+
+function $c4458ddda29fa2c9$var$parseTimings(s) {
     let videos = [];
 }
-let $b46492c29258f7b6$var$num = /^\d+:[0-5]\d$/;
-function $b46492c29258f7b6$var$logSubmit(event) {
-    event.preventDefault();
-    let value = document.getElementById('minutes').value;
-    console.log(value.length);
-    for(let i = 0; i < value.length; i++)console.log(i, value[i]);
-    let arr = value.split(/\s/ig);
-    for(let i1 = 0; i1 < arr.length; i1++)console.log(arr[i1].length, arr[i1].match($b46492c29258f7b6$var$num));
-}
-async function $b46492c29258f7b6$var$makeSureItExists() {
-    try {
-        let AhomeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
-        let AdataDir = AhomeDir + ".tauri_progres";
-        let Acreated = await $b2e3b9fd017c80e7$export$4368d992c4eafac0(AdataDir);
-        console.log(Acreated);
-    } catch (e) {
-        console.log(e);
-    }
-}
-async function $b46492c29258f7b6$var$main() {
-    let as = await window.__TAURI__.path.currentDir();
-    console.log(as);
-    let ff = await window.__TAURI__.fs.readDir(as);
-    console.log(ff);
-}
-$b46492c29258f7b6$var$makeSureItExists();
+window.onload = async function() {
+    let formOpenBtn = document.getElementById("open-form");
+    let formCloseBtn = document.getElementById("close-form");
+    let formEnclosure = document.getElementById("form-enclosure");
+    console.log(formOpenBtn, formCloseBtn, formEnclosure);
+    formOpenBtn.addEventListener("click", ()=>{
+        formEnclosure.style.display = "block";
+    });
+    formCloseBtn.addEventListener("click", ()=>{
+        formEnclosure.style.display = "none";
+    });
+    let f = new $7b79fc2448b3b35e$export$ca95ea95faa89f36();
+    let alerts = new $086d5838aee8ae00$export$a99aab2a736cea3e();
+    alerts.hideAll();
+    const form = document.getElementById("add-form");
+    form.addEventListener("submit", (e)=>{
+        e.preventDefault();
+        let errors = f.validate();
+        alerts.show('error', errors.join('\n'));
+    });
+    let exists = await $2dbb63a87f5e4f55$export$f160779312cf57d5.ensureFileExists();
+    console.log(exists);
+};
 
 

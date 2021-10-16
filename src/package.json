@@ -5,7 +5,7 @@
     "dev": "parcel",
     "build": "rm -rf ./../dist && parcel build --dist-dir ./../dist --log-level verbose --no-optimize --no-content-hash --no-source-maps"
   },
-  "source": "index.html",
+  "source": "src/index.html",
   "devDependencies": {
     "autoprefixer": "^10.3.7",
     "postcss": "^8.3.9",
@@ -15,6 +15,7 @@
     "@tailwindcss/forms": "^0.3.4",
     "parcel": "^2.0.0",
     "posthtml": "^0.16.5",
-    "posthtml-include": "^1.7.2"
+    "posthtml-include": "^1.7.2",
+    "uuid": "^8.3.2"
   }
 }

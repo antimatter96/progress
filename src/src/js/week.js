@@ -1,4 +1,7 @@
-class Week {
+import { v4 as uuid } from 'uuid';
+
+export class Week {
+  _id = "";
   name = "Sample Week 1";
   factor = 1;
   solvableTime = 20;
@@ -12,36 +15,37 @@ class Week {
 
   videos = [{ m: 40, s: 10, seen: false }];
 
-  constructor(input) {
+  constructor(input, existingUUID) {
+    this.id = existingUUID ? existingUUID : uuid();
     this.name = input.name;
-    this.factor = input.factor;
+    this.factor = parseFloat(input.factor, 10);
     this.solvableTime = input.solvableTime;
 
     this.videos = [];
     this.videos = input.videos.map((video) => {
       return {
-        m: video.m,
-        s: video.s,
-        seen: false,
+        m: parseInt(video.m, 10),
+        s: parseInt(video.s, 10),
+        seen: Boolean(video.seen),
       };
     });
 
     this.solvable = {
       activities: {
-        total: input.activiyCount,
-        left: input.activiyCount,
+        total: parseInt(input.activiyCount.total, 10),
+        left: parseInt(input.activiyCount.left, 10),
       },
       tutorials: {
-        total: input.tutorialCount,
-        left: input.tutorialCount,
+        total: parseInt(input.tutorialCount.total, 10),
+        left: parseInt(input.tutorialCount.left, 10),
       },
       practice: {
-        total: input.practiceCount,
-        left: input.practiceCount,
+        total: parseInt(input.practiceCount.total, 10),
+        left: parseInt(input.practiceCount.left, 10),
       },
       graded: {
-        total: input.gradedCount,
-        left: input.gradedCount,
+        total: parseInt(input.gradedCount.total, 10),
+        left: parseInt(input.gradedCount.left, 10),
       },
     };
   }
@@ -90,6 +94,8 @@ class Week {
     return m;
   }
 
+  validateSelf()
+
   getLeftMinutes() {
     let m = 0;
     let s = 0;
@@ -122,61 +128,50 @@ class Week {
     let e = p - l;
     return 100 * (e / p);
   }
-}
 
-function parseTimings(s) {
-  let videos = [];
-}
+  static Validate(input) {
+    if ( !input.id  || this.name ) {
+      throw new Error();
+    }
 
+    if ( !Number.isFinite(this.factor)  || !Number.isInteger(this.solvableTime)) {
+      throw new Error();
+    }
 
-let num = /^\d+:[0-5]\d$/;
-function logSubmit(event) {
-  event.preventDefault();
-  let value = document.getElementById('minutes').value;
-  console.log(value.length);
-  
-  for(let i = 0; i < value.length; i++) {
-    console.log(i, value[i]);
+    input.videos.map((video) => {
+      if ( !Number.isInteger(video.m)  || !Number.isInteger(video.s)) {
+        throw new Error();
+      }
+
+      if(video.s < 0 || video.s >= 60) {
+
+      }
+
+      if(video.m < 0) {
+
+      }
+    });
+
+    ['activiyCount', 'tutorialCount', 'practiceCount', 'gradedCount'].forEach((key) => {
+      let total = input[key].total;
+      let left = input[key].left;
+
+      if ( !Number.isInteger(total)  || !Number.isInteger(left)) {
+        throw new Error();
+      }
+
+      if (total < 0 || left < 0 || left > total) {
+        throw new Error();
+      }
+    })
   }
-  
-  let arr = value.split(/\s/ig);
-  
-   for(let i = 0; i < arr.length; i++) {
-    console.log(arr[i].length, (arr[i].match(num)));
+
+  static Parse(input) {
+    try {
+      Week.Validate(input);
+      return new Week(input)
+    } catch(e) {
+      return null;
+    }
   }
 }
-
-// const form = document.getElementById('form');
-// form.addEventListener('submit', logSubmit);
-
-
-// <form id="form">
-// <textarea id='minutes' form="form" rows="10", cols="6" required></textarea>
-//  <button type='submit'>Yes</button>
-// </form>
-
-
-import { createDir } from "@tauri-apps/api/fs";
-import { homeDir } from "@tauri-apps/api/path";
-
-async function makeSureItExists() {
-  try {
-    let AhomeDir = await homeDir();
-    let AdataDir = AhomeDir + ".tauri_progres";
-    let Acreated = await createDir(AdataDir);
-    console.log(Acreated);
-  } catch(e) {
-    console.log(e);
-  }
-}
-
-async function main() {
-
-  let as = await window.__TAURI__.path.currentDir();
-  console.log(as);
-  let ff = await window.__TAURI__.fs.readDir(as);
-
-  console.log(ff);
-}
-
-makeSureItExists();

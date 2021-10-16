@@ -1,11 +1,15 @@
-const colors = require('tailwindcss/colors');
+const colors = require("tailwindcss/colors");
+
+const customFonts = [
+  "WorkSans-Regular",
+];
 
 module.exports = {
   purge: {
-    content: [
-      '*.html',
-      '**/*.html',
-    ],
+    content: ["*.html", "**/*.html"],
+    options: {
+      fontFace: true,
+    },
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -13,13 +17,15 @@ module.exports = {
       ...colors,
       green: colors.lime,
     },
-    fontFamily: {
-      'display': ['Oswald'],
-      'body': ['"Open Sans"']
+    extend: {
+      fontFamily: {
+        sans: customFonts,
+        serif: customFonts,
+        "sans-serif": customFonts,
+      },
     },
-    extend: {},
   },
   variants: {
     extend: {},
-  }
+  },
 };
