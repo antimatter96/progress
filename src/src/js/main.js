@@ -15,7 +15,7 @@ window.onload = async function () {
   console.log(formOpenBtn, formCloseBtn, formEnclosure);
 
   formOpenBtn.addEventListener("click", () => {
-    formEnclosure.style.display = "block";
+    formEnclosure.style.display = "flex";
   });
 
   formCloseBtn.addEventListener("click", () => {
@@ -34,7 +34,7 @@ window.onload = async function () {
     let errors = f.validate();
 
     if (errors.length > 0) {
-      alerts.show('error', errors.join('\n'));
+      alerts.show('error', errors.join('\n'), 60_000);
     } else {
       let weekInput = f.submit();
       console.log(weekInput);
@@ -59,7 +59,7 @@ window.onload = async function () {
     console.log(exists);
   } catch(error) {
     console.log(console.error());
-    alerts.show('error', error, 20000)
+    alerts.show('error', error, 10_000)
   }
 
 };

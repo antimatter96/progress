@@ -34,7 +34,8 @@ body {
 }
 
 .alert-container {
-  @apply w-full p-4 overflow-x-auto text-center rounded-md;
+  @apply p-10 overflow-x-auto text-center rounded-none w-full bg-white shadow-2xl drop-shadow-2xl justify-center items-center fixed top-0 left-0;
+  display: flex;
 }
 
 .alert-inner-container {
@@ -42,7 +43,19 @@ body {
 }
 
 .alert-logo-container {
-  @apply flex items-center justify-center w-3/12;
+  @apply flex items-center justify-center w-4/12 px-10;
+}
+
+.alert-logo {
+  @apply w-20 h-20 text-white fill-current;
+}
+
+.alert-heading {
+  @apply font-semibold text-xl;
+}
+
+.alert-text {
+  @apply mb-1 text-sm leading-none text-gray-500;
 }
 
 .basic-input {

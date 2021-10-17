@@ -36,7 +36,6 @@ export class WeekManager {
       if (typeof e == 'string' && e.includes("os error 17")) {
         // already exists
       } else {
-        console.log(e);
         throw e;
       }
     }
@@ -49,6 +48,7 @@ export class WeekManager {
       let text = await _read(file);
       console.log(text);
     } catch (e) {
+      console.log(e);
       if (typeof e == 'string' && e.includes("os error 2")) {
         // no file exists, create now
         try {
@@ -63,7 +63,6 @@ export class WeekManager {
           throw error;
         }
       } else {
-        console.log(e);
         throw e;
       }
     }
