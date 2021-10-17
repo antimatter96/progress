@@ -14,14 +14,14 @@ class $086d5838aee8ae00$export$a99aab2a736cea3e {
     }
     hideAll() {
         this.all.forEach((ele)=>{
-            ele.style.display = "none;";
+            ele.style.display = "none";
         });
     }
     show(type, message, timeout) {
         let target = this[type];
         console.log(target);
-        target.style.display = "block";
-        target.getElementsByClassName('actual-text')[0].innerText = message;
+        target.style.display = "flex";
+        target.getElementsByClassName("actual-text")[0].innerText = message;
         setTimeout(()=>{
             this.hideAll();
         }, timeout);
@@ -1293,10 +1293,7 @@ class $2dbb63a87f5e4f55$export$f160779312cf57d5 {
         } catch (e) {
             console.log(e);
             if (typeof e == 'string' && e.includes("os error 17")) ;
-            else {
-                console.log(e);
-                throw e;
-            }
+            else throw e;
         }
         // Folder now exists
         try {
@@ -1305,6 +1302,7 @@ class $2dbb63a87f5e4f55$export$f160779312cf57d5 {
             let text = await $b2e3b9fd017c80e7$export$43caf9889c228507(file);
             console.log(text);
         } catch (e1) {
+            console.log(e1);
             if (typeof e1 == 'string' && e1.includes("os error 2")) // no file exists, create now
             try {
                 let homeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
@@ -1316,10 +1314,7 @@ class $2dbb63a87f5e4f55$export$f160779312cf57d5 {
             } catch (error) {
                 throw error;
             }
-            else {
-                console.log(e1);
-                throw e1;
-            }
+            else throw e1;
         }
     }
 }
@@ -1334,7 +1329,7 @@ window.onload = async function() {
     let formEnclosure = document.getElementById("form-enclosure");
     console.log(formOpenBtn, formCloseBtn, formEnclosure);
     formOpenBtn.addEventListener("click", ()=>{
-        formEnclosure.style.display = "block";
+        formEnclosure.style.display = "flex";
     });
     formCloseBtn.addEventListener("click", ()=>{
         formEnclosure.style.display = "none";
@@ -1346,7 +1341,7 @@ window.onload = async function() {
     form.addEventListener("submit", (e)=>{
         e.preventDefault();
         let errors = f.validate();
-        if (errors.length > 0) alerts.show('error', errors.join('\n'));
+        if (errors.length > 0) alerts.show('error', errors.join('\n'), 60000);
         else {
             let weekInput = f.submit();
             console.log(weekInput);
@@ -1364,7 +1359,7 @@ window.onload = async function() {
         console.log(exists);
     } catch (error) {
         console.log(console.error());
-        alerts.show('error', error, 20000);
+        alerts.show('error', error, 10000);
     }
 };
 

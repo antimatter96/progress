@@ -12,7 +12,7 @@ class AlertHandler {
 
   hideAll() {
     this.all.forEach((ele) => {
-      ele.style.display = "none;"
+      ele.style.display = "none";
     });
   }
 
@@ -20,14 +20,13 @@ class AlertHandler {
     let target = this[type];
     console.log(target);
 
-    target.style.display = "block";
-    target.getElementsByClassName('actual-text')[0].innerText = message;
+    target.style.display = "flex";
+    target.getElementsByClassName("actual-text")[0].innerText = message;
 
     setTimeout(() => {
-      this.hideAll()
-    }, timeout)
+      this.hideAll();
+    }, timeout);
   }
-
 }
 
-export { AlertHandler}
+export { AlertHandler };
