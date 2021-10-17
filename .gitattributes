@@ -1,0 +1,4 @@
+dist/** linguist-generated
+
+src-tauri/**/*.ts linguist-generated
+src/src/fonts/stylesheet.css linguist-generated
