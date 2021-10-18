@@ -36,18 +36,25 @@ window.onload = async function () {
     if (errors.length > 0) {
       alerts.show('error', errors.join('\n'), 60_000);
     } else {
+
+      let weeks = document.getElementById("weeks");
+
       let weekInput = f.submit();
       console.log(weekInput);
 
       let w = new Week(weekInput);
       console.log(w);
 
+      weeks.prepend(w.getHTML());
+
       let sss = JSON.stringify(w);
       console.log(sss);
 
       let w2 = new Week(JSON.parse(sss));
+      w2.name = "Arpit Jain 2";
       console.log(w2);
 
+      weeks.prepend(w2.getHTML());
 
       console.log(Week.Validate(JSON.parse(sss)));
     }
@@ -59,7 +66,7 @@ window.onload = async function () {
     console.log(exists);
   } catch(error) {
     console.log(console.error());
-    alerts.show('error', error, 10_000)
+    alerts.show('error', error, 1_000)
   }
 
 };
