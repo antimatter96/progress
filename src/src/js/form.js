@@ -105,7 +105,7 @@ class FormHandler {
     }
 
     if (parseInt(this.assignments.value, 10) > 1) {
-      input.solvable.practice = parseInt(this.assignments.value, 10) - 1;
+      input.solvable.practice.total = parseInt(this.assignments.value, 10) - 1;
     }
 
     Object.keys(input.solvable).forEach((key) => {

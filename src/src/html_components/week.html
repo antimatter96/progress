@@ -1,10 +1,11 @@
+<template id="week-details">
 <div class="container items-center bg-white my-5 better-shadow">
   <div class="text-blueGray-700 rounded-lg">
 
     <!-- Heading -->
     <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-amber-400">
       <div class="w-full border-b-2">
-        <h2 class="pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8">
+        <h2 class="pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8 template-title">
           Stats 5
         </h2>
       </div>
@@ -15,17 +16,17 @@
       <div class="pb-2 flex justify-between items-center border-b-2">
         <p class="dispay-container">
           <span class="dispay-label">Projected:</span>
-          <span class="dispay-data">24h</span>
+          <span class="dispay-data template-projected">24h</span>
         </p>
 
         <p class="dispay-container">
           <span class="dispay-label">Elapsed:</span>
-          <span class="dispay-data">12h</span>
+          <span class="dispay-data template-elapsed">12h</span>
         </p>
 
         <p class="dispay-container">
           <span class="dispay-label">Done:</span>
-          <span class="dispay-data">12%</span>
+          <span class="dispay-data template-done">12%</span>
         </p>
       </div>
     </div>
@@ -36,56 +37,7 @@
         <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
           Videos
         </h2>
-        <div class="flex justify-evenly flex-wrap">
-
-          <div class="video-time px-0">
-            <p class="w-full text-center px-6 py-2 bg-lime-500">10:12</p>
-            <button class="text-2xl w-full text-center py-1 border-t-2 bg-red-500">-</button>
-          </div>
-
-          <div class="video-time px-0">
-            <p class="w-full text-center px-5 pb-2 py-2 bg-red-500">10:12</p>
-            <div class="flex justify-around border-t-2 w-full">
-              <button class="text-2xl flex-grow w-auto py-1 text-center bg-lime-500">+</button>
-            </div>
-          </div>
-
-          <div class="video-time px-0">
-            <p class="w-full text-center px-5 pb-2 py-2 bg-red-500">10:12</p>
-            <div class="flex justify-around border-t-2 w-full">
-              <button class="text-2xl flex-grow w-auto py-1 text-center bg-lime-500">+</button>
-            </div>
-          </div>
-          <div class="video-time px-0">
-            <p class="w-full text-center px-5 pb-2 py-2 bg-red-500">10:12</p>
-            <div class="flex justify-around border-t-2 w-full">
-              <button class="text-2xl flex-grow w-auto py-1 text-center bg-lime-500">+</button>
-            </div>
-          </div>
-          <div class="video-time px-0">
-            <p class="w-full text-center px-5 pb-2 py-2 bg-red-500">10:12</p>
-            <div class="flex justify-around border-t-2 w-full">
-              <button class="text-2xl flex-grow w-auto py-1 text-center bg-lime-500">+</button>
-            </div>
-          </div>
-          <div class="video-time px-0">
-            <p class="w-full text-center px-5 pb-2 py-2 bg-red-500">10:12</p>
-            <div class="flex justify-around border-t-2 w-full">
-              <button class="text-2xl flex-grow w-auto py-1 text-center bg-lime-500">+</button>
-            </div>
-          </div>
-          <div class="video-time px-0">
-            <p class="w-full text-center px-5 pb-2 py-2 bg-red-500">10:12</p>
-            <div class="flex justify-around border-t-2 w-full">
-              <button class="text-2xl flex-grow w-auto py-1 text-center bg-lime-500">+</button>
-            </div>
-          </div>
-          <div class="video-time px-0">
-            <p class="w-full text-center px-5 pb-2 py-2 bg-red-500">10:12</p>
-            <div class="flex justify-around border-t-2 w-full">
-              <button class="text-2xl flex-grow w-auto py-1 text-center bg-lime-500">+</button>
-            </div>
-          </div>
+        <div class="flex justify-evenly flex-wrap template-video-container">
 
         </div>
       </div>
@@ -97,30 +49,43 @@
         <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
           Solvable
         </h2>
+
         <div class="flex justify-around">
-          <div class="video-time act-time px-0">
-            <p class="w-full text-center px-6 py-2 bg-lime-500">Activites : 1/3</p>
+
+          <div class="video-time act-time">
+            <p class="act-text template-activities">Activites : 1/3</p>
             <div class="flex justify-around border-t-2">
-              <button class="text-2xl flex-grow w-auto py-1 bg-lime-500">+</button>
-              <button class="text-2xl flex-grow w-auto py-1 bg-red-500 cursor-not-allowed">-</button>
+              <button class="solvable-btn bg-lime-500 btn-activities-plus">+</button>
+              <button class="solvable-btn bg-red-500 btn-activities-negative">-</button>
             </div>
           </div>
-          <div class="video-time act-time px-0">
-            <p class="w-full text-center px-6 py-2 bg-lime-500">Tutorials : 1/3</p>
+
+          <div class="video-time act-time">
+            <p class="act-text template-tutorials">Tutorials : 1/3</p>
             <div class="flex justify-around border-t-2">
-              <button class="text-2xl flex-grow w-auto py-1 bg-lime-500">+</button>
-              <button class="text-2xl flex-grow w-auto py-1 bg-red-500 cursor-not-allowed">-</button>
+              <button class="solvable-btn  bg-lime-500 btn-tutorials-plus">+</button>
+              <button class="solvable-btn  bg-red-500 btn-tutorials-negative">-</button>
             </div>
           </div>
-          <div class="video-time act-time px-0">
-            <p class="w-full text-center px-6 py-2 bg-lime-500">Graded : 1/3</p>
+
+          <div class="video-time act-time">
+            <p class="act-text template-graded">Graded : 1/3</p>
             <div class="flex justify-around border-t-2">
-              <button class="text-2xl flex-grow w-auto py-1 bg-lime-500">+</button>
-              <button class="text-2xl flex-grow w-auto py-1 bg-red-500 cursor-not-allowed">-</button>
+              <button class="solvable-btn bg-lime-500 btn-graded-plus">+</button>
+              <button class="solvable-btn bg-red-500 btn-graded-negative">-</button>
             </div>
           </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+</template>
+
+<template id="video-details">
+  <div class="video-time px-0">
+    <p class="video-text template-video-time">12:12</p> <!-- Add color -->
+    <button class="video-btn template-video-btn"></button> <!-- Add color -->
+  </div>
+</template>
