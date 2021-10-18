@@ -311,11 +311,55 @@ class $47e4cbed47ec5d75$export$fca4f8121099df57 {
         m /= this.factor * 60;
         return m;
     }
-    getPercentage() {
-        let p = this.getTotalMinutes();
-        let l = this.getLeftMinutes();
-        let e = p - l;
-        return 100 * (e / p);
+    getPercentage(total, left) {
+        return 100 * ((total - left) / total);
+    }
+    getHTML() {
+        let template = document.getElementById("week-details");
+        let videoTemplate = document.getElementById('video-details');
+        let weekDetails = template.content.firstElementChild.cloneNode(true);
+        console.log(weekDetails);
+        console.log(weekDetails.getElementsByClassName);
+        let title = weekDetails.getElementsByClassName('template-title')[0];
+        title.textContent = this.name;
+        let _projected = this.getTotalMinutes();
+        let _elasped = this.getLeftMinutes();
+        let _percentage = this.getPercentage(_projected, _elasped).toFixed(2);
+        let projected = weekDetails.getElementsByClassName('template-projected')[0];
+        projected.textContent = `${_projected.toFixed(1)}h`;
+        let elasped = weekDetails.getElementsByClassName('template-elapsed')[0];
+        elasped.textContent = `${_elasped.toFixed(1)}h`;
+        let percentage = weekDetails.getElementsByClassName('template-done')[0];
+        percentage.textContent = `${_percentage}%`;
+        let videoContainers = weekDetails.getElementsByClassName('template-video-container')[0];
+        this.videos.forEach((video, i)=>{
+            let videoDetails = videoTemplate.content.firstElementChild.cloneNode(true);
+            let videoTime = videoDetails.getElementsByClassName('template-video-time')[0];
+            videoTime.textContent = `${video.m}:${video.s}`;
+            videoTime.classList.add(i % 2 == 0 ? 'bg-lime-500' : 'bg-red-500');
+            let videoBtn = videoDetails.getElementsByClassName('template-video-btn')[0];
+            if (video.seen) {
+                videoBtn.textContent = '-';
+                videoBtn.classList.add('bg-red-500');
+            } else {
+                videoBtn.textContent = '+';
+                videoBtn.classList.add('bg-lime-500');
+            }
+            videoContainers.appendChild(videoDetails);
+        });
+        let solvable = this.solvable;
+        let activitiesText = weekDetails.getElementsByClassName('template-activities')[0];
+        activitiesText.textContent = `Activites : ${solvable.activities.total - solvable.activities.left} / ${solvable.activities.total}`;
+        // TODO : Arpit
+        // if (solvable.activities.left > 0) {
+        //   activitiesText.getElementsByClassName('btn-activities-plus')[0].classList.add('');
+        //   activitiesText.getElementsByClassName('btn-activities-minus')[0].classList.add('');
+        // }
+        let tutorialsText = weekDetails.getElementsByClassName('template-tutorials')[0];
+        tutorialsText.textContent = `Tutorials : ${solvable.tutorials.total - solvable.tutorials.left} / ${solvable.tutorials.total}`;
+        let gradedText = weekDetails.getElementsByClassName('template-graded')[0];
+        gradedText.textContent = `Graded : ${solvable.practice.total + solvable.graded.total - solvable.practice.left - solvable.graded.left} / ${solvable.practice.total + solvable.graded.total}`;
+        return weekDetails;
     }
     static Validate(input) {
         if (!input.id || !input.name) throw new Error(`${input.id} ${input.name}`);
@@ -1343,14 +1387,18 @@ window.onload = async function() {
         let errors = f.validate();
         if (errors.length > 0) alerts.show('error', errors.join('\n'), 60000);
         else {
+            let weeks = document.getElementById("weeks");
             let weekInput = f.submit();
             console.log(weekInput);
             let w = new $47e4cbed47ec5d75$export$fca4f8121099df57(weekInput);
             console.log(w);
+            weeks.prepend(w.getHTML());
             let sss = JSON.stringify(w);
             console.log(sss);
             let w2 = new $47e4cbed47ec5d75$export$fca4f8121099df57(JSON.parse(sss));
+            w2.name = "Arpit Jain 2";
             console.log(w2);
+            weeks.prepend(w2.getHTML());
             console.log($47e4cbed47ec5d75$export$fca4f8121099df57.Validate(JSON.parse(sss)));
         }
     });
@@ -1359,7 +1407,7 @@ window.onload = async function() {
         console.log(exists);
     } catch (error) {
         console.log(console.error());
-        alerts.show('error', error, 10000);
+        alerts.show('error', error, 1000);
     }
 };
 
