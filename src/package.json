@@ -8,6 +8,7 @@
   "source": "src/index.html",
   "dependencies": {
     "@parcel/reporter-bundle-analyzer": "^2.0.0",
+    "lit-html": "^2.0.1",
     "parcel": "^2.0.0",
     "postcss": "^8.3.9",
     "posthtml": "^0.16.5",

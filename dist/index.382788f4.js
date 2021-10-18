@@ -1,3 +1,296 @@
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */ var $a51c7802bfe1890e$var$t;
+const $a51c7802bfe1890e$var$i = globalThis.trustedTypes, $a51c7802bfe1890e$var$s = $a51c7802bfe1890e$var$i ? $a51c7802bfe1890e$var$i.createPolicy("lit-html", {
+    createHTML: (t)=>t
+}) : void 0, $a51c7802bfe1890e$var$e = `lit$${(Math.random() + "").slice(9)}$`, $a51c7802bfe1890e$var$o = "?" + $a51c7802bfe1890e$var$e, $a51c7802bfe1890e$var$n = `<${$a51c7802bfe1890e$var$o}>`, $a51c7802bfe1890e$var$l = document, $a51c7802bfe1890e$var$h = (t = "")=>$a51c7802bfe1890e$var$l.createComment(t)
+, $a51c7802bfe1890e$var$r = (t)=>null === t || "object" != typeof t && "function" != typeof t
+, $a51c7802bfe1890e$var$d = Array.isArray, $a51c7802bfe1890e$var$u = (t)=>{
+    var i;
+    return $a51c7802bfe1890e$var$d(t) || "function" == typeof (null === (i = t) || void 0 === i ? void 0 : i[Symbol.iterator]);
+}, $a51c7802bfe1890e$var$c = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, $a51c7802bfe1890e$var$v = /-->/g, $a51c7802bfe1890e$var$a = />/g, $a51c7802bfe1890e$var$f = />|[ 	\n\r](?:([^\s"'>=/]+)([ 	\n\r]*=[ 	\n\r]*(?:[^ 	\n\r"'`<>=]|("|')|))|$)/g, $a51c7802bfe1890e$var$_ = /'/g, $a51c7802bfe1890e$var$m = /"/g, $a51c7802bfe1890e$var$g = /^(?:script|style|textarea)$/i, $a51c7802bfe1890e$var$$ = (t)=>(i, ...s)=>({
+            _$litType$: t,
+            strings: i,
+            values: s
+        })
+, $a51c7802bfe1890e$export$c0bb0b647f701bb5 = $a51c7802bfe1890e$var$$(1), $a51c7802bfe1890e$export$7ed1367e7fa1ad68 = $a51c7802bfe1890e$var$$(2), $a51c7802bfe1890e$export$9c068ae9cc5db4e8 = Symbol.for("lit-noChange"), $a51c7802bfe1890e$export$45b790e32b2810ee = Symbol.for("lit-nothing"), $a51c7802bfe1890e$var$x = new WeakMap, $a51c7802bfe1890e$export$b3890eb0ae9dca99 = (t, i, s)=>{
+    var e, o;
+    const n = null !== (e = null == s ? void 0 : s.renderBefore) && void 0 !== e ? e : i;
+    let l = n._$litPart$;
+    if (void 0 === l) {
+        const t = null !== (o = null == s ? void 0 : s.renderBefore) && void 0 !== o ? o : null;
+        n._$litPart$ = l = new $a51c7802bfe1890e$var$N(i.insertBefore($a51c7802bfe1890e$var$h(), t), t, void 0, null != s ? s : {
+        });
+    }
+    return l._$AI(t), l;
+}, $a51c7802bfe1890e$var$A = $a51c7802bfe1890e$var$l.createTreeWalker($a51c7802bfe1890e$var$l, 129, null, !1), $a51c7802bfe1890e$var$C = (t, i)=>{
+    const o = t.length - 1, l = [];
+    let h, r = 2 === i ? "<svg>" : "", d = $a51c7802bfe1890e$var$c;
+    for(let i1 = 0; i1 < o; i1++){
+        const s = t[i1];
+        let o, u, $ = -1, p = 0;
+        for(; p < s.length && (d.lastIndex = p, u = d.exec(s), null !== u);)p = d.lastIndex, d === $a51c7802bfe1890e$var$c ? "!--" === u[1] ? d = $a51c7802bfe1890e$var$v : void 0 !== u[1] ? d = $a51c7802bfe1890e$var$a : void 0 !== u[2] ? ($a51c7802bfe1890e$var$g.test(u[2]) && (h = RegExp("</" + u[2], "g")), d = $a51c7802bfe1890e$var$f) : void 0 !== u[3] && (d = $a51c7802bfe1890e$var$f) : d === $a51c7802bfe1890e$var$f ? ">" === u[0] ? (d = null != h ? h : $a51c7802bfe1890e$var$c, $ = -1) : void 0 === u[1] ? $ = -2 : ($ = d.lastIndex - u[2].length, o = u[1], d = void 0 === u[3] ? $a51c7802bfe1890e$var$f : '"' === u[3] ? $a51c7802bfe1890e$var$m : $a51c7802bfe1890e$var$_) : d === $a51c7802bfe1890e$var$m || d === $a51c7802bfe1890e$var$_ ? d = $a51c7802bfe1890e$var$f : d === $a51c7802bfe1890e$var$v || d === $a51c7802bfe1890e$var$a ? d = $a51c7802bfe1890e$var$c : (d = $a51c7802bfe1890e$var$f, h = void 0);
+        const y = d === $a51c7802bfe1890e$var$f && t[i1 + 1].startsWith("/>") ? " " : "";
+        r += d === $a51c7802bfe1890e$var$c ? s + $a51c7802bfe1890e$var$n : $ >= 0 ? (l.push(o), s.slice(0, $) + "$lit$" + s.slice($) + $a51c7802bfe1890e$var$e + y) : s + $a51c7802bfe1890e$var$e + (-2 === $ ? (l.push(void 0), i1) : y);
+    }
+    const u = r + (t[o] || "<?>") + (2 === i ? "</svg>" : "");
+    return [
+        void 0 !== $a51c7802bfe1890e$var$s ? $a51c7802bfe1890e$var$s.createHTML(u) : u,
+        l
+    ];
+};
+class $a51c7802bfe1890e$var$P {
+    constructor({ strings: t , _$litType$: s  }, n){
+        let l;
+        this.parts = [];
+        let r = 0, d = 0;
+        const u = t.length - 1, c = this.parts, [v, a] = $a51c7802bfe1890e$var$C(t, s);
+        if (this.el = $a51c7802bfe1890e$var$P.createElement(v, n), $a51c7802bfe1890e$var$A.currentNode = this.el.content, 2 === s) {
+            const t = this.el.content, i = t.firstChild;
+            i.remove(), t.append(...i.childNodes);
+        }
+        for(; null !== (l = $a51c7802bfe1890e$var$A.nextNode()) && c.length < u;){
+            if (1 === l.nodeType) {
+                if (l.hasAttributes()) {
+                    const t = [];
+                    for (const i of l.getAttributeNames())if (i.endsWith("$lit$") || i.startsWith($a51c7802bfe1890e$var$e)) {
+                        const s = a[d++];
+                        if (t.push(i), void 0 !== s) {
+                            const t = l.getAttribute(s.toLowerCase() + "$lit$").split($a51c7802bfe1890e$var$e), i = /([.?@])?(.*)/.exec(s);
+                            c.push({
+                                type: 1,
+                                index: r,
+                                name: i[2],
+                                strings: t,
+                                ctor: "." === i[1] ? $a51c7802bfe1890e$var$M : "?" === i[1] ? $a51c7802bfe1890e$var$k : "@" === i[1] ? $a51c7802bfe1890e$var$H : $a51c7802bfe1890e$var$S
+                            });
+                        } else c.push({
+                            type: 6,
+                            index: r
+                        });
+                    }
+                    for (const i1 of t)l.removeAttribute(i1);
+                }
+                if ($a51c7802bfe1890e$var$g.test(l.tagName)) {
+                    const t = l.textContent.split($a51c7802bfe1890e$var$e), s = t.length - 1;
+                    if (s > 0) {
+                        l.textContent = $a51c7802bfe1890e$var$i ? $a51c7802bfe1890e$var$i.emptyScript : "";
+                        for(let i = 0; i < s; i++)l.append(t[i], $a51c7802bfe1890e$var$h()), $a51c7802bfe1890e$var$A.nextNode(), c.push({
+                            type: 2,
+                            index: ++r
+                        });
+                        l.append(t[s], $a51c7802bfe1890e$var$h());
+                    }
+                }
+            } else if (8 === l.nodeType) {
+                if (l.data === $a51c7802bfe1890e$var$o) c.push({
+                    type: 2,
+                    index: r
+                });
+                else {
+                    let t = -1;
+                    for(; -1 !== (t = l.data.indexOf($a51c7802bfe1890e$var$e, t + 1));)c.push({
+                        type: 7,
+                        index: r
+                    }), t += $a51c7802bfe1890e$var$e.length - 1;
+                }
+            }
+            r++;
+        }
+    }
+    static createElement(t, i) {
+        const s = $a51c7802bfe1890e$var$l.createElement("template");
+        return s.innerHTML = t, s;
+    }
+}
+function $a51c7802bfe1890e$var$V(t, i, s = t, e) {
+    var o, n, l, h;
+    if (i === $a51c7802bfe1890e$export$9c068ae9cc5db4e8) return i;
+    let d = void 0 !== e ? null === (o = s._$Cl) || void 0 === o ? void 0 : o[e] : s._$Cu;
+    const u = $a51c7802bfe1890e$var$r(i) ? void 0 : i._$litDirective$;
+    return (null == d ? void 0 : d.constructor) !== u && (null === (n = null == d ? void 0 : d._$AO) || void 0 === n || n.call(d, !1), void 0 === u ? d = void 0 : (d = new u(t), d._$AT(t, s, e)), void 0 !== e ? (null !== (l = (h = s)._$Cl) && void 0 !== l ? l : h._$Cl = [])[e] = d : s._$Cu = d), void 0 !== d && (i = $a51c7802bfe1890e$var$V(t, d._$AS(t, i.values), d, e)), i;
+}
+class $a51c7802bfe1890e$var$E {
+    constructor(t, i){
+        this.v = [], this._$AN = void 0, this._$AD = t, this._$AM = i;
+    }
+    get parentNode() {
+        return this._$AM.parentNode;
+    }
+    get _$AU() {
+        return this._$AM._$AU;
+    }
+    p(t) {
+        var i;
+        const { el: { content: s  } , parts: e  } = this._$AD, o = (null !== (i = null == t ? void 0 : t.creationScope) && void 0 !== i ? i : $a51c7802bfe1890e$var$l).importNode(s, !0);
+        $a51c7802bfe1890e$var$A.currentNode = o;
+        let n = $a51c7802bfe1890e$var$A.nextNode(), h = 0, r = 0, d = e[0];
+        for(; void 0 !== d;){
+            if (h === d.index) {
+                let i;
+                2 === d.type ? i = new $a51c7802bfe1890e$var$N(n, n.nextSibling, this, t) : 1 === d.type ? i = new d.ctor(n, d.name, d.strings, this, t) : 6 === d.type && (i = new $a51c7802bfe1890e$var$I(n, this, t)), this.v.push(i), d = e[++r];
+            }
+            h !== (null == d ? void 0 : d.index) && (n = $a51c7802bfe1890e$var$A.nextNode(), h++);
+        }
+        return o;
+    }
+    m(t) {
+        let i = 0;
+        for (const s of this.v)void 0 !== s && (void 0 !== s.strings ? (s._$AI(t, s, i), i += s.strings.length - 2) : s._$AI(t[i])), i++;
+    }
+}
+class $a51c7802bfe1890e$var$N {
+    constructor(t, i, s, e){
+        var o;
+        this.type = 2, this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee, this._$AN = void 0, this._$AA = t, this._$AB = i, this._$AM = s, this.options = e, this._$Cg = null === (o = null == e ? void 0 : e.isConnected) || void 0 === o || o;
+    }
+    get _$AU() {
+        var t, i;
+        return null !== (i = null === (t = this._$AM) || void 0 === t ? void 0 : t._$AU) && void 0 !== i ? i : this._$Cg;
+    }
+    get parentNode() {
+        let t = this._$AA.parentNode;
+        const i = this._$AM;
+        return void 0 !== i && 11 === t.nodeType && (t = i.parentNode), t;
+    }
+    get startNode() {
+        return this._$AA;
+    }
+    get endNode() {
+        return this._$AB;
+    }
+    _$AI(t, i = this) {
+        t = $a51c7802bfe1890e$var$V(this, t, i), $a51c7802bfe1890e$var$r(t) ? t === $a51c7802bfe1890e$export$45b790e32b2810ee || null == t || "" === t ? (this._$AH !== $a51c7802bfe1890e$export$45b790e32b2810ee && this._$AR(), this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee) : t !== this._$AH && t !== $a51c7802bfe1890e$export$9c068ae9cc5db4e8 && this.$(t) : void 0 !== t._$litType$ ? this.T(t) : void 0 !== t.nodeType ? this.S(t) : $a51c7802bfe1890e$var$u(t) ? this.M(t) : this.$(t);
+    }
+    A(t, i = this._$AB) {
+        return this._$AA.parentNode.insertBefore(t, i);
+    }
+    S(t) {
+        this._$AH !== t && (this._$AR(), this._$AH = this.A(t));
+    }
+    $(t) {
+        this._$AH !== $a51c7802bfe1890e$export$45b790e32b2810ee && $a51c7802bfe1890e$var$r(this._$AH) ? this._$AA.nextSibling.data = t : this.S($a51c7802bfe1890e$var$l.createTextNode(t)), this._$AH = t;
+    }
+    T(t) {
+        var i;
+        const { values: s , _$litType$: e  } = t, o = "number" == typeof e ? this._$AC(t) : (void 0 === e.el && (e.el = $a51c7802bfe1890e$var$P.createElement(e.h, this.options)), e);
+        if ((null === (i = this._$AH) || void 0 === i ? void 0 : i._$AD) === o) this._$AH.m(s);
+        else {
+            const t = new $a51c7802bfe1890e$var$E(o, this), i = t.p(this.options);
+            t.m(s), this.S(i), this._$AH = t;
+        }
+    }
+    _$AC(t) {
+        let i = $a51c7802bfe1890e$var$x.get(t.strings);
+        return void 0 === i && $a51c7802bfe1890e$var$x.set(t.strings, i = new $a51c7802bfe1890e$var$P(t)), i;
+    }
+    M(t) {
+        $a51c7802bfe1890e$var$d(this._$AH) || (this._$AH = [], this._$AR());
+        const i = this._$AH;
+        let s, e = 0;
+        for (const o of t)e === i.length ? i.push(s = new $a51c7802bfe1890e$var$N(this.A($a51c7802bfe1890e$var$h()), this.A($a51c7802bfe1890e$var$h()), this, this.options)) : s = i[e], s._$AI(o), e++;
+        e < i.length && (this._$AR(s && s._$AB.nextSibling, e), i.length = e);
+    }
+    _$AR(t = this._$AA.nextSibling, i) {
+        var s;
+        for(null === (s = this._$AP) || void 0 === s || s.call(this, !1, !0, i); t && t !== this._$AB;){
+            const i = t.nextSibling;
+            t.remove(), t = i;
+        }
+    }
+    setConnected(t) {
+        var i;
+        void 0 === this._$AM && (this._$Cg = t, null === (i = this._$AP) || void 0 === i || i.call(this, t));
+    }
+}
+class $a51c7802bfe1890e$var$S {
+    constructor(t, i, s, e, o){
+        this.type = 1, this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee, this._$AN = void 0, this.element = t, this.name = i, this._$AM = e, this.options = o, s.length > 2 || "" !== s[0] || "" !== s[1] ? (this._$AH = Array(s.length - 1).fill(new String), this.strings = s) : this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee;
+    }
+    get tagName() {
+        return this.element.tagName;
+    }
+    get _$AU() {
+        return this._$AM._$AU;
+    }
+    _$AI(t, i = this, s, e) {
+        const o = this.strings;
+        let n = !1;
+        if (void 0 === o) t = $a51c7802bfe1890e$var$V(this, t, i, 0), n = !$a51c7802bfe1890e$var$r(t) || t !== this._$AH && t !== $a51c7802bfe1890e$export$9c068ae9cc5db4e8, n && (this._$AH = t);
+        else {
+            const e = t;
+            let l, h;
+            for(t = o[0], l = 0; l < o.length - 1; l++)h = $a51c7802bfe1890e$var$V(this, e[s + l], i, l), h === $a51c7802bfe1890e$export$9c068ae9cc5db4e8 && (h = this._$AH[l]), n || (n = !$a51c7802bfe1890e$var$r(h) || h !== this._$AH[l]), h === $a51c7802bfe1890e$export$45b790e32b2810ee ? t = $a51c7802bfe1890e$export$45b790e32b2810ee : t !== $a51c7802bfe1890e$export$45b790e32b2810ee && (t += (null != h ? h : "") + o[l + 1]), this._$AH[l] = h;
+        }
+        n && !e && this.k(t);
+    }
+    k(t) {
+        t === $a51c7802bfe1890e$export$45b790e32b2810ee ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, null != t ? t : "");
+    }
+}
+class $a51c7802bfe1890e$var$M extends $a51c7802bfe1890e$var$S {
+    constructor(){
+        super(...arguments), this.type = 3;
+    }
+    k(t) {
+        this.element[this.name] = t === $a51c7802bfe1890e$export$45b790e32b2810ee ? void 0 : t;
+    }
+}
+class $a51c7802bfe1890e$var$k extends $a51c7802bfe1890e$var$S {
+    constructor(){
+        super(...arguments), this.type = 4;
+    }
+    k(t) {
+        t && t !== $a51c7802bfe1890e$export$45b790e32b2810ee ? this.element.setAttribute(this.name, "") : this.element.removeAttribute(this.name);
+    }
+}
+class $a51c7802bfe1890e$var$H extends $a51c7802bfe1890e$var$S {
+    constructor(t, i, s, e, o){
+        super(t, i, s, e, o), this.type = 5;
+    }
+    _$AI(t, i = this) {
+        var s;
+        if ((t = null !== (s = $a51c7802bfe1890e$var$V(this, t, i, 0)) && void 0 !== s ? s : $a51c7802bfe1890e$export$45b790e32b2810ee) === $a51c7802bfe1890e$export$9c068ae9cc5db4e8) return;
+        const e = this._$AH, o = t === $a51c7802bfe1890e$export$45b790e32b2810ee && e !== $a51c7802bfe1890e$export$45b790e32b2810ee || t.capture !== e.capture || t.once !== e.once || t.passive !== e.passive, n = t !== $a51c7802bfe1890e$export$45b790e32b2810ee && (e === $a51c7802bfe1890e$export$45b790e32b2810ee || o);
+        o && this.element.removeEventListener(this.name, this, e), n && this.element.addEventListener(this.name, this, t), this._$AH = t;
+    }
+    handleEvent(t) {
+        var i, s;
+        "function" == typeof this._$AH ? this._$AH.call(null !== (s = null === (i = this.options) || void 0 === i ? void 0 : i.host) && void 0 !== s ? s : this.element, t) : this._$AH.handleEvent(t);
+    }
+}
+class $a51c7802bfe1890e$var$I {
+    constructor(t, i, s){
+        this.element = t, this.type = 6, this._$AN = void 0, this._$AM = i, this.options = s;
+    }
+    get _$AU() {
+        return this._$AM._$AU;
+    }
+    _$AI(t) {
+        $a51c7802bfe1890e$var$V(this, t);
+    }
+}
+const $a51c7802bfe1890e$export$8613d1ca9052b22e = {
+    P: "$lit$",
+    V: $a51c7802bfe1890e$var$e,
+    L: $a51c7802bfe1890e$var$o,
+    I: 1,
+    N: $a51c7802bfe1890e$var$C,
+    R: $a51c7802bfe1890e$var$E,
+    D: $a51c7802bfe1890e$var$u,
+    j: $a51c7802bfe1890e$var$V,
+    H: $a51c7802bfe1890e$var$N,
+    O: $a51c7802bfe1890e$var$S,
+    F: $a51c7802bfe1890e$var$k,
+    B: $a51c7802bfe1890e$var$H,
+    W: $a51c7802bfe1890e$var$M,
+    Z: $a51c7802bfe1890e$var$I
+}, $a51c7802bfe1890e$var$R = window.litHtmlPolyfillSupport;
+null == $a51c7802bfe1890e$var$R || $a51c7802bfe1890e$var$R($a51c7802bfe1890e$var$P, $a51c7802bfe1890e$var$N), (null !== ($a51c7802bfe1890e$var$t = globalThis.litHtmlVersions) && void 0 !== $a51c7802bfe1890e$var$t ? $a51c7802bfe1890e$var$t : globalThis.litHtmlVersions = []).push("2.0.1");
+
+
 class $086d5838aee8ae00$export$a99aab2a736cea3e {
     constructor(){
         this.ok = document.getElementById("alert-ok");
@@ -119,7 +412,7 @@ class $7b79fc2448b3b35e$export$ca95ea95faa89f36 {
             },
             videos: []
         };
-        if (parseInt(this.assignments.value, 10) > 1) input.solvable.practice = parseInt(this.assignments.value, 10) - 1;
+        if (parseInt(this.assignments.value, 10) > 1) input.solvable.practice.total = parseInt(this.assignments.value, 10) - 1;
         Object.keys(input.solvable).forEach((key)=>{
             input.solvable[key].left = input.solvable[key].total;
         });
@@ -137,6 +430,76 @@ class $7b79fc2448b3b35e$export$ca95ea95faa89f36 {
         return input;
     }
 }
+
+
+
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */ const $d71bce45553af777$export$9ba3b3f20a85bfa = {
+    ATTRIBUTE: 1,
+    CHILD: 2,
+    PROPERTY: 3,
+    BOOLEAN_ATTRIBUTE: 4,
+    EVENT: 5,
+    ELEMENT: 6
+}, $d71bce45553af777$export$99b43ad1ed32e735 = (t)=>(...e)=>({
+            _$litDirective$: t,
+            values: e
+        })
+;
+class $d71bce45553af777$export$befdefbdce210f91 {
+    constructor(t){
+    }
+    get _$AU() {
+        return this._$AM._$AU;
+    }
+    _$AT(t, e, i) {
+        this._$Ct = t, this._$AM = e, this._$Ci = i;
+    }
+    _$AS(t, e) {
+        return this.update(t, e);
+    }
+    update(t, e) {
+        return this.render(...e);
+    }
+}
+
+
+/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */ const $6197f1f1b7c083f0$export$56cc687933817664 = $d71bce45553af777$export$99b43ad1ed32e735(class extends $d71bce45553af777$export$befdefbdce210f91 {
+    constructor(t){
+        var i;
+        if (super(t), t.type !== $d71bce45553af777$export$9ba3b3f20a85bfa.ATTRIBUTE || "class" !== t.name || (null === (i = t.strings) || void 0 === i ? void 0 : i.length) > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
+    }
+    render(t) {
+        return " " + Object.keys(t).filter((i)=>t[i]
+        ).join(" ") + " ";
+    }
+    update(i, [s]) {
+        var r, o;
+        if (void 0 === this.st) {
+            this.st = new Set, void 0 !== i.strings && (this.et = new Set(i.strings.join(" ").split(/\s/).filter((t)=>"" !== t
+            )));
+            for(const t in s)s[t] && !(null === (r = this.et) || void 0 === r ? void 0 : r.has(t)) && this.st.add(t);
+            return this.render(s);
+        }
+        const e = i.element.classList;
+        this.st.forEach((t)=>{
+            t in s || (e.remove(t), this.st.delete(t));
+        });
+        for(const t in s){
+            const i = !!s[t];
+            i === this.st.has(t) || (null === (o = this.et) || void 0 === o ? void 0 : o.has(t)) || (i ? (e.add(t), this.st.add(t)) : (e.remove(t), this.st.delete(t)));
+        }
+        return $a51c7802bfe1890e$export$9c068ae9cc5db4e8;
+    }
+});
 
 
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
@@ -202,39 +565,40 @@ var $300e172487e56da3$export$2e2bcd8739ae039 = $300e172487e56da3$var$v4;
 
 
 
-class $47e4cbed47ec5d75$export$fca4f8121099df57 {
-    name = "Sample Week 1";
-    factor = 1;
-    solvableTime = 20;
-    solvable = {
-        activities: {
-            total: 3,
-            left: 3
-        },
-        tutorials: {
-            total: 2,
-            left: 2
-        },
-        practice: {
-            total: 1,
-            left: 1
-        },
-        graded: {
-            total: 1,
-            left: 1
-        }
-    };
-    videos = [
-        {
-            m: 40,
-            s: 10,
-            seen: false
-        }
-    ];
+class $850e48264ea38c74$export$fca4f8121099df57 {
     constructor(input){
+        this.id = 'uuid';
+        this.name = "Sample Week 1";
+        this.factor = 1;
+        this.solvableTime = 20;
+        this.solvable = {
+            activities: {
+                total: 3,
+                left: 3
+            },
+            tutorials: {
+                total: 2,
+                left: 2
+            },
+            practice: {
+                total: 1,
+                left: 1
+            },
+            graded: {
+                total: 1,
+                left: 1
+            }
+        };
+        this.videos = [
+            {
+                m: 40,
+                s: 10,
+                seen: false
+            }
+        ];
         this.id = input.id ? input.id : $300e172487e56da3$export$2e2bcd8739ae039();
         this.name = input.name;
-        this.factor = parseFloat(input.factor, 10);
+        this.factor = parseFloat(input.factor);
         this.solvableTime = input.solvableTime;
         this.videos = [];
         this.videos = input.videos.map((video)=>{
@@ -294,72 +658,141 @@ class $47e4cbed47ec5d75$export$fca4f8121099df57 {
     }
     validateSelf() {
     }
-    getLeftMinutes() {
+    getElapsedMinutes() {
         let m = 0;
         let s = 0;
         this.videos.forEach((video)=>{
-            if (!video.seen) {
+            if (video.seen) {
                 m += video.m;
                 s += video.s;
             }
         });
         m += s / 60;
         let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
-            return prev + data.left;
+            return prev + (data.total - data.left);
         }, 0);
         m += this.solvableTime * solvableCount;
         m /= this.factor * 60;
         return m;
     }
     getPercentage(total, left) {
-        return 100 * ((total - left) / total);
+        return 100 * left / total;
     }
-    getHTML() {
-        let template = document.getElementById("week-details");
-        let videoTemplate = document.getElementById('video-details');
-        let weekDetails = template.content.firstElementChild.cloneNode(true);
-        console.log(weekDetails);
-        console.log(weekDetails.getElementsByClassName);
-        let title = weekDetails.getElementsByClassName('template-title')[0];
-        title.textContent = this.name;
-        let _projected = this.getTotalMinutes();
-        let _elasped = this.getLeftMinutes();
-        let _percentage = this.getPercentage(_projected, _elasped).toFixed(2);
-        let projected = weekDetails.getElementsByClassName('template-projected')[0];
-        projected.textContent = `${_projected.toFixed(1)}h`;
-        let elasped = weekDetails.getElementsByClassName('template-elapsed')[0];
-        elasped.textContent = `${_elasped.toFixed(1)}h`;
-        let percentage = weekDetails.getElementsByClassName('template-done')[0];
-        percentage.textContent = `${_percentage}%`;
-        let videoContainers = weekDetails.getElementsByClassName('template-video-container')[0];
-        this.videos.forEach((video, i)=>{
-            let videoDetails = videoTemplate.content.firstElementChild.cloneNode(true);
-            let videoTime = videoDetails.getElementsByClassName('template-video-time')[0];
-            videoTime.textContent = `${video.m}:${video.s}`;
-            videoTime.classList.add(i % 2 == 0 ? 'bg-lime-500' : 'bg-red-500');
-            let videoBtn = videoDetails.getElementsByClassName('template-video-btn')[0];
-            if (video.seen) {
-                videoBtn.textContent = '-';
-                videoBtn.classList.add('bg-red-500');
-            } else {
-                videoBtn.textContent = '+';
-                videoBtn.classList.add('bg-lime-500');
-            }
-            videoContainers.appendChild(videoDetails);
+    static templateFunc(week) {
+        let _projected = week.getTotalMinutes();
+        let _elasped = week.getElapsedMinutes();
+        let _percentage = week.getPercentage(_projected, _elasped);
+        let videos = [];
+        week.videos.forEach((video, i)=>{
+            const textClass = {
+                'bg-red-500': i % 2 == 0,
+                'bg-lime-500': i % 2 != 0
+            };
+            const btnClass = {
+                'bg-red-500': video.seen,
+                'bg-lime-500': !video.seen
+            };
+            videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
+      <div class="video-time px-0">
+        <p class="video-text ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m}:${video.s}</p> <!-- Add color -->
+        <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}">${video.seen ? '-' : '+'}</button> <!-- Add color -->
+      </div>
+    `);
         });
-        let solvable = this.solvable;
-        let activitiesText = weekDetails.getElementsByClassName('template-activities')[0];
-        activitiesText.textContent = `Activites : ${solvable.activities.total - solvable.activities.left} / ${solvable.activities.total}`;
-        // TODO : Arpit
-        // if (solvable.activities.left > 0) {
-        //   activitiesText.getElementsByClassName('btn-activities-plus')[0].classList.add('');
-        //   activitiesText.getElementsByClassName('btn-activities-minus')[0].classList.add('');
-        // }
-        let tutorialsText = weekDetails.getElementsByClassName('template-tutorials')[0];
-        tutorialsText.textContent = `Tutorials : ${solvable.tutorials.total - solvable.tutorials.left} / ${solvable.tutorials.total}`;
-        let gradedText = weekDetails.getElementsByClassName('template-graded')[0];
-        gradedText.textContent = `Graded : ${solvable.practice.total + solvable.graded.total - solvable.practice.left - solvable.graded.left} / ${solvable.practice.total + solvable.graded.total}`;
-        return weekDetails;
+        let _solvable = week.solvable;
+        let solvableData = [];
+        solvableData.push({
+            title: 'Actvities',
+            done: _solvable.activities.total - _solvable.activities.left,
+            total: _solvable.activities.total
+        });
+        solvableData.push({
+            title: 'Tutorials',
+            done: _solvable.tutorials.total - _solvable.tutorials.left,
+            total: _solvable.tutorials.total
+        });
+        solvableData.push({
+            title: 'Graded',
+            done: _solvable.practice.total + _solvable.graded.total - _solvable.practice.left - _solvable.graded.left,
+            total: _solvable.practice.total + _solvable.graded.total
+        });
+        let solvables = [];
+        solvableData.forEach((data)=>{
+            // TODO : Arpit
+            // if (solvable.activities.left > 0) {
+            //   activitiesText.getElementsByClassName('btn-activities-plus')[0].classList.add('');
+            //   activitiesText.getElementsByClassName('btn-activities-minus')[0].classList.add('');
+            // }
+            solvables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
+      <div class="video-time act-time">
+        <p class="act-text">${data.title} : ${data.done}/${data.total}</p>
+        <div class="flex justify-around border-t-2">
+          <button class="solvable-btn bg-lime-500">+</button>
+          <button class="solvable-btn bg-red-500">-</button>
+        </div>
+      </div>
+    `);
+        });
+        return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
+    <div class="container items-center bg-white my-5 better-shadow">
+      <div class="text-blueGray-700 rounded-lg">
+
+        <!-- Heading -->
+        <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-amber-400">
+          <div class="w-full border-b-2">
+            <h2 class="pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8">
+              ${week.name}
+            </h2>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between bg-sky-300">
+          <div class="pb-2 flex justify-between items-center border-b-2">
+            <p class="dispay-container">
+              <span class="dispay-label">Projected:</span>
+              <span class="dispay-data template-projected">${_projected.toFixed(1)}h</span>
+            </p>
+
+            <p class="dispay-container">
+              <span class="dispay-label">Elapsed:</span>
+              <span class="dispay-data template-elapsed">${_elasped.toFixed(1)}h</span>
+            </p>
+
+            <p class="dispay-container">
+              <span class="dispay-label">Done:</span>
+              <span class="dispay-data template-done">${_percentage.toFixed(2)}%</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Videos -->
+        <div class="pt-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+          <div class="w-full border-b-2">
+            <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+              Videos
+            </h2>
+            <div class="flex justify-evenly flex-wrap template-video-container">
+              ${videos}
+            </div>
+          </div>
+        </div>
+
+        <!-- Solvable -->
+        <div class="pt-5 pb-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+          <div class="w-full">
+            <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+              Solvable
+            </h2>
+
+            <div class="flex justify-around">
+              ${solvables}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
     }
     static Validate(input) {
         if (!input.id || !input.name) throw new Error(`${input.id} ${input.name}`);
@@ -383,8 +816,8 @@ class $47e4cbed47ec5d75$export$fca4f8121099df57 {
     }
     static Parse(input) {
         try {
-            $47e4cbed47ec5d75$export$fca4f8121099df57.Validate(input);
-            return new $47e4cbed47ec5d75$export$fca4f8121099df57(input);
+            $850e48264ea38c74$export$fca4f8121099df57.Validate(input);
+            return new $850e48264ea38c74$export$fca4f8121099df57(input);
         } catch (e) {
             return null;
         }
@@ -1390,16 +1823,19 @@ window.onload = async function() {
             let weeks = document.getElementById("weeks");
             let weekInput = f.submit();
             console.log(weekInput);
-            let w = new $47e4cbed47ec5d75$export$fca4f8121099df57(weekInput);
+            let w = new $850e48264ea38c74$export$fca4f8121099df57(weekInput);
             console.log(w);
-            weeks.prepend(w.getHTML());
+            let htmlcontainer = document.createElement('div');
+            htmlcontainer.id = w.id;
+            weeks.prepend(htmlcontainer);
+            $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$fca4f8121099df57.templateFunc(w), htmlcontainer);
             let sss = JSON.stringify(w);
             console.log(sss);
-            let w2 = new $47e4cbed47ec5d75$export$fca4f8121099df57(JSON.parse(sss));
+            let w2 = new $850e48264ea38c74$export$fca4f8121099df57(JSON.parse(sss));
             w2.name = "Arpit Jain 2";
             console.log(w2);
-            weeks.prepend(w2.getHTML());
-            console.log($47e4cbed47ec5d75$export$fca4f8121099df57.Validate(JSON.parse(sss)));
+            //weeks.prepend(w2.getHTML());
+            console.log($850e48264ea38c74$export$fca4f8121099df57.Validate(JSON.parse(sss)));
         }
     });
     try {

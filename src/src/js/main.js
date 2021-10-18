@@ -1,11 +1,8 @@
+import { render } from "lit-html";
 import { AlertHandler } from "./alerts"
 import { FormHandler } from './form'
-import { Week } from "./week";
+import { Week, templateFunc } from "./week";
 import { WeekManager } from './week_manager'
-
-function parseTimings(s) {
-  let videos = [];
-}
 
 window.onload = async function () {
   let formOpenBtn = document.getElementById("open-form");
@@ -45,7 +42,15 @@ window.onload = async function () {
       let w = new Week(weekInput);
       console.log(w);
 
-      weeks.prepend(w.getHTML());
+      let htmlcontainer  = document.createElement('div');
+      htmlcontainer.id = w.id;
+      weeks.prepend(htmlcontainer);
+
+      render(templateFunc(w), htmlcontainer);
+      setTimeout(() => {
+        w.markSolvableDone('activities');
+        render(templateFunc(w), htmlcontainer);
+      }, 5_000)
 
       let sss = JSON.stringify(w);
       console.log(sss);
@@ -54,7 +59,7 @@ window.onload = async function () {
       w2.name = "Arpit Jain 2";
       console.log(w2);
 
-      weeks.prepend(w2.getHTML());
+      //weeks.prepend(w2.getHTML());
 
       console.log(Week.Validate(JSON.parse(sss)));
     }
