@@ -596,6 +596,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
                 seen: false
             }
         ];
+        this.lastChangeTime = 123123;
         this.id = input.id ? input.id : $300e172487e56da3$export$2e2bcd8739ae039();
         this.name = input.name;
         this.factor = parseFloat(input.factor);
@@ -626,20 +627,28 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
                 left: parseInt(input.solvable.graded.left, 10)
             }
         };
+        this.lastChangeTime = Date.now();
+    }
+    updateLastChangeTime() {
+        this.lastChangeTime = Date.now();
     }
     markVideoSeen(i) {
         this.videos[i].seen = true;
+        this.updateLastChangeTime();
     }
     markVideoLeft(i) {
         this.videos[i].seen = false;
+        this.updateLastChangeTime();
     }
     markSolvableDone(type) {
         if (this.solvable[type].left <= 0) throw new Error("Already done");
         this.solvable[type].left -= 1;
+        this.updateLastChangeTime();
     }
     markSolvableNotDone(type) {
         if (this.solvable[type].left + 1 > this.solvable[type].total) throw new Error("Already done");
         this.solvable[type].left += 1;
+        this.updateLastChangeTime();
     }
     getTotalMinutes() {
         let m = 0;
@@ -678,122 +687,6 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
     getPercentage(total, left) {
         return 100 * left / total;
     }
-    static templateFunc(week) {
-        let _projected = week.getTotalMinutes();
-        let _elasped = week.getElapsedMinutes();
-        let _percentage = week.getPercentage(_projected, _elasped);
-        let videos = [];
-        week.videos.forEach((video, i)=>{
-            const textClass = {
-                'bg-red-500': i % 2 == 0,
-                'bg-lime-500': i % 2 != 0
-            };
-            const btnClass = {
-                'bg-red-500': video.seen,
-                'bg-lime-500': !video.seen
-            };
-            videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
-      <div class="video-time px-0">
-        <p class="video-text ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m}:${video.s}</p> <!-- Add color -->
-        <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}">${video.seen ? '-' : '+'}</button> <!-- Add color -->
-      </div>
-    `);
-        });
-        let _solvable = week.solvable;
-        let solvableData = [];
-        solvableData.push({
-            title: 'Actvities',
-            done: _solvable.activities.total - _solvable.activities.left,
-            total: _solvable.activities.total
-        });
-        solvableData.push({
-            title: 'Tutorials',
-            done: _solvable.tutorials.total - _solvable.tutorials.left,
-            total: _solvable.tutorials.total
-        });
-        solvableData.push({
-            title: 'Graded',
-            done: _solvable.practice.total + _solvable.graded.total - _solvable.practice.left - _solvable.graded.left,
-            total: _solvable.practice.total + _solvable.graded.total
-        });
-        let solvables = [];
-        solvableData.forEach((data)=>{
-            // TODO : Arpit
-            // if (solvable.activities.left > 0) {
-            //   activitiesText.getElementsByClassName('btn-activities-plus')[0].classList.add('');
-            //   activitiesText.getElementsByClassName('btn-activities-minus')[0].classList.add('');
-            // }
-            solvables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
-      <div class="video-time act-time">
-        <p class="act-text">${data.title} : ${data.done}/${data.total}</p>
-        <div class="flex justify-around border-t-2">
-          <button class="solvable-btn bg-lime-500">+</button>
-          <button class="solvable-btn bg-red-500">-</button>
-        </div>
-      </div>
-    `);
-        });
-        return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
-    <div class="container items-center bg-white my-5 better-shadow">
-      <div class="text-blueGray-700 rounded-lg">
-
-        <!-- Heading -->
-        <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-amber-400">
-          <div class="w-full border-b-2">
-            <h2 class="pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8">
-              ${week.name}
-            </h2>
-          </div>
-        </div>
-
-        <!-- Summary -->
-        <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between bg-sky-300">
-          <div class="pb-2 flex justify-between items-center border-b-2">
-            <p class="dispay-container">
-              <span class="dispay-label">Projected:</span>
-              <span class="dispay-data template-projected">${_projected.toFixed(1)}h</span>
-            </p>
-
-            <p class="dispay-container">
-              <span class="dispay-label">Elapsed:</span>
-              <span class="dispay-data template-elapsed">${_elasped.toFixed(1)}h</span>
-            </p>
-
-            <p class="dispay-container">
-              <span class="dispay-label">Done:</span>
-              <span class="dispay-data template-done">${_percentage.toFixed(2)}%</span>
-            </p>
-          </div>
-        </div>
-
-        <!-- Videos -->
-        <div class="pt-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
-          <div class="w-full border-b-2">
-            <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
-              Videos
-            </h2>
-            <div class="flex justify-evenly flex-wrap template-video-container">
-              ${videos}
-            </div>
-          </div>
-        </div>
-
-        <!-- Solvable -->
-        <div class="pt-5 pb-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
-          <div class="w-full">
-            <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
-              Solvable
-            </h2>
-
-            <div class="flex justify-around">
-              ${solvables}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    `;
-    }
     static Validate(input) {
         if (!input.id || !input.name) throw new Error(`${input.id} ${input.name}`);
         if (!Number.isFinite(input.factor) || !Number.isInteger(input.solvableTime)) throw new Error();
@@ -822,6 +715,122 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             return null;
         }
     }
+}
+function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
+    let _projected = week.getTotalMinutes();
+    let _elasped = week.getElapsedMinutes();
+    let _percentage = week.getPercentage(_projected, _elasped);
+    let videos = [];
+    week.videos.forEach((video, i)=>{
+        const textClass = {
+            'bg-red-500': i % 2 == 0,
+            'bg-lime-500': i % 2 != 0
+        };
+        const btnClass = {
+            'bg-red-500': video.seen,
+            'bg-lime-500': !video.seen
+        };
+        videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
+    <div class="video-time px-0">
+      <p class="video-text ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m}:${video.s}</p> <!-- Add color -->
+      <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}">${video.seen ? '-' : '+'}</button> <!-- Add color -->
+    </div>
+  `);
+    });
+    let _solvable = week.solvable;
+    let solvableData = [];
+    solvableData.push({
+        title: 'Actvities',
+        done: _solvable.activities.total - _solvable.activities.left,
+        total: _solvable.activities.total
+    });
+    solvableData.push({
+        title: 'Tutorials',
+        done: _solvable.tutorials.total - _solvable.tutorials.left,
+        total: _solvable.tutorials.total
+    });
+    solvableData.push({
+        title: 'Graded',
+        done: _solvable.practice.total + _solvable.graded.total - _solvable.practice.left - _solvable.graded.left,
+        total: _solvable.practice.total + _solvable.graded.total
+    });
+    let solvables = [];
+    solvableData.forEach((data)=>{
+        // TODO : Arpit
+        // if (solvable.activities.left > 0) {
+        //   activitiesText.getElementsByClassName('btn-activities-plus')[0].classList.add('');
+        //   activitiesText.getElementsByClassName('btn-activities-minus')[0].classList.add('');
+        // }
+        solvables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
+    <div class="video-time act-time">
+      <p class="act-text">${data.title} : ${data.done}/${data.total}</p>
+      <div class="flex justify-around border-t-2">
+        <button class="solvable-btn bg-lime-500">+</button>
+        <button class="solvable-btn bg-red-500">-</button>
+      </div>
+    </div>
+  `);
+    });
+    return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
+  <div class="container items-center bg-white my-5 better-shadow">
+    <div class="text-blueGray-700 rounded-lg">
+
+      <!-- Heading -->
+      <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-amber-400">
+        <div class="w-full border-b-2">
+          <h2 class="pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8">
+            ${week.name}
+          </h2>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between bg-sky-300">
+        <div class="pb-2 flex justify-between items-center border-b-2">
+          <p class="dispay-container">
+            <span class="dispay-label">Projected:</span>
+            <span class="dispay-data template-projected">${_projected.toFixed(1)}h</span>
+          </p>
+
+          <p class="dispay-container">
+            <span class="dispay-label">Elapsed:</span>
+            <span class="dispay-data template-elapsed">${_elasped.toFixed(1)}h</span>
+          </p>
+
+          <p class="dispay-container">
+            <span class="dispay-label">Done:</span>
+            <span class="dispay-data template-done">${_percentage.toFixed(2)}%</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Videos -->
+      <div class="pt-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+        <div class="w-full border-b-2">
+          <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+            Videos
+          </h2>
+          <div class="flex justify-evenly flex-wrap template-video-container">
+            ${videos}
+          </div>
+        </div>
+      </div>
+
+      <!-- Solvable -->
+      <div class="pt-5 pb-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+        <div class="w-full">
+          <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+            Solvable
+          </h2>
+
+          <div class="flex justify-around">
+            ${solvables}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
 }
 
 
@@ -1797,9 +1806,6 @@ class $2dbb63a87f5e4f55$export$f160779312cf57d5 {
 }
 
 
-function $c4458ddda29fa2c9$var$parseTimings(s) {
-    let videos = [];
-}
 window.onload = async function() {
     let formOpenBtn = document.getElementById("open-form");
     let formCloseBtn = document.getElementById("close-form");
@@ -1828,7 +1834,11 @@ window.onload = async function() {
             let htmlcontainer = document.createElement('div');
             htmlcontainer.id = w.id;
             weeks.prepend(htmlcontainer);
-            $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$fca4f8121099df57.templateFunc(w), htmlcontainer);
+            $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(w), htmlcontainer);
+            setTimeout(()=>{
+                w.markSolvableDone('activities');
+                $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(w), htmlcontainer);
+            }, 5000);
             let sss = JSON.stringify(w);
             console.log(sss);
             let w2 = new $850e48264ea38c74$export$fca4f8121099df57(JSON.parse(sss));
