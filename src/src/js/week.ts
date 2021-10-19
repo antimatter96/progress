@@ -46,8 +46,8 @@ export class Week {
         left: parseInt(input.solvable.tutorials.left, 10),
       },
       assignments: {
-        total: parseInt(input.solvable.graded.total, 10) +  parseInt(input.solvable.practice.total, 10),
-        left: parseInt(input.solvable.graded.left, 10) + parseInt(input.solvable.practice.left, 10),
+        total: parseInt(input.solvable.assignments.total, 10),
+        left: parseInt(input.solvable.assignments.left, 10),
       },
     };
 
@@ -160,22 +160,22 @@ export class Week {
   }
 
   addEventListeners() {
-    let titles = ['Activities', 'Tutorials','Assignments'];
+    let titles = ['Activities', 'Tutorials', 'Assignments'];
 
     titles.forEach((type) => {
-        let ttype = type.toLowerCase();
-        let upBtn = document.getElementById(`${this.id}-${type}-plus`);
+      let ttype = type.toLowerCase();
+      let upBtn = document.getElementById(`${this.id}-${type}-plus`);
 
-        if (this.solvable[ttype].total > this.solvable[ttype].done) {
-          upBtn.addEventListener('click', (e) => {
-            this.markSolvableDone(type);
-          });
-        }
-
-        let downBtn = document.getElementById(`${this.id}-${type}-minus`);
-        downBtn.addEventListener('click', (e) => {
-          this.markSolvableNotDone(type);
+      if (this.solvable[ttype].total > this.solvable[ttype].done) {
+        upBtn.addEventListener('click', (e) => {
+          this.markSolvableDone(type);
         });
+      }
+
+      let downBtn = document.getElementById(`${this.id}-${type}-minus`);
+      downBtn.addEventListener('click', (e) => {
+        this.markSolvableNotDone(type);
+      });
     });
 
   }
@@ -277,13 +277,13 @@ export function templateFunc(week: Week) {
   let solvables = [];
 
   solvableData.forEach((data) => {
-    const btnUp = (data.total > data.done) ? 
-      { 'bg-white-500': true, 'text-lime-700': true, 'border-lime-500' : true } : 
-      { 'bg-trueGray-200': true, 'text-gray-500': true, 'cursor-not-allowed' : true, 'border-black-500': true };
+    const btnUp = (data.total > data.done) ?
+      { 'bg-white-500': true, 'text-lime-700': true, 'border-lime-500': true } :
+      { 'bg-trueGray-200': true, 'text-gray-500': true, 'cursor-not-allowed': true, 'border-black-500': true };
 
-    const btnDown = (data.done > 0) ? 
-      { 'bg-white-500': true, 'text-red-700': true, 'border-red-500' : true } : 
-      { 'bg-trueGray-200': true, 'text-gray-500': true, 'cursor-not-allowed' : true, 'border-black-500': true };
+    const btnDown = (data.done > 0) ?
+      { 'bg-white-500': true, 'text-red-700': true, 'border-red-500': true } :
+      { 'bg-trueGray-200': true, 'text-gray-500': true, 'cursor-not-allowed': true, 'border-black-500': true };
 
     solvables.push(html`
     <div class="video-time act-time">

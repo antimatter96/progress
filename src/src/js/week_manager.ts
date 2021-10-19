@@ -11,8 +11,8 @@ export class WeekManager {
 
   weeksContainer: HTMLElement;
 
-  htmlWeeks : Array<HTMLElement>
-  weeks : Array<Week>;
+  htmlWeeks: Array<HTMLElement>
+  weeks: Array<Week>;
 
   constructor() {
     this.weeksContainer = document.getElementById("weeks");
@@ -23,7 +23,7 @@ export class WeekManager {
   createNewWeek(input): Week {
     let week = new Week(input);
 
-    let htmlcontainer  = document.createElement('div');
+    let htmlcontainer = document.createElement('div');
     htmlcontainer.id = week.id;
 
     this.htmlWeeks.unshift(htmlcontainer);
