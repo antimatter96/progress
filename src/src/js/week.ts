@@ -62,17 +62,22 @@ export class Week {
     this.lastChangeTime = Date.now();
   }
 
-  markVideoSeen(i) {
+  markVideoSeen(i): void{
+    if (this.videos[i].seen) {
+      throw new Error("Already done");
+    }
     this.videos[i].seen = true;
     this.updateLastChangeTime();
   }
-  markVideoLeft(i) {
+  markVideoLeft(i):void {
+    if (!this.videos[i].seen) {
+      throw new Error("Already done");
+    }
     this.videos[i].seen = false;
     this.updateLastChangeTime();
-
   }
 
-  markSolvableDone(type) {
+  markSolvableDone(type): void {
     if (this.solvable[type].left <= 0) {
       throw new Error("Already done");
     }
@@ -81,14 +86,15 @@ export class Week {
 
   }
 
-  markSolvableNotDone(type) {
+  markSolvableNotDone(type): void {
     if (this.solvable[type].left + 1 > this.solvable[type].total) {
       throw new Error("Already done");
     }
     this.solvable[type].left += 1;
     this.updateLastChangeTime();
-
   }
+
+  validateSelf() { }
 
   getTotalMinutes(): number {
     let m = 0;
@@ -112,8 +118,6 @@ export class Week {
 
     return m;
   }
-
-  validateSelf() { }
 
   getElapsedMinutes(): number {
     let m = 0;
@@ -144,7 +148,7 @@ export class Week {
     return (100 * (left) / total);
   }
 
-  static Validate(input) {
+  static Validate(input): void {
     if (!input.id || !input.name) {
       throw new Error(`${input.id} ${input.name}`);
     }
@@ -181,7 +185,7 @@ export class Week {
     });
   }
 
-  static Parse(input) {
+  static Parse(input): Week {
     try {
       Week.Validate(input);
       return new Week(input);
@@ -199,14 +203,14 @@ export function templateFunc(week: Week) {
 
   let videos = [];
   week.videos.forEach((video, i) => {
-    const textClass = { 
-      'bg-red-500': i%2 == 0,
-      'bg-lime-500' : i%2 != 0
+    const textClass = {
+      'bg-red-500': i % 2 == 0,
+      'bg-lime-500': i % 2 != 0
     };
 
-    const btnClass = { 
+    const btnClass = {
       'bg-red-500': video.seen,
-      'bg-lime-500' : !video.seen
+      'bg-lime-500': !video.seen
     };
 
     videos.push(html`
@@ -242,11 +246,11 @@ export function templateFunc(week: Week) {
 
   solvableData.forEach((data) => {
 
-  // TODO : Arpit
-  // if (solvable.activities.left > 0) {
-  //   activitiesText.getElementsByClassName('btn-activities-plus')[0].classList.add('');
-  //   activitiesText.getElementsByClassName('btn-activities-minus')[0].classList.add('');
-  // }
+    // TODO : Arpit
+    // if (solvable.activities.left > 0) {
+    //   activitiesText.getElementsByClassName('btn-activities-plus')[0].classList.add('');
+    //   activitiesText.getElementsByClassName('btn-activities-minus')[0].classList.add('');
+    // }
 
     solvables.push(html`
     <div class="video-time act-time">
