@@ -1,4 +1,12 @@
 class AlertHandler {
+
+  error : HTMLElement;
+  ok : HTMLElement;
+  info : HTMLElement;
+  warning : HTMLElement;
+
+  all : Array<HTMLElement>
+
   constructor() {
     this.ok = document.getElementById("alert-ok");
     this.info = document.getElementById("alert-info");
@@ -10,13 +18,13 @@ class AlertHandler {
     this.all = [this.ok, this.info, this.warning, this.error];
   }
 
-  hideAll() {
+  hideAll() :void {
     this.all.forEach((ele) => {
       ele.style.display = "none";
     });
   }
 
-  show(type, message, timeout) {
+  show(type: string, message: string, timeout: number) :void {
     let target = this[type];
     console.log(target);
 

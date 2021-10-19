@@ -1,17 +1,29 @@
 const minuteSeconds = /^\d+:[0-5]\d$/;
 
 class FormHandler {
+
+  titleInput: HTMLInputElement;
+
+  activities: HTMLInputElement;
+  tutorials: HTMLInputElement;
+  assignments: HTMLInputElement;
+
+  factor: HTMLInputElement;
+  assignmentTime: HTMLInputElement;
+
+  videos: HTMLInputElement;
+
   constructor() {
-    this.titleInput = document.getElementById("input-title");
+    this.titleInput = document.getElementById("input-title") as HTMLInputElement;
 
-    this.activities = document.getElementById("input-activities");
-    this.tutorials = document.getElementById("input-tutorials");
-    this.assignments = document.getElementById("input-assignments");
+    this.activities = document.getElementById("input-activities") as HTMLInputElement;
+    this.tutorials = document.getElementById("input-tutorials") as HTMLInputElement;
+    this.assignments = document.getElementById("input-assignments") as HTMLInputElement;
 
-    this.factor = document.getElementById("input-factor");
-    this.assignmentTime = document.getElementById("input-assignment-time");
+    this.factor = document.getElementById("input-factor") as HTMLInputElement;
+    this.assignmentTime = document.getElementById("input-assignment-time") as HTMLInputElement;
 
-    this.videos = document.getElementById("input-videos");
+    this.videos = document.getElementById("input-videos") as HTMLInputElement;
 
     console.log(this.titleInput);
 
@@ -37,7 +49,6 @@ class FormHandler {
     console.log("videos", this.videos.value);
     console.log("assignmentTime", this.assignmentTime.value);
 
-
     [this.titleInput].forEach((ele) => {
       let title = ele.value;
 
@@ -55,7 +66,7 @@ class FormHandler {
     });
 
     [this.factor].forEach((ele) => {
-      let val = parseFloat(ele.value, 10);
+      let val = parseFloat(ele.value);
       if (Number.isFinite(val) && val >= 0.0) {
       } else {
         errors.push(`- '${ele.dataset.name}' should be a non-negative number`);
@@ -65,7 +76,7 @@ class FormHandler {
     let value = this.videos.value;
     let arr = value.trim().split(/\s/ig);
 
-    for(let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       if (arr[i].length > 0 && !arr[i].match(minuteSeconds)) {
         errors.push(`- '${arr[i]}' is not a valid video time`)
       }
@@ -91,7 +102,7 @@ class FormHandler {
   submit() {
     let input = {
       name: this.titleInput.value.trim(),
-      factor: parseFloat(this.factor.value, 10),
+      factor: parseFloat(this.factor.value),
       solvableTime: parseInt(this.assignmentTime.value, 10),
 
       solvable: {
@@ -101,7 +112,7 @@ class FormHandler {
         graded: { total: parseInt(this.assignments.value, 10), left: 1 },
       },
 
-      videos : [],
+      videos: [],
     }
 
     if (parseInt(this.assignments.value, 10) > 1) {
@@ -115,7 +126,7 @@ class FormHandler {
     let value = this.videos.value;
     let arr = value.trim().split(/\s/ig);
 
-    for(let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       if (arr[i].length === 0) {
         continue;
       }

@@ -291,7 +291,7 @@ const $a51c7802bfe1890e$export$8613d1ca9052b22e = {
 null == $a51c7802bfe1890e$var$R || $a51c7802bfe1890e$var$R($a51c7802bfe1890e$var$P, $a51c7802bfe1890e$var$N), (null !== ($a51c7802bfe1890e$var$t = globalThis.litHtmlVersions) && void 0 !== $a51c7802bfe1890e$var$t ? $a51c7802bfe1890e$var$t : globalThis.litHtmlVersions = []).push("2.0.1");
 
 
-class $086d5838aee8ae00$export$a99aab2a736cea3e {
+class $3c13b93cfbb34482$export$a99aab2a736cea3e {
     constructor(){
         this.ok = document.getElementById("alert-ok");
         this.info = document.getElementById("alert-info");
@@ -322,8 +322,8 @@ class $086d5838aee8ae00$export$a99aab2a736cea3e {
 }
 
 
-const $7b79fc2448b3b35e$var$minuteSeconds = /^\d+:[0-5]\d$/;
-class $7b79fc2448b3b35e$export$ca95ea95faa89f36 {
+const $9fdc79397460abda$var$minuteSeconds = /^\d+:[0-5]\d$/;
+class $9fdc79397460abda$export$ca95ea95faa89f36 {
     constructor(){
         this.titleInput = document.getElementById("input-title");
         this.activities = document.getElementById("input-activities");
@@ -365,13 +365,13 @@ class $7b79fc2448b3b35e$export$ca95ea95faa89f36 {
         [
             this.factor
         ].forEach((ele)=>{
-            let val = parseFloat(ele.value, 10);
+            let val = parseFloat(ele.value);
             if (Number.isFinite(val) && val >= 0) ;
             else errors.push(`- '${ele.dataset.name}' should be a non-negative number`);
         });
         let value = this.videos.value;
         let arr = value.trim().split(/\s/ig);
-        for(let i = 0; i < arr.length; i++)if (arr[i].length > 0 && !arr[i].match($7b79fc2448b3b35e$var$minuteSeconds)) errors.push(`- '${arr[i]}' is not a valid video time`);
+        for(let i = 0; i < arr.length; i++)if (arr[i].length > 0 && !arr[i].match($9fdc79397460abda$var$minuteSeconds)) errors.push(`- '${arr[i]}' is not a valid video time`);
         return errors;
     }
     /**
@@ -390,7 +390,7 @@ class $7b79fc2448b3b35e$export$ca95ea95faa89f36 {
    */ submit() {
         let input = {
             name: this.titleInput.value.trim(),
-            factor: parseFloat(this.factor.value, 10),
+            factor: parseFloat(this.factor.value),
             solvableTime: parseInt(this.assignmentTime.value, 10),
             solvable: {
                 activities: {
@@ -633,10 +633,12 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         this.lastChangeTime = Date.now();
     }
     markVideoSeen(i) {
+        if (this.videos[i].seen) throw new Error("Already done");
         this.videos[i].seen = true;
         this.updateLastChangeTime();
     }
     markVideoLeft(i) {
+        if (!this.videos[i].seen) throw new Error("Already done");
         this.videos[i].seen = false;
         this.updateLastChangeTime();
     }
@@ -649,6 +651,8 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         if (this.solvable[type].left + 1 > this.solvable[type].total) throw new Error("Already done");
         this.solvable[type].left += 1;
         this.updateLastChangeTime();
+    }
+    validateSelf() {
     }
     getTotalMinutes() {
         let m = 0;
@@ -664,8 +668,6 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         m += this.solvableTime * solvableCount;
         m /= this.factor * 60;
         return m;
-    }
-    validateSelf() {
     }
     getElapsedMinutes() {
         let m = 0;
@@ -834,935 +836,807 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
 }
 
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */ var $51cbcdbd1737bc6e$var$t = function(n, e) {
-    return ($51cbcdbd1737bc6e$var$t = Object.setPrototypeOf || ({
-        __proto__: []
-    }) instanceof Array && function(t, n) {
-        t.__proto__ = n;
-    } || function(t, n) {
-        for(var e in n)Object.prototype.hasOwnProperty.call(n, e) && (t[e] = n[e]);
-    })(n, e);
-};
-function $51cbcdbd1737bc6e$export$4368d992c4eafac0(n, e) {
-    if ("function" != typeof e && null !== e) throw new TypeError("Class extends value " + String(e) + " is not a constructor or null");
-    function r() {
-        this.constructor = n;
-    }
-    $51cbcdbd1737bc6e$var$t(n, e), n.prototype = null === e ? Object.create(e) : (r.prototype = e.prototype, new r);
+/** @ignore */ function $58a29a379dbc9264$var$uid() {
+    const length = new Int8Array(1);
+    window.crypto.getRandomValues(length);
+    const array = new Uint8Array(Math.max(16, Math.abs(length[0])));
+    window.crypto.getRandomValues(array);
+    return array.join('');
 }
-var $51cbcdbd1737bc6e$export$8b22cf2602fb60ce = function() {
-    return ($51cbcdbd1737bc6e$export$8b22cf2602fb60ce = Object.assign || function(t) {
-        for(var n, e = 1, r = arguments.length; e < r; e++)for(var o in n = arguments[e])Object.prototype.hasOwnProperty.call(n, o) && (t[o] = n[o]);
-        return t;
-    }).apply(this, arguments);
-};
-function $51cbcdbd1737bc6e$export$71511d61b312f219(t, n, e, r) {
-    return new (e || (e = Promise))(function(o, a) {
-        function i(t) {
-            try {
-                u(r.next(t));
-            } catch (t1) {
-                a(t1);
-            }
-        }
-        function c(t) {
-            try {
-                u(r.throw(t));
-            } catch (t1) {
-                a(t1);
-            }
-        }
-        function u(t) {
-            var n;
-            t.done ? o(t.value) : (n = t.value, n instanceof e ? n : new e(function(t) {
-                t(n);
-            })).then(i, c);
-        }
-        u((r = r.apply(t, n || [])).next());
-    });
-}
-function $51cbcdbd1737bc6e$export$407448d2b89b1813(t, n) {
-    var e, r, o, a, i = {
-        label: 0,
-        sent: function() {
-            if (1 & o[0]) throw o[1];
-            return o[1];
+/**
+ * Transforms a callback function to a string identifier that can be passed to the backend.
+ * The backend uses the identifier to `eval()` the callback.
+ *
+ * @return A unique identifier associated with the callback function.
+ */ function $58a29a379dbc9264$export$4bb129cdd1bfa196(callback, once = false) {
+    const identifier = $58a29a379dbc9264$var$uid();
+    Object.defineProperty(window, identifier, {
+        value: (result)=>{
+            if (once) Reflect.deleteProperty(window, identifier);
+            return callback?.(result);
         },
-        trys: [],
-        ops: []
-    };
-    function c(a) {
-        return function(c) {
-            return (function(a) {
-                if (e) throw new TypeError("Generator is already executing.");
-                for(; i;)try {
-                    if (e = 1, r && (o = 2 & a[0] ? r.return : a[0] ? r.throw || ((o = r.return) && o.call(r), 0) : r.next) && !(o = o.call(r, a[1])).done) return o;
-                    switch(r = 0, o && (a = [
-                        2 & a[0],
-                        o.value
-                    ]), a[0]){
-                        case 0:
-                        case 1:
-                            o = a;
-                            break;
-                        case 4:
-                            return i.label++, {
-                                value: a[1],
-                                done: !1
-                            };
-                        case 5:
-                            i.label++, r = a[1], a = [
-                                0
-                            ];
-                            continue;
-                        case 7:
-                            a = i.ops.pop(), i.trys.pop();
-                            continue;
-                        default:
-                            if (!(o = i.trys, (o = o.length > 0 && o[o.length - 1]) || 6 !== a[0] && 2 !== a[0])) {
-                                i = 0;
-                                continue;
-                            }
-                            if (3 === a[0] && (!o || a[1] > o[0] && a[1] < o[3])) {
-                                i.label = a[1];
-                                break;
-                            }
-                            if (6 === a[0] && i.label < o[1]) {
-                                i.label = o[1], o = a;
-                                break;
-                            }
-                            if (o && i.label < o[2]) {
-                                i.label = o[2], i.ops.push(a);
-                                break;
-                            }
-                            o[2] && i.ops.pop(), i.trys.pop();
-                            continue;
-                    }
-                    a = n.call(t, i);
-                } catch (t1) {
-                    a = [
-                        6,
-                        t1
-                    ], r = 0;
-                } finally{
-                    e = o = 0;
-                }
-                if (5 & a[0]) throw a[1];
-                return {
-                    value: a[0] ? a[1] : void 0,
-                    done: !0
-                };
-            })([
-                a,
-                c
-            ]);
-        };
-    }
-    return a = {
-        next: c(0),
-        throw: c(1),
-        return: c(2)
-    }, "function" == typeof Symbol && (a[Symbol.iterator] = function() {
-        return this;
-    }), a;
+        writable: false,
+        configurable: true
+    });
+    return identifier;
 }
-function $51cbcdbd1737bc6e$export$625550452a3fa3ec(t, n) {
-    void 0 === n && (n = !1);
-    var e = function() {
-        var t = new Int8Array(1);
-        window.crypto.getRandomValues(t);
-        var n = new Uint8Array(Math.max(16, Math.abs(t[0])));
-        return window.crypto.getRandomValues(n), n.join("");
-    }();
-    return Object.defineProperty(window, e, {
-        value: function(r) {
-            return n && Reflect.deleteProperty(window, e), null == t ? void 0 : t(r);
-        },
-        writable: !1,
-        configurable: !0
-    }), e;
-}
-function $51cbcdbd1737bc6e$export$23f2a1d2818174ef(t, n) {
-    return void 0 === n && (n = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(r) {
-            return [
-                2,
-                new Promise(function(r, o) {
-                    var i = $51cbcdbd1737bc6e$export$625550452a3fa3ec(function(t) {
-                        r(t), Reflect.deleteProperty(window, c);
-                    }, !0), c = $51cbcdbd1737bc6e$export$625550452a3fa3ec(function(t) {
-                        o(t), Reflect.deleteProperty(window, i);
-                    }, !0);
-                    window.rpc.notify(t, $51cbcdbd1737bc6e$export$8b22cf2602fb60ce({
-                        __invokeKey: __TAURI_INVOKE_KEY__,
-                        callback: i,
-                        error: c
-                    }, n));
-                })
-            ];
+/**
+ * Sends a message to the backend.
+ *
+ * @param cmd The command name.
+ * @param args The optional arguments to pass to the command.
+ * @return A promise resolving or rejecting to the backend response.
+ */ async function $58a29a379dbc9264$export$468cda29b159ee5d(cmd, args = {
+}) {
+    return new Promise((resolve, reject)=>{
+        const callback = $58a29a379dbc9264$export$4bb129cdd1bfa196((e)=>{
+            resolve(e);
+            Reflect.deleteProperty(window, error);
+        }, true);
+        const error = $58a29a379dbc9264$export$4bb129cdd1bfa196((e)=>{
+            reject(e);
+            Reflect.deleteProperty(window, callback);
+        }, true);
+        window.rpc.notify(cmd, {
+            __invokeKey: __TAURI_INVOKE_KEY__,
+            callback: callback,
+            error: error,
+            ...args
         });
     });
 }
-function $51cbcdbd1737bc6e$export$f1e1789686576879(t) {
-    return navigator.userAgent.includes("Windows") ? "https://asset.localhost/" + t : "asset://" + t;
-}
-var $51cbcdbd1737bc6e$export$db3b6bfb95261072 = Object.freeze({
-    __proto__: null,
-    transformCallback: $51cbcdbd1737bc6e$export$625550452a3fa3ec,
-    invoke: $51cbcdbd1737bc6e$export$23f2a1d2818174ef,
-    convertFileSrc: $51cbcdbd1737bc6e$export$f1e1789686576879
-});
-
-
-
-function $758353a1ec5abd94$export$23f2a1d2818174ef(n) {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(i) {
-            return [
-                2,
-                $51cbcdbd1737bc6e$export$23f2a1d2818174ef("tauri", n)
-            ];
-        });
-    });
+/**
+ * Convert a device file path to an URL that can be loaded by the webview.
+ * Note that `asset:` must be allowed on the `csp` value configured on `tauri.conf.json`.
+ *
+ * @param  filePath the file path. On Windows, the drive name must be omitted, i.e. using `/Users/user/file.png` instead of `C:/Users/user/file.png`.
+ *
+ * @return the URL that can be used as source on the webview
+ */ function $58a29a379dbc9264$export$ff8d5d24eb9a44cb(filePath) {
+    return navigator.userAgent.includes('Windows') ? `https://asset.localhost/${filePath}` : `asset://${filePath}`;
 }
 
 
+async function $ba486902928da365$export$cb94bbae4adf94e4(command) {
+    return $58a29a379dbc9264$export$468cda29b159ee5d('tauri', command);
+}
 
 
-var $b2e3b9fd017c80e7$export$ef35774e6d314e91;
-function $b2e3b9fd017c80e7$export$43caf9889c228507(r, o) {
-    return void 0 === o && (o = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Fs",
-                    message: {
-                        cmd: "readTextFile",
-                        path: r,
-                        options: o
-                    }
-                })
-            ];
-        });
-    });
-}
-function $b2e3b9fd017c80e7$export$407448d2b89b1813(r, o) {
-    return void 0 === o && (o = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Fs",
-                    message: {
-                        cmd: "readBinaryFile",
-                        path: r,
-                        options: o
-                    }
-                })
-            ];
-        });
-    });
-}
-function $b2e3b9fd017c80e7$export$efccba1c4a2ef57b(r, o) {
-    return void 0 === o && (o = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return "object" == typeof o && Object.freeze(o), "object" == typeof r && Object.freeze(r), [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Fs",
-                    message: {
-                        cmd: "writeFile",
-                        path: r.path,
-                        contents: r.contents,
-                        options: o
-                    }
-                })
-            ];
-        });
-    });
-}
-!function(t) {
-    t[t.Audio = 1] = "Audio", t[t.Cache = 2] = "Cache", t[t.Config = 3] = "Config", t[t.Data = 4] = "Data", t[t.LocalData = 5] = "LocalData", t[t.Desktop = 6] = "Desktop", t[t.Document = 7] = "Document", t[t.Download = 8] = "Download", t[t.Executable = 9] = "Executable", t[t.Font = 10] = "Font", t[t.Home = 11] = "Home", t[t.Picture = 12] = "Picture", t[t.Public = 13] = "Public", t[t.Runtime = 14] = "Runtime", t[t.Template = 15] = "Template", t[t.Video = 16] = "Video", t[t.Resource = 17] = "Resource", t[t.App = 18] = "App", t[t.Current = 19] = "Current";
-}($b2e3b9fd017c80e7$export$ef35774e6d314e91 || ($b2e3b9fd017c80e7$export$ef35774e6d314e91 = {
+var $61d50d698abff50d$export$935a0db531ce0305;
+(function(BaseDirectory) {
+    BaseDirectory[BaseDirectory["Audio"] = 1] = "Audio";
+    BaseDirectory[BaseDirectory["Cache"] = 2] = "Cache";
+    BaseDirectory[BaseDirectory["Config"] = 3] = "Config";
+    BaseDirectory[BaseDirectory["Data"] = 4] = "Data";
+    BaseDirectory[BaseDirectory["LocalData"] = 5] = "LocalData";
+    BaseDirectory[BaseDirectory["Desktop"] = 6] = "Desktop";
+    BaseDirectory[BaseDirectory["Document"] = 7] = "Document";
+    BaseDirectory[BaseDirectory["Download"] = 8] = "Download";
+    BaseDirectory[BaseDirectory["Executable"] = 9] = "Executable";
+    BaseDirectory[BaseDirectory["Font"] = 10] = "Font";
+    BaseDirectory[BaseDirectory["Home"] = 11] = "Home";
+    BaseDirectory[BaseDirectory["Picture"] = 12] = "Picture";
+    BaseDirectory[BaseDirectory["Public"] = 13] = "Public";
+    BaseDirectory[BaseDirectory["Runtime"] = 14] = "Runtime";
+    BaseDirectory[BaseDirectory["Template"] = 15] = "Template";
+    BaseDirectory[BaseDirectory["Video"] = 16] = "Video";
+    BaseDirectory[BaseDirectory["Resource"] = 17] = "Resource";
+    BaseDirectory[BaseDirectory["App"] = 18] = "App";
+    BaseDirectory[BaseDirectory["Current"] = 19] = "Current";
+})($61d50d698abff50d$export$935a0db531ce0305 || ($61d50d698abff50d$export$935a0db531ce0305 = {
 }));
-function $b2e3b9fd017c80e7$var$a(t) {
-    var e = function(t) {
-        if (t.length < 65536) return String.fromCharCode.apply(null, Array.from(t));
-        for(var e = "", i = t.length, r = 0; r < i; r++){
-            var o = t.subarray(65536 * r, 65536 * (r + 1));
-            e += String.fromCharCode.apply(null, Array.from(o));
+/**
+ * Reads a file as UTF-8 encoded string.
+ *
+ * @param filePath Path to the file.
+ * @param options Configuration object.
+ * @returns A promise resolving to the file content as a UTF-8 encoded string.
+ */ async function $61d50d698abff50d$export$177308921a610223(filePath, options = {
+}) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Fs',
+        message: {
+            cmd: 'readTextFile',
+            path: filePath,
+            options: options
         }
-        return e;
-    }(new Uint8Array(t));
-    return btoa(e);
-}
-function $b2e3b9fd017c80e7$export$8b22cf2602fb60ce(r, o) {
-    return void 0 === o && (o = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return "object" == typeof o && Object.freeze(o), "object" == typeof r && Object.freeze(r), [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Fs",
-                    message: {
-                        cmd: "writeBinaryFile",
-                        path: r.path,
-                        contents: $b2e3b9fd017c80e7$var$a(r.contents),
-                        options: o
-                    }
-                })
-            ];
-        });
     });
 }
-function $b2e3b9fd017c80e7$export$db3b6bfb95261072(r, o) {
-    return void 0 === o && (o = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Fs",
-                    message: {
-                        cmd: "readDir",
-                        path: r,
-                        options: o
-                    }
-                })
-            ];
-        });
+/**
+ * Reads a file as byte array.
+ *
+ * @param filePath Path to the file.
+ * @param options Configuration object.
+ * @returns A promise resolving to the file bytes array.
+ */ async function $61d50d698abff50d$export$8cd2d0b72833f623(filePath, options = {
+}) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Fs',
+        message: {
+            cmd: 'readBinaryFile',
+            path: filePath,
+            options: options
+        }
     });
 }
-function $b2e3b9fd017c80e7$export$4368d992c4eafac0(r, o) {
-    return void 0 === o && (o = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Fs",
-                    message: {
-                        cmd: "createDir",
-                        path: r,
-                        options: o
-                    }
-                })
-            ];
-        });
+/**
+ * Writes a text file.
+ *
+ * @param file File configuration object.
+ * @param options Configuration object.
+ * @returns A promise indicating the success or failure of the operation.
+ */ async function $61d50d698abff50d$export$552bfb764b5cd2b4(file, options = {
+}) {
+    if (typeof options === 'object') Object.freeze(options);
+    if (typeof file === 'object') Object.freeze(file);
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Fs',
+        message: {
+            cmd: 'writeFile',
+            path: file.path,
+            contents: file.contents,
+            options: options
+        }
     });
 }
-function $b2e3b9fd017c80e7$export$f1e1789686576879(r, o) {
-    return void 0 === o && (o = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Fs",
-                    message: {
-                        cmd: "removeDir",
-                        path: r,
-                        options: o
-                    }
-                })
-            ];
-        });
+/** @ignore */ const $61d50d698abff50d$var$CHUNK_SIZE = 65536;
+/**
+ * Convert an Uint8Array to ascii string.
+ *
+ * @ignore
+ * @param arr
+ * @returns An ASCII string.
+ */ function $61d50d698abff50d$var$uint8ArrayToString(arr) {
+    if (arr.length < $61d50d698abff50d$var$CHUNK_SIZE) return String.fromCharCode.apply(null, Array.from(arr));
+    let result = '';
+    const arrLen = arr.length;
+    for(let i = 0; i < arrLen; i++){
+        const chunk = arr.subarray(i * $61d50d698abff50d$var$CHUNK_SIZE, (i + 1) * $61d50d698abff50d$var$CHUNK_SIZE);
+        result += String.fromCharCode.apply(null, Array.from(chunk));
+    }
+    return result;
+}
+/**
+ * Convert an ArrayBuffer to base64 encoded string.
+ *
+ * @ignore
+ * @param buffer
+ * @returns A base64 encoded string.
+ */ function $61d50d698abff50d$var$arrayBufferToBase64(buffer) {
+    const str = $61d50d698abff50d$var$uint8ArrayToString(new Uint8Array(buffer));
+    return btoa(str);
+}
+/**
+ * Writes a binary file.
+ *
+ * @param file Write configuration object.
+ * @param options Configuration object.
+ * @returns A promise indicating the success or failure of the operation.
+ */ async function $61d50d698abff50d$export$be8585a11be8d850(file, options = {
+}) {
+    if (typeof options === 'object') Object.freeze(options);
+    if (typeof file === 'object') Object.freeze(file);
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Fs',
+        message: {
+            cmd: 'writeBinaryFile',
+            path: file.path,
+            contents: $61d50d698abff50d$var$arrayBufferToBase64(file.contents),
+            options: options
+        }
     });
 }
-function $b2e3b9fd017c80e7$export$39b482c5e57630a8(r, o, n) {
-    return void 0 === n && (n = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Fs",
-                    message: {
-                        cmd: "copyFile",
-                        source: r,
-                        destination: o,
-                        options: n
-                    }
-                })
-            ];
-        });
+/**
+ * List directory files.
+ *
+ * @param dir Path to the directory to read.
+ * @param options Configuration object.
+ * @returns A promise resolving to the directory entries.
+ */ async function $61d50d698abff50d$export$2cab79cede1f94ef(dir, options = {
+}) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Fs',
+        message: {
+            cmd: 'readDir',
+            path: dir,
+            options: options
+        }
     });
 }
-function $b2e3b9fd017c80e7$export$dda1d9f60106f0e9(r, o) {
-    return void 0 === o && (o = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Fs",
-                    message: {
-                        cmd: "removeFile",
-                        path: r,
-                        options: o
-                    }
-                })
-            ];
-        });
+/**
+ * Creates a directory.
+ * If one of the path's parent components doesn't exist
+ * and the `recursive` option isn't set to true, the promise will be rejected.
+ *
+ * @param dir Path to the directory to create.
+ * @param options Configuration object.
+ * @returns A promise indicating the success or failure of the operation.
+ */ async function $61d50d698abff50d$export$8ffa162de829532c(dir, options = {
+}) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Fs',
+        message: {
+            cmd: 'createDir',
+            path: dir,
+            options: options
+        }
     });
 }
-function $b2e3b9fd017c80e7$export$23f2a1d2818174ef(r, o, n) {
-    return void 0 === n && (n = {
-    }), $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Fs",
-                    message: {
-                        cmd: "renameFile",
-                        oldPath: r,
-                        newPath: o,
-                        options: n
-                    }
-                })
-            ];
-        });
+/**
+ * Removes a directory.
+ * If the directory is not empty and the `recursive` option isn't set to true, the promise will be rejected.
+ *
+ * @param dir Path to the directory to remove.
+ * @param options Configuration object.
+ * @returns A promise indicating the success or failure of the operation.
+ */ async function $61d50d698abff50d$export$75426ec8836e4c8(dir, options = {
+}) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Fs',
+        message: {
+            cmd: 'removeDir',
+            path: dir,
+            options: options
+        }
     });
 }
-var $b2e3b9fd017c80e7$export$2d1720544b23b823 = Object.freeze({
-    __proto__: null,
-    get BaseDirectory () {
-        return $b2e3b9fd017c80e7$export$ef35774e6d314e91;
-    },
-    get Dir () {
-        return $b2e3b9fd017c80e7$export$ef35774e6d314e91;
-    },
-    readTextFile: $b2e3b9fd017c80e7$export$43caf9889c228507,
-    readBinaryFile: $b2e3b9fd017c80e7$export$407448d2b89b1813,
-    writeFile: $b2e3b9fd017c80e7$export$efccba1c4a2ef57b,
-    writeBinaryFile: $b2e3b9fd017c80e7$export$8b22cf2602fb60ce,
-    readDir: $b2e3b9fd017c80e7$export$db3b6bfb95261072,
-    createDir: $b2e3b9fd017c80e7$export$4368d992c4eafac0,
-    removeDir: $b2e3b9fd017c80e7$export$f1e1789686576879,
-    copyFile: $b2e3b9fd017c80e7$export$39b482c5e57630a8,
-    removeFile: $b2e3b9fd017c80e7$export$dda1d9f60106f0e9,
-    renameFile: $b2e3b9fd017c80e7$export$23f2a1d2818174ef
-});
+/**
+ * Copys a file to a destination.
+ *
+ * @param source A path of the file to copy.
+ * @param destination A path for the destination file.
+ * @param options Configuration object.
+ * @returns A promise indicating the success or failure of the operation.
+ */ async function $61d50d698abff50d$export$c763efb2c06e223f(source, destination, options = {
+}) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Fs',
+        message: {
+            cmd: 'copyFile',
+            source: source,
+            destination: destination,
+            options: options
+        }
+    });
+}
+/**
+ * Removes a file.
+ *
+ * @param file Path to the file to remove.
+ * @param options Configuration object.
+ * @returns A promise indicating the success or failure of the operation.
+ */ async function $61d50d698abff50d$export$f9daa85ef05b41c1(file, options = {
+}) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Fs',
+        message: {
+            cmd: 'removeFile',
+            path: file,
+            options: options
+        }
+    });
+}
+/**
+ * Renames a file.
+ *
+ * @param oldPath A path of the file to rename.
+ * @param newPath A path of the new file name.
+ * @param options Configuration object.
+ * @returns A promise indicating the success or failure of the operation.
+ */ async function $61d50d698abff50d$export$35956cb5939e0c69(oldPath, newPath, options = {
+}) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Fs',
+        message: {
+            cmd: 'renameFile',
+            oldPath: oldPath,
+            newPath: newPath,
+            options: options
+        }
+    });
+}
 
 
 
 
-
-
-
-function $6bb1bd938cd7d248$export$23f2a1d2818174ef() {
-    return navigator.appVersion.includes("Win");
+// Copyright 2019-2021 Tauri Programme within The Commons Conservancy
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+/** @ignore */ function $ef35292e2d1574b0$export$a10d59b01729022b() {
+    return navigator.appVersion.includes('Linux');
+}
+function $ef35292e2d1574b0$export$f993c945890e93ba() {
+    return navigator.appVersion.includes('Win');
+}
+function $ef35292e2d1574b0$export$6159e43e50a41987() {
+    return navigator.appVersion.includes('Mac');
 }
 
 
+/**
+ * The path module provides utilities for working with file and directory paths.
+ *
+ * This package is also accessible with `window.__TAURI__.path` when `tauri.conf.json > build > withGlobalTauri` is set to true.
+ *
+ * The APIs must be allowlisted on `tauri.conf.json`:
+ * ```json
+ * {
+ *   "tauri": {
+ *     "allowlist": {
+ *       "path": {
+ *         "all": true, // enable all Path APIs
+ *       }
+ *     }
+ *   }
+ * }
+ * ```
+ * It is recommended to allowlist only the APIs you use for optimal bundle size and security.
+ * @module
+ */ /**
+ * Returns the path to the suggested directory for your app config files.
+ * Resolves to `${configDir}/${bundleIdentifier}`, where `bundleIdentifier` is the value configured on `tauri.conf.json > tauri > bundle > identifier`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$56ea8a400e2932d4() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.App
+        }
+    });
+}
+/**
+ * Returns the path to the user's audio directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_MUSIC_DIR`.
+ * - **macOS:** Resolves to `$HOME/Music`.
+ * - **Windows:** Resolves to `{FOLDERID_Music}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$80972f2b714ec89a() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Audio
+        }
+    });
+}
+/**
+ * Returns the path to the user's cache directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_CACHE_HOME` or `$HOME/.cache`.
+ * - **macOS:** Resolves to `$HOME/Library/Caches`.
+ * - **Windows:** Resolves to `{FOLDERID_LocalAppData}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$212994f9616d6a96() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Cache
+        }
+    });
+}
+/**
+ * Returns the path to the user's config directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_CONFIG_HOME` or `$HOME/.config`.
+ * - **macOS:** Resolves to `$HOME/Library/Application Support`.
+ * - **Windows:** Resolves to `{FOLDERID_LocalAppData}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$9001346227a6fc19() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Config
+        }
+    });
+}
+/**
+ * Returns the path to the user's data directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_DATA_HOME` or `$HOME/.local/share`.
+ * - **macOS:** Resolves to `$HOME/Library/Application Support`.
+ * - **Windows:** Resolves to `{FOLDERID_RoamingAppData}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$fbc2f06101237695() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Data
+        }
+    });
+}
+/**
+ * Returns the path to the user's desktop directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_DESKTOP_DIR`.
+ * - **macOS:** Resolves to `$HOME/Library/Desktop`.
+ * - **Windows:** Resolves to `{FOLDERID_Desktop}`.
+
+ * @returns
+ */ async function $877b126e36883e53$export$a50bd16b0c43ad2f() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Desktop
+        }
+    });
+}
+/**
+ * Returns the path to the user's document directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_DOCUMENTS_DIR`.
+ * - **macOS:** Resolves to `$HOME/Documents`.
+ * - **Windows:** Resolves to `{FOLDERID_Documents}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$a429a5561f1dc3d6() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Document
+        }
+    });
+}
+/**
+ * Returns the path to the user's download directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux**: Resolves to `$XDG_DOWNLOAD_DIR`.
+ * - **macOS**: Resolves to `$HOME/Downloads`.
+ * - **Windows**: Resolves to `{FOLDERID_Downloads}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$9e45585b4bee89a1() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Download
+        }
+    });
+}
+/**
+ * Returns the path to the user's executable directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_BIN_HOME/../bin` or `$XDG_DATA_HOME/../bin` or `$HOME/.local/bin`.
+ * - **macOS:** Not supported.
+ * - **Windows:** Not supported.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$e93cc8051516ab6e() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Executable
+        }
+    });
+}
+/**
+ * Returns the path to the user's font directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_DATA_HOME/fonts` or `$HOME/.local/share/fonts`.
+ * - **macOS:** Resolves to `$HOME/Library/Fonts`.
+ * - **Windows:** Not supported.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$3fb5697a1989111() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Font
+        }
+    });
+}
+/**
+ * Returns the path to the user's home directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$HOME`.
+ * - **macOS:** Resolves to `$HOME`.
+ * - **Windows:** Resolves to `{FOLDERID_Profile}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$e401803eb3bf9d2f() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Home
+        }
+    });
+}
+/**
+ * Returns the path to the user's local data directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_DATA_HOME` or `$HOME/.local/share`.
+ * - **macOS:** Resolves to `$HOME/Library/Application Support`.
+ * - **Windows:** Resolves to `{FOLDERID_LocalAppData}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$121e57f1d2014b17() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.LocalData
+        }
+    });
+}
+/**
+ * Returns the path to the user's picture directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_PICTURES_DIR`.
+ * - **macOS:** Resolves to `$HOME/Pictures`.
+ * - **Windows:** Resolves to `{FOLDERID_Pictures}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$c6dd1bb2709cdc52() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Picture
+        }
+    });
+}
+/**
+ * Returns the path to the user's public directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_PUBLICSHARE_DIR`.
+ * - **macOS:** Resolves to `$HOME/Public`.
+ * - **Windows:** Resolves to `{FOLDERID_Public}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$6c70c65865fc400f() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Public
+        }
+    });
+}
+/**
+ * Returns the path to the user's resource directory.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$461fb6e53e44bc85() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Resource
+        }
+    });
+}
+/**
+ * Returns the path to the user's runtime directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_RUNTIME_DIR`.
+ * - **macOS:** Not supported.
+ * - **Windows:** Not supported.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$73803a3ab9861602() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Runtime
+        }
+    });
+}
+/**
+ * Returns the path to the user's template directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_TEMPLATES_DIR`.
+ * - **macOS:** Not supported.
+ * - **Windows:** Resolves to `{FOLDERID_Templates}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$9ca3efa71cee2d47() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Template
+        }
+    });
+}
+/**
+ * Returns the path to the user's video directory.
+ *
+ * ## Platform-specific
+ *
+ * - **Linux:** Resolves to `$XDG_VIDEOS_DIR`.
+ * - **macOS:** Resolves to `$HOME/Movies`.
+ * - **Windows:** Resolves to `{FOLDERID_Videos}`.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$5de685dcef85f37c() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Video
+        }
+    });
+}
+/**
+ * Returns the path to the current working directory.
+ *
+ * @returns
+ */ async function $877b126e36883e53$export$3290e8ab7509f3a9() {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolvePath',
+            path: '',
+            directory: $61d50d698abff50d$export$935a0db531ce0305.Current
+        }
+    });
+}
+/**
+ * Provides the platform-specific path segment separator:
+ * - `\` on Windows
+ * - `/` on POSIX
+ */ const $877b126e36883e53$export$5aee1a5bd9743d8f = $ef35292e2d1574b0$export$f993c945890e93ba() ? '\\' : '/';
+/**
+ * Provides the platform-specific path segment delimiter:
+ * - `;` on Windows
+ * - `:` on POSIX
+ */ const $877b126e36883e53$export$c889f2fcc19dbf12 = $ef35292e2d1574b0$export$f993c945890e93ba() ? ';' : ':';
+/**
+ * Resolves a sequence of `paths` or `path` segments into an absolute path.
+ *
+ * @param paths A sequence of paths or path segments.
+ */ async function $877b126e36883e53$export$f7ad0328861e2f03(...paths) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'resolve',
+            paths: paths
+        }
+    });
+}
+/**
+ * Normalizes the given `path`, resolving `'..'` and `'.'` segments and resolve symolic links.
+ */ async function $877b126e36883e53$export$a3295358bff77e(path) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'normalize',
+            path: path
+        }
+    });
+}
+/**
+ *  Joins all given `path` segments together using the platform-specific separator as a delimiter, then normalizes the resulting path.
+ *
+ * @param paths A sequence of path segments.
+ */ async function $877b126e36883e53$export$f7e2c8231c57a8bd(...paths) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'join',
+            paths: paths
+        }
+    });
+}
+/**
+ * Returns the directory name of a `path`. Trailing directory separators are ignored.
+ */ async function $877b126e36883e53$export$7f7b8152cc673abe(path) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'dirname',
+            path: path
+        }
+    });
+}
+/**
+ * Returns the extension of the `path`.
+ */ async function $877b126e36883e53$export$d0e86f3a75393fa3(path) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'extname',
+            path: path
+        }
+    });
+}
+/**
+ *  Returns the last portion of a `path`. Trailing directory separators are ignored.
+ *
+ * @param ext An optional file extension to be removed from the returned path.
+ */ async function $877b126e36883e53$export$9bf319d8f74f51d1(path, ext) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'basename',
+            path: path,
+            ext: ext
+        }
+    });
+}
+async function $877b126e36883e53$export$e434c7255acda994(path) {
+    return $ba486902928da365$export$cb94bbae4adf94e4({
+        __tauriModule: 'Path',
+        message: {
+            cmd: 'isAbsolute',
+            path: path
+        }
+    });
+}
 
 
-
-
-function $836f855d1b318ba1$export$407448d2b89b1813() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.App
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$8b22cf2602fb60ce() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Audio
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$db3b6bfb95261072() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Cache
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$4368d992c4eafac0() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Config
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$f1e1789686576879() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Data
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$2d1720544b23b823() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Desktop
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$39b482c5e57630a8() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Document
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$dda1d9f60106f0e9() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Download
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$23f2a1d2818174ef() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Executable
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$35e795649ee09318() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Font
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$342063e11d6c3cad() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Home
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$882b5998b3b9117c() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.LocalData
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$953cecd6e717a553() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Picture
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$7ccc53e8f1e7dfc5() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Public
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$43caf9889c228507() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Resource
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$ae1af26003f05816() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Runtime
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$625550452a3fa3ec() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Template
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$90a7f3efeed30595() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Video
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$9e5f44173e64f162() {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolvePath",
-                        path: "",
-                        directory: $b2e3b9fd017c80e7$export$ef35774e6d314e91.Current
-                    }
-                })
-            ];
-        });
-    });
-}
-var $836f855d1b318ba1$export$2408f22a0fab9ae5 = $6bb1bd938cd7d248$export$23f2a1d2818174ef() ? "\\" : "/", $836f855d1b318ba1$export$3b14a55fb2447963 = $6bb1bd938cd7d248$export$23f2a1d2818174ef() ? ";" : ":";
-function $836f855d1b318ba1$export$efccba1c4a2ef57b() {
-    for(var i = [], n = 0; n < arguments.length; n++)i[n] = arguments[n];
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "resolve",
-                        paths: i
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$d141bba7fdc215a3(i) {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "normalize",
-                        path: i
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$4a5767248b18ef41() {
-    for(var i = [], n = 0; n < arguments.length; n++)i[n] = arguments[n];
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "join",
-                        paths: i
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$df995fae86a55f06(i) {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "dirname",
-                        path: i
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$ebd11618f299a286(i) {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "extname",
-                        path: i
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$ef35774e6d314e91(i, n) {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "basename",
-                        path: i,
-                        ext: n
-                    }
-                })
-            ];
-        });
-    });
-}
-function $836f855d1b318ba1$export$e7094788287c5e9b(i) {
-    return $51cbcdbd1737bc6e$export$71511d61b312f219(this, void 0, void 0, function() {
-        return $51cbcdbd1737bc6e$export$407448d2b89b1813(this, function(t) {
-            return [
-                2,
-                $758353a1ec5abd94$export$23f2a1d2818174ef({
-                    __tauriModule: "Path",
-                    message: {
-                        cmd: "isAbsolute",
-                        path: i
-                    }
-                })
-            ];
-        });
-    });
-}
-var $836f855d1b318ba1$export$ffb5f4729a158638 = Object.freeze({
-    __proto__: null,
-    appDir: $836f855d1b318ba1$export$407448d2b89b1813,
-    audioDir: $836f855d1b318ba1$export$8b22cf2602fb60ce,
-    cacheDir: $836f855d1b318ba1$export$db3b6bfb95261072,
-    configDir: $836f855d1b318ba1$export$4368d992c4eafac0,
-    dataDir: $836f855d1b318ba1$export$f1e1789686576879,
-    desktopDir: $836f855d1b318ba1$export$2d1720544b23b823,
-    documentDir: $836f855d1b318ba1$export$39b482c5e57630a8,
-    downloadDir: $836f855d1b318ba1$export$dda1d9f60106f0e9,
-    executableDir: $836f855d1b318ba1$export$23f2a1d2818174ef,
-    fontDir: $836f855d1b318ba1$export$35e795649ee09318,
-    homeDir: $836f855d1b318ba1$export$342063e11d6c3cad,
-    localDataDir: $836f855d1b318ba1$export$882b5998b3b9117c,
-    pictureDir: $836f855d1b318ba1$export$953cecd6e717a553,
-    publicDir: $836f855d1b318ba1$export$7ccc53e8f1e7dfc5,
-    resourceDir: $836f855d1b318ba1$export$43caf9889c228507,
-    runtimeDir: $836f855d1b318ba1$export$ae1af26003f05816,
-    templateDir: $836f855d1b318ba1$export$625550452a3fa3ec,
-    videoDir: $836f855d1b318ba1$export$90a7f3efeed30595,
-    currentDir: $836f855d1b318ba1$export$9e5f44173e64f162,
-    get BaseDirectory () {
-        return $b2e3b9fd017c80e7$export$ef35774e6d314e91;
-    },
-    sep: $836f855d1b318ba1$export$2408f22a0fab9ae5,
-    delimiter: $836f855d1b318ba1$export$3b14a55fb2447963,
-    resolve: $836f855d1b318ba1$export$efccba1c4a2ef57b,
-    normalize: $836f855d1b318ba1$export$d141bba7fdc215a3,
-    join: $836f855d1b318ba1$export$4a5767248b18ef41,
-    dirname: $836f855d1b318ba1$export$df995fae86a55f06,
-    extname: $836f855d1b318ba1$export$ebd11618f299a286,
-    basename: $836f855d1b318ba1$export$ef35774e6d314e91,
-    isAbsolute: $836f855d1b318ba1$export$e7094788287c5e9b
-});
-
-
-
-
-class $2dbb63a87f5e4f55$export$f160779312cf57d5 {
+class $2f25b22e70662204$export$f160779312cf57d5 {
     constructor(){
     }
     async loadLocal() {
         try {
-            let homeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
+            let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
             let file = homeDir + ".tauri_progres/data.json";
-            let text = await $b2e3b9fd017c80e7$export$43caf9889c228507(file);
+            let text = await $61d50d698abff50d$export$177308921a610223(file);
             console.log(text);
         } catch (e) {
             throw e;
@@ -1772,9 +1646,9 @@ class $2dbb63a87f5e4f55$export$f160779312cf57d5 {
         // Create or read folder
         let homeDir;
         try {
-            homeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
+            homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
             let dataDir = homeDir + ".tauri_progres";
-            let created = await $b2e3b9fd017c80e7$export$4368d992c4eafac0(dataDir);
+            let created = await $61d50d698abff50d$export$8ffa162de829532c(dataDir);
             console.log("Created", created);
         } catch (e) {
             console.log(e);
@@ -1783,17 +1657,17 @@ class $2dbb63a87f5e4f55$export$f160779312cf57d5 {
         }
         // Folder now exists
         try {
-            let homeDir1 = await $836f855d1b318ba1$export$342063e11d6c3cad();
+            let homeDir1 = await $877b126e36883e53$export$e401803eb3bf9d2f();
             let file = homeDir1 + ".tauri_progres/data.json";
-            let text = await $b2e3b9fd017c80e7$export$43caf9889c228507(file);
+            let text = await $61d50d698abff50d$export$177308921a610223(file);
             console.log(text);
         } catch (e1) {
             console.log(e1);
             if (typeof e1 == 'string' && e1.includes("os error 2")) // no file exists, create now
             try {
-                let homeDir = await $836f855d1b318ba1$export$342063e11d6c3cad();
+                let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
                 let path = homeDir + ".tauri_progres/data.json";
-                let text = await $b2e3b9fd017c80e7$export$efccba1c4a2ef57b({
+                let text = await $61d50d698abff50d$export$552bfb764b5cd2b4({
                     contents: "",
                     path: path
                 });
@@ -1817,8 +1691,8 @@ window.onload = async function() {
     formCloseBtn.addEventListener("click", ()=>{
         formEnclosure.style.display = "none";
     });
-    let f = new $7b79fc2448b3b35e$export$ca95ea95faa89f36();
-    let alerts = new $086d5838aee8ae00$export$a99aab2a736cea3e();
+    let f = new $9fdc79397460abda$export$ca95ea95faa89f36();
+    let alerts = new $3c13b93cfbb34482$export$a99aab2a736cea3e();
     alerts.hideAll();
     const form = document.getElementById("add-form");
     form.addEventListener("submit", (e)=>{
@@ -1849,7 +1723,7 @@ window.onload = async function() {
         }
     });
     try {
-        let exists = await $2dbb63a87f5e4f55$export$f160779312cf57d5.ensureFileExists();
+        let exists = await $2f25b22e70662204$export$f160779312cf57d5.ensureFileExists();
         console.log(exists);
     } catch (error) {
         console.log(console.error());
