@@ -6,12 +6,6 @@ const customFonts = [
 ];
 
 module.exports = {
-  purge: {
-    content: ["*.html", "**/*.html"],
-    options: {
-      fontFace: true,
-    },
-  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {

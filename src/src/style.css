@@ -51,7 +51,7 @@ body {
 }
 
 .solvable-btn {
-  @apply text-2xl flex-grow w-auto py-1;
+  @apply text-2xl flex-grow w-auto py-1 border-2 shadow-lg;
 }
 
 .alert-container {

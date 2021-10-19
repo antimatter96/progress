@@ -1,8 +1,8 @@
 import { render } from "lit-html";
-import { AlertHandler } from "./alerts"
-import { FormHandler } from './form'
+import { AlertHandler } from "./alerts";
+import { FormHandler } from "./form";
 import { Week, templateFunc } from "./week";
-import { WeekManager } from './week_manager'
+import { WeekManager } from "./week_manager";
 
 window.onload = async function () {
   let formOpenBtn = document.getElementById("open-form");
@@ -24,6 +24,8 @@ window.onload = async function () {
 
   alerts.hideAll();
 
+  let wm = new WeekManager();
+
   const form = document.getElementById("add-form");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -31,26 +33,13 @@ window.onload = async function () {
     let errors = f.validate();
 
     if (errors.length > 0) {
-      alerts.show('error', errors.join('\n'), 60_000);
+      alerts.show("error", errors.join("\n"), 60_000);
     } else {
-
-      let weeks = document.getElementById("weeks");
-
       let weekInput = f.submit();
       console.log(weekInput);
 
-      let w = new Week(weekInput);
+      let w = wm.createNewWeek(weekInput);
       console.log(w);
-
-      let htmlcontainer  = document.createElement('div');
-      htmlcontainer.id = w.id;
-      weeks.prepend(htmlcontainer);
-
-      render(templateFunc(w), htmlcontainer);
-      setTimeout(() => {
-        w.markSolvableDone('activities');
-        render(templateFunc(w), htmlcontainer);
-      }, 5_000)
 
       let sss = JSON.stringify(w);
       console.log(sss);
@@ -65,13 +54,11 @@ window.onload = async function () {
     }
   });
 
-
   try {
     let exists = await WeekManager.ensureFileExists();
     console.log(exists);
-  } catch(error) {
+  } catch (error) {
     console.log(console.error());
-    alerts.show('error', error, 1_000)
+    alerts.show("error", error, 1_000);
   }
-
 };
