@@ -164,17 +164,16 @@ export class Week {
 
     titles.forEach((type) => {
       let ttype = type.toLowerCase();
-      let upBtn = document.getElementById(`${this.id}-${type}-plus`);
 
-      if (this.solvable[ttype].total > this.solvable[ttype].done) {
-        upBtn.addEventListener('click', (e) => {
-          this.markSolvableDone(type);
-        });
-      }
+      let downBtn = document.getElementById(`${this.id}-${ttype}-minus`);
+      let upBtn = document.getElementById(`${this.id}-${ttype}-plus`);
 
-      let downBtn = document.getElementById(`${this.id}-${type}-minus`);
-      downBtn.addEventListener('click', (e) => {
-        this.markSolvableNotDone(type);
+      upBtn.addEventListener('click', () => {
+        this.markSolvableDone(ttype);
+      });
+
+      downBtn.addEventListener('click', () => {
+        this.markSolvableNotDone(ttype);
       });
     });
 
@@ -232,7 +231,6 @@ export function templateFunc(week: Week) {
   let _elasped = week.getElapsedMinutes();
   let _percentage = week.getPercentage(_projected, _elasped);
 
-
   let videos = [];
   week.videos.forEach((video, i) => {
     const textClass = {
@@ -278,12 +276,12 @@ export function templateFunc(week: Week) {
 
   solvableData.forEach((data) => {
     const btnUp = (data.total > data.done) ?
-      { 'bg-white-500': true, 'text-lime-700': true, 'border-lime-500': true } :
-      { 'bg-trueGray-200': true, 'text-gray-500': true, 'cursor-not-allowed': true, 'border-black-500': true };
+      { 'btnUp-valid': true } :
+      { 'btnUp-invalid': true };
 
     const btnDown = (data.done > 0) ?
-      { 'bg-white-500': true, 'text-red-700': true, 'border-red-500': true } :
-      { 'bg-trueGray-200': true, 'text-gray-500': true, 'cursor-not-allowed': true, 'border-black-500': true };
+      { 'btnDown-valid': true } :
+      { 'btnDown-invalid': true };
 
     solvables.push(html`
     <div class="video-time act-time">

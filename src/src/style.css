@@ -4,6 +4,10 @@
 
 @import url("./fonts/stylesheet.css");
 
+* {
+  @apply border-white;
+}
+
 body {
   @apply font-sans;
   background-color: #f9fafe;
@@ -30,7 +34,7 @@ body {
 }
 
 .video-time.act-time {
-  @apply w-5/12 mx-1 my-2 text-2xl font-bold text-white bottom-2 shadow px-0;
+  @apply w-5/12 mx-1 my-2 px-0 flex flex-col justify-center bg-white shadow-none;
 }
 
 .common-text {
@@ -51,8 +55,26 @@ body {
 }
 
 .solvable-btn {
-  @apply text-2xl flex-grow w-auto py-1 border-2 shadow-lg;
+  @apply text-2xl flex-grow w-auto py-1 border-2;
 }
+
+.btnUp-valid {
+  @apply bg-white text-lime-700 border-lime-500;
+}
+
+.btnUp-invalid {
+  @apply bg-trueGray-200 text-gray-500 cursor-not-allowed border-black;
+}
+
+.btnDown-valid {
+  @apply bg-white text-red-700 border-red-500;
+}
+
+.btnDown-invalid {
+ @apply bg-trueGray-200 text-gray-500 cursor-not-allowed border-black;
+}
+
+/**/
 
 .alert-container {
   @apply p-10 overflow-x-auto text-center rounded-none w-full bg-white shadow-2xl drop-shadow-2xl justify-center items-center fixed top-0 left-0;
