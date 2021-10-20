@@ -1,4 +1,7 @@
-dist/** linguist-generated
+dist/** linguist-generated=true
+dist/* linguist-generated=true
 
-src-tauri/** linguist-generated
-src/src/fonts/stylesheet.css linguist-generated
+src-tauri/** linguist-generated=true
+src/src/fonts/stylesheet.css linguist-generated=true
+src/src/fonts/stylesheet.css linguist-vendored=true
+
