@@ -13,13 +13,13 @@ export class Week {
   solvable = {
     activities: { total: 3, left: 3 },
     tutorials: { total: 2, left: 2 },
-    practice: { total: 1, left: 1 },
-    graded: { total: 1, left: 1 },
+    assignments: { total: 1, left: 1 },
   };
 
   videos = [{ m: 40, s: 10, seen: false }];
 
   lastChangeTime = 123123;
+  updateMe: CallableFunction
 
   constructor(input) {
     this.id = input.id ? input.id : uuid();
@@ -45,31 +45,34 @@ export class Week {
         total: parseInt(input.solvable.tutorials.total, 10),
         left: parseInt(input.solvable.tutorials.left, 10),
       },
-      practice: {
-        total: parseInt(input.solvable.practice.total, 10),
-        left: parseInt(input.solvable.practice.left, 10),
-      },
-      graded: {
-        total: parseInt(input.solvable.graded.total, 10),
-        left: parseInt(input.solvable.graded.left, 10),
+      assignments: {
+        total: parseInt(input.solvable.assignments.total, 10),
+        left: parseInt(input.solvable.assignments.left, 10),
       },
     };
 
-    this.lastChangeTime = Date.now();
+    this.updateLastChangeTime();
+  }
+
+  setUpdateFunction(fn: CallableFunction) {
+    this.updateMe = fn;
   }
 
   updateLastChangeTime() {
     this.lastChangeTime = Date.now();
+    if (this.updateMe) {
+      this.updateMe();
+    }
   }
 
-  markVideoSeen(i): void{
+  markVideoSeen(i): void {
     if (this.videos[i].seen) {
       throw new Error("Already done");
     }
     this.videos[i].seen = true;
     this.updateLastChangeTime();
   }
-  markVideoLeft(i):void {
+  markVideoLeft(i): void {
     if (!this.videos[i].seen) {
       throw new Error("Already done");
     }
@@ -148,6 +151,34 @@ export class Week {
     return (100 * (left) / total);
   }
 
+  _increment(e) {
+    console.log(e);
+  }
+
+  _decrement(e) {
+    console.log(e);
+  }
+
+  addEventListeners() {
+    let titles = ['Activities', 'Tutorials', 'Assignments'];
+
+    titles.forEach((type) => {
+      let ttype = type.toLowerCase();
+
+      let downBtn = document.getElementById(`${this.id}-${ttype}-minus`);
+      let upBtn = document.getElementById(`${this.id}-${ttype}-plus`);
+
+      upBtn.addEventListener('click', () => {
+        this.markSolvableDone(ttype);
+      });
+
+      downBtn.addEventListener('click', () => {
+        this.markSolvableNotDone(ttype);
+      });
+    });
+
+  }
+
   static Validate(input): void {
     if (!input.id || !input.name) {
       throw new Error(`${input.id} ${input.name}`);
@@ -171,7 +202,7 @@ export class Week {
       }
     });
 
-    ["activities", "tutorials", "practice", "graded"].forEach((key) => {
+    ["activities", "tutorials", "assignments"].forEach((key) => {
       let total = input.solvable[key].total;
       let left = input.solvable[key].left;
 
@@ -200,7 +231,6 @@ export function templateFunc(week: Week) {
   let _elasped = week.getElapsedMinutes();
   let _percentage = week.getPercentage(_projected, _elasped);
 
-
   let videos = [];
   week.videos.forEach((video, i) => {
     const textClass = {
@@ -227,7 +257,7 @@ export function templateFunc(week: Week) {
   let solvableData = [];
 
   solvableData.push({
-    title: 'Actvities',
+    title: 'Activities',
     done: _solvable.activities.total - _solvable.activities.left,
     total: _solvable.activities.total,
   })
@@ -237,39 +267,42 @@ export function templateFunc(week: Week) {
     total: _solvable.tutorials.total,
   })
   solvableData.push({
-    title: 'Graded',
-    done: _solvable.practice.total + _solvable.graded.total - _solvable.practice.left - _solvable.graded.left,
-    total: _solvable.practice.total + _solvable.graded.total,
+    title: 'Assignments',
+    done: _solvable.assignments.total - _solvable.assignments.left,
+    total: _solvable.assignments.total
   })
 
   let solvables = [];
 
   solvableData.forEach((data) => {
+    const btnUp = (data.total > data.done) ?
+      { 'btnUp-valid': true } :
+      { 'btnUp-invalid': true };
 
-    // TODO : Arpit
-    // if (solvable.activities.left > 0) {
-    //   activitiesText.getElementsByClassName('btn-activities-plus')[0].classList.add('');
-    //   activitiesText.getElementsByClassName('btn-activities-minus')[0].classList.add('');
-    // }
+    const btnDown = (data.done > 0) ?
+      { 'btnDown-valid': true } :
+      { 'btnDown-invalid': true };
+
+    const inProgress = { 'in-progress' : data.total > data.done, 'done' : data.total == data.done }
 
     solvables.push(html`
     <div class="video-time act-time">
-      <p class="act-text">${data.title} : ${data.done}/${data.total}</p>
-      <div class="flex justify-around border-t-2">
-        <button class="solvable-btn bg-lime-500">+</button>
-        <button class="solvable-btn bg-red-500">-</button>
+      <h2 class="act-text ${classMap(inProgress)}">${data.title} <br>${data.done}/${data.total}</h2>
+      <div class="flex justify-around mt-0.5">
+        <button class="solvable-btn mr-0.5 ${classMap(btnUp)}" id="${week.id}-${data.title.toLowerCase()}-plus">+</button>
+        <button class="solvable-btn ml-0.5 ${classMap(btnDown)}" id="${week.id}-${data.title.toLowerCase()}-minus">-</button>
       </div>
     </div>
   `);
   })
 
   return html`
-  <div class="container items-center bg-white my-5 better-shadow">
+  <div class="container items-center bg-white my-5 better-shadow week-overall">
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
       <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-amber-400">
-        <div class="w-full border-b-2">
+        <div class="w-full border-b-2 border-gray-600">
           <h2 class="pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8">
             ${week.name}
           </h2>
@@ -278,31 +311,31 @@ export function templateFunc(week: Week) {
 
       <!-- Summary -->
       <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between bg-sky-300">
-        <div class="pb-2 flex justify-between items-center border-b-2">
+        <div class="pb-2 flex justify-between items-center border-b-2 border-gray-600">
           <p class="dispay-container">
             <span class="dispay-label">Projected:</span>
-            <span class="dispay-data template-projected">${_projected.toFixed(1)}h</span>
+            <span class="dispay-data">${_projected.toFixed(1)}h</span>
           </p>
 
           <p class="dispay-container">
             <span class="dispay-label">Elapsed:</span>
-            <span class="dispay-data template-elapsed">${_elasped.toFixed(1)}h</span>
+            <span class="dispay-data">${_elasped.toFixed(1)}h</span>
           </p>
 
           <p class="dispay-container">
             <span class="dispay-label">Done:</span>
-            <span class="dispay-data template-done">${_percentage.toFixed(2)}%</span>
+            <span class="dispay-data">${_percentage.toFixed(2)}%</span>
           </p>
         </div>
       </div>
 
       <!-- Videos -->
       <div class="pt-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
-        <div class="w-full border-b-2">
-          <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+        <div class="w-full border-b-2 border-gray-600">
+          <h2 class="pb-1 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
             Videos
           </h2>
-          <div class="flex justify-evenly flex-wrap template-video-container">
+          <div class="flex justify-evenly flex-wrap">
             ${videos}
           </div>
         </div>

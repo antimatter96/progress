@@ -401,18 +401,13 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
                     total: parseInt(this.tutorials.value, 10),
                     left: 2
                 },
-                practice: {
-                    total: 0,
-                    left: 0
-                },
-                graded: {
+                assignments: {
                     total: parseInt(this.assignments.value, 10),
                     left: 1
                 }
             },
             videos: []
         };
-        if (parseInt(this.assignments.value, 10) > 1) input.solvable.practice.total = parseInt(this.assignments.value, 10) - 1;
         Object.keys(input.solvable).forEach((key)=>{
             input.solvable[key].left = input.solvable[key].total;
         });
@@ -580,11 +575,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
                 total: 2,
                 left: 2
             },
-            practice: {
-                total: 1,
-                left: 1
-            },
-            graded: {
+            assignments: {
                 total: 1,
                 left: 1
             }
@@ -618,19 +609,19 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
                 total: parseInt(input.solvable.tutorials.total, 10),
                 left: parseInt(input.solvable.tutorials.left, 10)
             },
-            practice: {
-                total: parseInt(input.solvable.practice.total, 10),
-                left: parseInt(input.solvable.practice.left, 10)
-            },
-            graded: {
-                total: parseInt(input.solvable.graded.total, 10),
-                left: parseInt(input.solvable.graded.left, 10)
+            assignments: {
+                total: parseInt(input.solvable.assignments.total, 10),
+                left: parseInt(input.solvable.assignments.left, 10)
             }
         };
-        this.lastChangeTime = Date.now();
+        this.updateLastChangeTime();
+    }
+    setUpdateFunction(fn) {
+        this.updateMe = fn;
     }
     updateLastChangeTime() {
         this.lastChangeTime = Date.now();
+        if (this.updateMe) this.updateMe();
     }
     markVideoSeen(i) {
         if (this.videos[i].seen) throw new Error("Already done");
@@ -689,6 +680,30 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
     getPercentage(total, left) {
         return 100 * left / total;
     }
+    _increment(e) {
+        console.log(e);
+    }
+    _decrement(e) {
+        console.log(e);
+    }
+    addEventListeners() {
+        let titles = [
+            'Activities',
+            'Tutorials',
+            'Assignments'
+        ];
+        titles.forEach((type)=>{
+            let ttype = type.toLowerCase();
+            let downBtn = document.getElementById(`${this.id}-${ttype}-minus`);
+            let upBtn = document.getElementById(`${this.id}-${ttype}-plus`);
+            upBtn.addEventListener('click', ()=>{
+                this.markSolvableDone(ttype);
+            });
+            downBtn.addEventListener('click', ()=>{
+                this.markSolvableNotDone(ttype);
+            });
+        });
+    }
     static Validate(input) {
         if (!input.id || !input.name) throw new Error(`${input.id} ${input.name}`);
         if (!Number.isFinite(input.factor) || !Number.isInteger(input.solvableTime)) throw new Error();
@@ -700,8 +715,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         [
             "activities",
             "tutorials",
-            "practice",
-            "graded"
+            "assignments"
         ].forEach((key)=>{
             let total = input.solvable[key].total;
             let left = input.solvable[key].left;
@@ -742,7 +756,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     let _solvable = week.solvable;
     let solvableData = [];
     solvableData.push({
-        title: 'Actvities',
+        title: 'Activities',
         done: _solvable.activities.total - _solvable.activities.left,
         total: _solvable.activities.total
     });
@@ -752,34 +766,43 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
         total: _solvable.tutorials.total
     });
     solvableData.push({
-        title: 'Graded',
-        done: _solvable.practice.total + _solvable.graded.total - _solvable.practice.left - _solvable.graded.left,
-        total: _solvable.practice.total + _solvable.graded.total
+        title: 'Assignments',
+        done: _solvable.assignments.total - _solvable.assignments.left,
+        total: _solvable.assignments.total
     });
     let solvables = [];
     solvableData.forEach((data)=>{
-        // TODO : Arpit
-        // if (solvable.activities.left > 0) {
-        //   activitiesText.getElementsByClassName('btn-activities-plus')[0].classList.add('');
-        //   activitiesText.getElementsByClassName('btn-activities-minus')[0].classList.add('');
-        // }
+        const btnUp = data.total > data.done ? {
+            'btnUp-valid': true
+        } : {
+            'btnUp-invalid': true
+        };
+        const btnDown = data.done > 0 ? {
+            'btnDown-valid': true
+        } : {
+            'btnDown-invalid': true
+        };
+        const inProgress = {
+            'in-progress': data.total > data.done,
+            'done': data.total == data.done
+        };
         solvables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
     <div class="video-time act-time">
-      <p class="act-text">${data.title} : ${data.done}/${data.total}</p>
-      <div class="flex justify-around border-t-2">
-        <button class="solvable-btn bg-lime-500">+</button>
-        <button class="solvable-btn bg-red-500">-</button>
+      <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${data.title} <br>${data.done}/${data.total}</h2>
+      <div class="flex justify-around mt-0.5">
+        <button class="solvable-btn mr-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${week.id}-${data.title.toLowerCase()}-plus">+</button>
+        <button class="solvable-btn ml-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${week.id}-${data.title.toLowerCase()}-minus">-</button>
       </div>
     </div>
   `);
     });
     return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
-  <div class="container items-center bg-white my-5 better-shadow">
+  <div class="container items-center bg-white my-5 better-shadow week-overall">
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
       <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-amber-400">
-        <div class="w-full border-b-2">
+        <div class="w-full border-b-2 border-gray-600">
           <h2 class="pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8">
             ${week.name}
           </h2>
@@ -788,31 +811,31 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
 
       <!-- Summary -->
       <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between bg-sky-300">
-        <div class="pb-2 flex justify-between items-center border-b-2">
+        <div class="pb-2 flex justify-between items-center border-b-2 border-gray-600">
           <p class="dispay-container">
             <span class="dispay-label">Projected:</span>
-            <span class="dispay-data template-projected">${_projected.toFixed(1)}h</span>
+            <span class="dispay-data">${_projected.toFixed(1)}h</span>
           </p>
 
           <p class="dispay-container">
             <span class="dispay-label">Elapsed:</span>
-            <span class="dispay-data template-elapsed">${_elasped.toFixed(1)}h</span>
+            <span class="dispay-data">${_elasped.toFixed(1)}h</span>
           </p>
 
           <p class="dispay-container">
             <span class="dispay-label">Done:</span>
-            <span class="dispay-data template-done">${_percentage.toFixed(2)}%</span>
+            <span class="dispay-data">${_percentage.toFixed(2)}%</span>
           </p>
         </div>
       </div>
 
       <!-- Videos -->
       <div class="pt-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
-        <div class="w-full border-b-2">
-          <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+        <div class="w-full border-b-2 border-gray-600">
+          <h2 class="pb-1 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
             Videos
           </h2>
-          <div class="flex justify-evenly flex-wrap template-video-container">
+          <div class="flex justify-evenly flex-wrap">
             ${videos}
           </div>
         </div>
@@ -1629,8 +1652,34 @@ async function $877b126e36883e53$export$e434c7255acda994(path) {
 }
 
 
+
+
 class $2f25b22e70662204$export$f160779312cf57d5 {
     constructor(){
+        this.weeksContainer = document.getElementById("weeks");
+        this.weeks = [];
+        this.htmlWeeks = [];
+    }
+    createNewWeek(input) {
+        let week = new $850e48264ea38c74$export$fca4f8121099df57(input);
+        let htmlcontainer = document.createElement('div');
+        htmlcontainer.id = week.id;
+        this.htmlWeeks.unshift(htmlcontainer);
+        this.weeks.unshift(week);
+        this.weeksContainer.prepend(htmlcontainer);
+        $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
+        console.log("here");
+        week.addEventListeners();
+        console.log("here 2");
+        setTimeout(()=>{
+            week.markSolvableDone('activities');
+            $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
+        }, 5000);
+        let updateFunction = ()=>{
+            $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
+        };
+        week.setUpdateFunction(updateFunction);
+        return week;
     }
     async loadLocal() {
         try {
@@ -1668,7 +1717,7 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
                 let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
                 let path = homeDir + ".tauri_progres/data.json";
                 let text = await $61d50d698abff50d$export$552bfb764b5cd2b4({
-                    contents: "",
+                    contents: "{}",
                     path: path
                 });
             } catch (error) {
@@ -1694,25 +1743,17 @@ window.onload = async function() {
     let f = new $9fdc79397460abda$export$ca95ea95faa89f36();
     let alerts = new $3c13b93cfbb34482$export$a99aab2a736cea3e();
     alerts.hideAll();
+    let wm = new $2f25b22e70662204$export$f160779312cf57d5();
     const form = document.getElementById("add-form");
     form.addEventListener("submit", (e)=>{
         e.preventDefault();
         let errors = f.validate();
-        if (errors.length > 0) alerts.show('error', errors.join('\n'), 60000);
+        if (errors.length > 0) alerts.show("error", errors.join("\n"), 60000);
         else {
-            let weeks = document.getElementById("weeks");
             let weekInput = f.submit();
             console.log(weekInput);
-            let w = new $850e48264ea38c74$export$fca4f8121099df57(weekInput);
+            let w = wm.createNewWeek(weekInput);
             console.log(w);
-            let htmlcontainer = document.createElement('div');
-            htmlcontainer.id = w.id;
-            weeks.prepend(htmlcontainer);
-            $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(w), htmlcontainer);
-            setTimeout(()=>{
-                w.markSolvableDone('activities');
-                $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(w), htmlcontainer);
-            }, 5000);
             let sss = JSON.stringify(w);
             console.log(sss);
             let w2 = new $850e48264ea38c74$export$fca4f8121099df57(JSON.parse(sss));
@@ -1727,7 +1768,7 @@ window.onload = async function() {
         console.log(exists);
     } catch (error) {
         console.log(console.error());
-        alerts.show('error', error, 1000);
+        alerts.show("error", error, 1000);
     }
 };
 

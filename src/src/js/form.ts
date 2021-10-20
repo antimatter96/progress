@@ -108,15 +108,10 @@ class FormHandler {
       solvable: {
         activities: { total: parseInt(this.activities.value, 10), left: 3 },
         tutorials: { total: parseInt(this.tutorials.value, 10), left: 2 },
-        practice: { total: 0, left: 0 },
-        graded: { total: parseInt(this.assignments.value, 10), left: 1 },
+        assignments: { total: parseInt(this.assignments.value, 10), left: 1 },
       },
 
       videos: [],
-    }
-
-    if (parseInt(this.assignments.value, 10) > 1) {
-      input.solvable.practice.total = parseInt(this.assignments.value, 10) - 1;
     }
 
     Object.keys(input.solvable).forEach((key) => {

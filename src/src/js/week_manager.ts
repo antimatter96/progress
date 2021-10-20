@@ -4,10 +4,48 @@ import {
   writeFile as _write,
 } from "@tauri-apps/api/fs";
 import { homeDir as _homeDir } from "@tauri-apps/api/path";
+import { render } from "lit-html";
+import { templateFunc, Week } from "./week";
 
 export class WeekManager {
-  constructor() {
 
+  weeksContainer: HTMLElement;
+
+  htmlWeeks: Array<HTMLElement>
+  weeks: Array<Week>;
+
+  constructor() {
+    this.weeksContainer = document.getElementById("weeks");
+    this.weeks = [];
+    this.htmlWeeks = [];
+  }
+
+  createNewWeek(input): Week {
+    let week = new Week(input);
+
+    let htmlcontainer = document.createElement('div');
+    htmlcontainer.id = week.id;
+
+    this.htmlWeeks.unshift(htmlcontainer);
+    this.weeks.unshift(week);
+    this.weeksContainer.prepend(htmlcontainer);
+
+    render(templateFunc(week), htmlcontainer);
+    console.log("here");
+    week.addEventListeners();
+    console.log("here 2");
+
+    setTimeout(() => {
+      week.markSolvableDone('activities');
+      render(templateFunc(week), htmlcontainer);
+    }, 5_000)
+
+    let updateFunction = () => {
+      render(templateFunc(week), htmlcontainer);
+    }
+
+    week.setUpdateFunction(updateFunction);
+    return week;
   }
 
   async loadLocal() {
@@ -56,7 +94,7 @@ export class WeekManager {
           let path = homeDir + ".tauri_progres/data.json";
 
           let text = await _write({
-            contents: "",
+            contents: "{}",
             path,
           });
         } catch (error) {

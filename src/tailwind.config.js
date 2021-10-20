@@ -1,13 +1,11 @@
 const colors = require("tailwindcss/colors");
-const plugin = require('tailwindcss/plugin');
+const plugin = require("tailwindcss/plugin");
 
-const customFonts = [
-  "WorkSans-Regular",
-];
+const customFonts = ["WorkSans-Regular"];
 
 module.exports = {
   purge: {
-    content: ["*.html", "**/*.html"],
+    content: ["*.html", "**/*.html", "*.ts", "**/*.ts"],
     options: {
       fontFace: true,
     },
@@ -27,17 +25,16 @@ module.exports = {
     },
   },
   variants: {
-    backgroundColor: ({after}) => after(['invalid']),
-    borderColor: ({after}) => after(['invalid'])
-
+    backgroundColor: ({ after }) => after(["invalid"]),
+    borderColor: ({ after }) => after(["invalid"]),
   },
   plugins: [
-    plugin(function({ addVariant, e }) {
-      addVariant('invalid', ({ modifySelectors, separator }) => {
+    plugin(function ({ addVariant, e }) {
+      addVariant("invalid", ({ modifySelectors, separator }) => {
         modifySelectors(({ className }) => {
-          return `.${e(`invalid${separator}${className}`)}:invalid`
-        })
-      })
-    })
-  ]
+          return `.${e(`invalid${separator}${className}`)}:invalid`;
+        });
+      });
+    }),
+  ],
 };
