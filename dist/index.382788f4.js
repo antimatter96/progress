@@ -560,6 +560,19 @@ var $300e172487e56da3$export$2e2bcd8739ae039 = $300e172487e56da3$var$v4;
 
 
 
+const $850e48264ea38c74$var$progress = [
+    "bg-red-500",
+    "bg-red-400",
+    "bg-red-300",
+    "bg-red-200",
+    "bg-amber-400",
+    "bg-amber-300",
+    "bg-amber-200",
+    "bg-lime-200",
+    "bg-lime-300",
+    "bg-lime-400",
+    "bg-lime-500"
+];
 class $850e48264ea38c74$export$fca4f8121099df57 {
     constructor(input){
         this.id = 'uuid';
@@ -619,27 +632,42 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
     setUpdateFunction(fn) {
         this.updateMe = fn;
     }
+    setAlertFunction(fn) {
+        this.alertUser = fn;
+    }
     updateLastChangeTime() {
         this.lastChangeTime = Date.now();
         if (this.updateMe) this.updateMe();
     }
     markVideoSeen(i) {
-        if (this.videos[i].seen) throw new Error("Already done");
+        if (this.videos[i].seen) {
+            this.alertUser('error', "Already done");
+            return;
+        }
         this.videos[i].seen = true;
         this.updateLastChangeTime();
     }
     markVideoLeft(i) {
-        if (!this.videos[i].seen) throw new Error("Already done");
+        if (!this.videos[i].seen) {
+            this.alertUser('error', "Already done");
+            return;
+        }
         this.videos[i].seen = false;
         this.updateLastChangeTime();
     }
     markSolvableDone(type) {
-        if (this.solvable[type].left <= 0) throw new Error("Already done");
+        if (this.solvable[type].left <= 0) {
+            this.alertUser('error', "Already done");
+            return;
+        }
         this.solvable[type].left -= 1;
         this.updateLastChangeTime();
     }
     markSolvableNotDone(type) {
-        if (this.solvable[type].left + 1 > this.solvable[type].total) throw new Error("Already done");
+        if (this.solvable[type].left + 1 > this.solvable[type].total) {
+            this.alertUser('error', "Already done");
+            return;
+        }
         this.solvable[type].left += 1;
         this.updateLastChangeTime();
     }
@@ -748,8 +776,8 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
         };
         videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
     <div class="video-time px-0">
-      <p class="video-text ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m}:${video.s}</p> <!-- Add color -->
-      <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}">${video.seen ? '-' : '+'}</button> <!-- Add color -->
+      <p class="video-text ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m}:${video.s}</p>
+      <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}">${video.seen ? '-' : '+'}</button>
     </div>
   `);
     });
@@ -796,21 +824,24 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     </div>
   `);
     });
+    let progressColor = {
+        [$850e48264ea38c74$var$progress[Math.floor(_percentage / 10)]]: true
+    };
     return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
   <div class="container items-center bg-white my-5 better-shadow week-overall">
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
-      <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-amber-400">
-        <div class="w-full border-b-2 border-gray-600">
-          <h2 class="pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8">
+      <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
+        <div class="w-full border-b-2 border-white">
+          <h2 class="pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
             ${week.name}
           </h2>
         </div>
       </div>
 
       <!-- Summary -->
-      <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between bg-sky-300">
+      <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between ${$6197f1f1b7c083f0$export$56cc687933817664(progressColor)}">
         <div class="pb-2 flex justify-between items-center border-b-2 border-gray-600">
           <p class="dispay-container">
             <span class="dispay-label">Projected:</span>
@@ -1655,10 +1686,11 @@ async function $877b126e36883e53$export$e434c7255acda994(path) {
 
 
 class $2f25b22e70662204$export$f160779312cf57d5 {
-    constructor(){
+    constructor(alerts){
         this.weeksContainer = document.getElementById("weeks");
         this.weeks = [];
         this.htmlWeeks = [];
+        this.alerts = alerts;
     }
     createNewWeek(input) {
         let week = new $850e48264ea38c74$export$fca4f8121099df57(input);
@@ -1678,7 +1710,11 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         let updateFunction = ()=>{
             $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
         };
+        let alertFunction = (type, message)=>{
+            this.alerts.show(type, message, 5000);
+        };
         week.setUpdateFunction(updateFunction);
+        week.setAlertFunction(alertFunction);
         return week;
     }
     async loadLocal() {
@@ -1743,7 +1779,7 @@ window.onload = async function() {
     let f = new $9fdc79397460abda$export$ca95ea95faa89f36();
     let alerts = new $3c13b93cfbb34482$export$a99aab2a736cea3e();
     alerts.hideAll();
-    let wm = new $2f25b22e70662204$export$f160779312cf57d5();
+    let wm = new $2f25b22e70662204$export$f160779312cf57d5(alerts);
     const form = document.getElementById("add-form");
     form.addEventListener("submit", (e)=>{
         e.preventDefault();
