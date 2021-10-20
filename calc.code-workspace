@@ -5,6 +5,12 @@
 		}
 	],
 	"settings": {
-		"css.lint.unknownAtRules": "ignore"
+		"css.lint.unknownAtRules": "ignore",
+		"search.exclude": {
+			"**/node_modules": true,
+			"**/bower_components": true,
+			"**/*.code-search": true,
+			"dist/" : true,
+		}
 	}
 }

@@ -283,10 +283,12 @@ export function templateFunc(week: Week) {
       { 'btnDown-valid': true } :
       { 'btnDown-invalid': true };
 
+    const inProgress = { 'in-progress' : data.total > data.done, 'done' : data.total == data.done }
+
     solvables.push(html`
     <div class="video-time act-time">
-      <p class="act-text">${data.title}: ${data.done}/${data.total}</p>
-      <div class="flex justify-around border-t-2">
+      <h2 class="act-text ${classMap(inProgress)}">${data.title} <br>${data.done}/${data.total}</h2>
+      <div class="flex justify-around mt-0.5">
         <button class="solvable-btn mr-0.5 ${classMap(btnUp)}" id="${week.id}-${data.title.toLowerCase()}-plus">+</button>
         <button class="solvable-btn ml-0.5 ${classMap(btnDown)}" id="${week.id}-${data.title.toLowerCase()}-minus">-</button>
       </div>
@@ -295,12 +297,12 @@ export function templateFunc(week: Week) {
   })
 
   return html`
-  <div class="container items-center bg-white my-5 better-shadow">
+  <div class="container items-center bg-white my-5 better-shadow week-overall">
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
       <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-amber-400">
-        <div class="w-full border-b-2">
+        <div class="w-full border-b-2 border-gray-600">
           <h2 class="pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8">
             ${week.name}
           </h2>
@@ -309,31 +311,31 @@ export function templateFunc(week: Week) {
 
       <!-- Summary -->
       <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between bg-sky-300">
-        <div class="pb-2 flex justify-between items-center border-b-2">
+        <div class="pb-2 flex justify-between items-center border-b-2 border-gray-600">
           <p class="dispay-container">
             <span class="dispay-label">Projected:</span>
-            <span class="dispay-data template-projected">${_projected.toFixed(1)}h</span>
+            <span class="dispay-data">${_projected.toFixed(1)}h</span>
           </p>
 
           <p class="dispay-container">
             <span class="dispay-label">Elapsed:</span>
-            <span class="dispay-data template-elapsed">${_elasped.toFixed(1)}h</span>
+            <span class="dispay-data">${_elasped.toFixed(1)}h</span>
           </p>
 
           <p class="dispay-container">
             <span class="dispay-label">Done:</span>
-            <span class="dispay-data template-done">${_percentage.toFixed(2)}%</span>
+            <span class="dispay-data">${_percentage.toFixed(2)}%</span>
           </p>
         </div>
       </div>
 
       <!-- Videos -->
       <div class="pt-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
-        <div class="w-full border-b-2">
-          <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+        <div class="w-full border-b-2 border-gray-600">
+          <h2 class="pb-1 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
             Videos
           </h2>
-          <div class="flex justify-evenly flex-wrap template-video-container">
+          <div class="flex justify-evenly flex-wrap">
             ${videos}
           </div>
         </div>
