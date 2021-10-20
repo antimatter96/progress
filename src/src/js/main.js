@@ -24,7 +24,7 @@ window.onload = async function () {
 
   alerts.hideAll();
 
-  let wm = new WeekManager();
+  let wm = new WeekManager(alerts);
 
   const form = document.getElementById("add-form");
   form.addEventListener("submit", (e) => {

@@ -4,6 +4,14 @@ import { classMap } from 'lit-html/directives/class-map';
 
 import { v4 as uuid } from "uuid";
 
+const progress = [
+  "bg-red-500",
+  "bg-red-400", "bg-red-300", "bg-red-200",
+  "bg-amber-400", "bg-amber-300", "bg-amber-200",
+  "bg-lime-200", "bg-lime-300", "bg-lime-400",
+  "bg-lime-500"
+]
+
 export class Week {
   id = 'uuid'
   name = "Sample Week 1";
@@ -20,6 +28,7 @@ export class Week {
 
   lastChangeTime = 123123;
   updateMe: CallableFunction
+  alertUser: CallableFunction
 
   constructor(input) {
     this.id = input.id ? input.id : uuid();
@@ -58,6 +67,10 @@ export class Week {
     this.updateMe = fn;
   }
 
+  setAlertFunction(fn: CallableFunction) {
+    this.alertUser = fn;
+  }
+
   updateLastChangeTime() {
     this.lastChangeTime = Date.now();
     if (this.updateMe) {
@@ -67,14 +80,16 @@ export class Week {
 
   markVideoSeen(i): void {
     if (this.videos[i].seen) {
-      throw new Error("Already done");
+      this.alertUser('error', "Already done");
+      return;
     }
     this.videos[i].seen = true;
     this.updateLastChangeTime();
   }
   markVideoLeft(i): void {
     if (!this.videos[i].seen) {
-      throw new Error("Already done");
+      this.alertUser('error', "Already done");
+      return;
     }
     this.videos[i].seen = false;
     this.updateLastChangeTime();
@@ -82,7 +97,8 @@ export class Week {
 
   markSolvableDone(type): void {
     if (this.solvable[type].left <= 0) {
-      throw new Error("Already done");
+      this.alertUser('error', "Already done");
+      return;
     }
     this.solvable[type].left -= 1;
     this.updateLastChangeTime();
@@ -91,7 +107,8 @@ export class Week {
 
   markSolvableNotDone(type): void {
     if (this.solvable[type].left + 1 > this.solvable[type].total) {
-      throw new Error("Already done");
+      this.alertUser('error', "Already done");
+      return;
     }
     this.solvable[type].left += 1;
     this.updateLastChangeTime();
@@ -245,8 +262,8 @@ export function templateFunc(week: Week) {
 
     videos.push(html`
     <div class="video-time px-0">
-      <p class="video-text ${classMap(textClass)}">${video.m}:${video.s}</p> <!-- Add color -->
-      <button class="video-btn ${classMap(btnClass)}">${video.seen ? '-' : '+'}</button> <!-- Add color -->
+      <p class="video-text ${classMap(textClass)}">${video.m}:${video.s}</p>
+      <button class="video-btn ${classMap(btnClass)}">${video.seen ? '-' : '+'}</button>
     </div>
   `);
   });
@@ -283,7 +300,7 @@ export function templateFunc(week: Week) {
       { 'btnDown-valid': true } :
       { 'btnDown-invalid': true };
 
-    const inProgress = { 'in-progress' : data.total > data.done, 'done' : data.total == data.done }
+    const inProgress = { 'in-progress': data.total > data.done, 'done': data.total == data.done }
 
     solvables.push(html`
     <div class="video-time act-time">
@@ -296,21 +313,23 @@ export function templateFunc(week: Week) {
   `);
   })
 
+  let progressColor = { [ progress[ (Math.floor(_percentage/10)) ] ]: true };
+
   return html`
   <div class="container items-center bg-white my-5 better-shadow week-overall">
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
-      <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-amber-400">
-        <div class="w-full border-b-2 border-gray-600">
-          <h2 class="pb-2 text-2xl font-bold text-black lg:text-x lg:mr-8">
+      <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
+        <div class="w-full border-b-2 border-white">
+          <h2 class="pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
             ${week.name}
           </h2>
         </div>
       </div>
 
       <!-- Summary -->
-      <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between bg-sky-300">
+      <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between ${classMap(progressColor)}">
         <div class="pb-2 flex justify-between items-center border-b-2 border-gray-600">
           <p class="dispay-container">
             <span class="dispay-label">Projected:</span>

@@ -6,6 +6,7 @@ import {
 import { homeDir as _homeDir } from "@tauri-apps/api/path";
 import { render } from "lit-html";
 import { templateFunc, Week } from "./week";
+import { AlertHandler } from './alerts'
 
 export class WeekManager {
 
@@ -14,10 +15,14 @@ export class WeekManager {
   htmlWeeks: Array<HTMLElement>
   weeks: Array<Week>;
 
-  constructor() {
+  alerts : AlertHandler
+
+  constructor(alerts: AlertHandler) {
     this.weeksContainer = document.getElementById("weeks");
     this.weeks = [];
     this.htmlWeeks = [];
+
+    this.alerts = alerts;
   }
 
   createNewWeek(input): Week {
@@ -44,7 +49,13 @@ export class WeekManager {
       render(templateFunc(week), htmlcontainer);
     }
 
+    let alertFunction = (type, message) => {
+      this.alerts.show(type, message, 5_000);
+    }
+
     week.setUpdateFunction(updateFunction);
+    week.setAlertFunction(alertFunction);
+
     return week;
   }
 
