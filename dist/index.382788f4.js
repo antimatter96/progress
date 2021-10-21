@@ -601,7 +601,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             }
         ];
         this.lastChangeTime = 123123;
-        this.id = input.id ? input.id : $300e172487e56da3$export$2e2bcd8739ae039();
+        this.id = input.hasOwnProperty('id') ? input.id : $300e172487e56da3$export$2e2bcd8739ae039();
         this.name = input.name;
         this.factor = parseFloat(input.factor);
         this.solvableTime = input.solvableTime;
@@ -627,7 +627,11 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
                 left: parseInt(input.solvable.assignments.left, 10)
             }
         };
+        this.hidden = input.hasOwnProperty('hidden') ? input.hidden : false;
+        this.locked = input.hasOwnProperty('locked') ? input.locked : false;
+        this.menuVisible = false;
         this.updateLastChangeTime();
+        console.log(this);
     }
     setUpdateFunction(fn) {
         this.updateMe = fn;
@@ -640,6 +644,10 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         if (this.updateMe) this.updateMe();
     }
     markVideoSeen(i) {
+        if (this.locked) {
+            this.alertUser('error', "Please unlock before making any changes");
+            return;
+        }
         if (this.videos[i].seen) {
             this.alertUser('error', "Already done");
             return;
@@ -648,6 +656,10 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         this.updateLastChangeTime();
     }
     markVideoLeft(i) {
+        if (this.locked) {
+            this.alertUser('error', "Please unlock before making any changes");
+            return;
+        }
         if (!this.videos[i].seen) {
             this.alertUser('error', "Already done");
             return;
@@ -656,6 +668,10 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         this.updateLastChangeTime();
     }
     markSolvableDone(type) {
+        if (this.locked) {
+            this.alertUser('error', "Please unlock before making any changes");
+            return;
+        }
         if (this.solvable[type].left <= 0) {
             this.alertUser('error', "Already done");
             return;
@@ -664,6 +680,10 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         this.updateLastChangeTime();
     }
     markSolvableNotDone(type) {
+        if (this.locked) {
+            this.alertUser('error', "Please unlock before making any changes");
+            return;
+        }
         if (this.solvable[type].left + 1 > this.solvable[type].total) {
             this.alertUser('error', "Already done");
             return;
@@ -730,6 +750,20 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             downBtn.addEventListener('click', ()=>{
                 this.markSolvableNotDone(ttype);
             });
+        });
+        document.getElementById(`${this.id}-menu`).addEventListener('click', ()=>{
+            this.menuVisible = !this.menuVisible;
+            this.updateLastChangeTime();
+        });
+        document.getElementById(`${this.id}-hide`).addEventListener('click', ()=>{
+            this.menuVisible = !this.menuVisible;
+            this.hidden = !this.hidden;
+            this.updateLastChangeTime();
+        });
+        document.getElementById(`${this.id}-lock`).addEventListener('click', ()=>{
+            this.menuVisible = !this.menuVisible;
+            this.locked = !this.locked;
+            this.updateLastChangeTime();
         });
     }
     static Validate(input) {
@@ -833,15 +867,30 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
 
       <!-- Heading -->
       <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
-        <div class="w-full border-b-2 border-white">
-          <h2 class="pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
-            ${week.name}
-          </h2>
+        <div class="w-full border-b-2 border-white justify-between inline-flex">
+          <div class="inline-flex items-center">
+            <h2 class="pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
+              ${week.name}
+            </h2>
+          </div>
+          <div class="inline-flex items-center move-up">
+            <button class="w-auto p-2 my-2 text-base font-medium bg-white rounded-full" id="${week.id}-menu">
+              <svg xmlns="http://www.w3.org/2000/svg" class="4-6 w-4" fill="none" viewBox="0 0 24 24" stroke="black">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+              </svg>
+            </button>
+
+            <div ?hidden=${!week.menuVisible} class="origin-top-right absolute top-0 right-10 mt-2 w-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+              <a class="rounded-t-md text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-lock"> ${week.locked ? 'Unlock' : 'Lock'}  </a>
+              <a class="text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
+              <a class="rounded-b-md text-white bg-red-800 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-delete">Delete</a>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Summary -->
-      <div class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between ${$6197f1f1b7c083f0$export$56cc687933817664(progressColor)}">
+      <div ?hidden=${week.hidden} class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between ${$6197f1f1b7c083f0$export$56cc687933817664(progressColor)}">
         <div class="pb-2 flex justify-between items-center border-b-2 border-gray-600">
           <p class="dispay-container">
             <span class="dispay-label">Projected:</span>
@@ -861,7 +910,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Videos -->
-      <div class="pt-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full border-b-2 border-gray-600">
           <h2 class="pb-1 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
             Videos
@@ -873,7 +922,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Solvable -->
-      <div class="pt-5 pb-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-5 pb-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full">
           <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
             Solvable
@@ -1692,8 +1741,7 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         this.htmlWeeks = [];
         this.alerts = alerts;
     }
-    createNewWeek(input) {
-        let week = new $850e48264ea38c74$export$fca4f8121099df57(input);
+    registerWeek(week) {
         let htmlcontainer = document.createElement('div');
         htmlcontainer.id = week.id;
         this.htmlWeeks.unshift(htmlcontainer);
@@ -1703,10 +1751,6 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         console.log("here");
         week.addEventListeners();
         console.log("here 2");
-        setTimeout(()=>{
-            week.markSolvableDone('activities');
-            $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
-        }, 5000);
         let updateFunction = ()=>{
             $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
         };
@@ -1715,6 +1759,10 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         };
         week.setUpdateFunction(updateFunction);
         week.setAlertFunction(alertFunction);
+    }
+    createNewWeek(input) {
+        let week = new $850e48264ea38c74$export$fca4f8121099df57(input);
+        this.registerWeek(week);
         return week;
     }
     async loadLocal() {
@@ -1780,6 +1828,14 @@ window.onload = async function() {
     let alerts = new $3c13b93cfbb34482$export$a99aab2a736cea3e();
     alerts.hideAll();
     let wm = new $2f25b22e70662204$export$f160779312cf57d5(alerts);
+    let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`);
+    ww.hidden = true;
+    let w2 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
+    wm.registerWeek(w2);
+    ww.id = "asdasdasdasdasd";
+    ww.hidden = false;
+    let w3 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
+    wm.registerWeek(w3);
     const form = document.getElementById("add-form");
     form.addEventListener("submit", (e)=>{
         e.preventDefault();
