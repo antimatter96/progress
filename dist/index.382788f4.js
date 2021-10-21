@@ -639,6 +639,9 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
     setAlertFunction(fn) {
         this.alertUser = fn;
     }
+    setDeleteFunction(fn) {
+        this.deleteMe = fn;
+    }
     updateLastChangeTime() {
         this.lastChangeTime = Date.now();
         if (this.updateMe) this.updateMe();
@@ -764,6 +767,17 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             this.menuVisible = !this.menuVisible;
             this.locked = !this.locked;
             this.updateLastChangeTime();
+        });
+        document.getElementById(`${this.id}-delete`).addEventListener('click', async ()=>{
+            this.menuVisible = !this.menuVisible;
+            if (this.locked) {
+                this.alertUser('error', "Please unlock before making any changes");
+                return;
+            }
+            let promise = window.confirm("Do you really want to delete this ?");
+            let confirmed = await promise;
+            if (confirmed) this.deleteMe();
+            else this.alertUser('warning', "Please be careful");
         });
     }
     static Validate(input) {
@@ -1757,8 +1771,17 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         let alertFunction = (type, message)=>{
             this.alerts.show(type, message, 5000);
         };
+        let deleteFucntion = ()=>{
+            this.weeksContainer.removeChild(htmlcontainer);
+            this.weeks = this.weeks.filter((item)=>item.id != week.id
+            );
+            week = null;
+            console.log(this.weeks);
+        };
+        console.log(this.weeks);
         week.setUpdateFunction(updateFunction);
         week.setAlertFunction(alertFunction);
+        week.setDeleteFunction(deleteFucntion);
     }
     createNewWeek(input) {
         let week = new $850e48264ea38c74$export$fca4f8121099df57(input);

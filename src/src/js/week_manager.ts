@@ -19,6 +19,7 @@ export class WeekManager {
 
   constructor(alerts: AlertHandler) {
     this.weeksContainer = document.getElementById("weeks");
+
     this.weeks = [];
     this.htmlWeeks = [];
 
@@ -47,8 +48,18 @@ export class WeekManager {
       this.alerts.show(type, message, 5_000);
     }
 
+    let deleteFucntion = () => {
+      this.weeksContainer.removeChild(htmlcontainer);
+      this.weeks = this.weeks.filter(item => item.id != week.id);
+
+      week = null;
+      console.log(this.weeks);
+    }
+
+    console.log(this.weeks);
     week.setUpdateFunction(updateFunction);
     week.setAlertFunction(alertFunction);
+    week.setDeleteFunction(deleteFucntion);
   }
 
   createNewWeek(input): Week {
