@@ -42,6 +42,10 @@ body {
   @apply w-full text-center px-6 py-2;
 }
 
+.move-up {
+  transform: translateY(-5px);
+}
+
 .act-text {
   @apply common-text;
 }

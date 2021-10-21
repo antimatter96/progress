@@ -25,9 +25,8 @@ export class WeekManager {
     this.alerts = alerts;
   }
 
-  createNewWeek(input): Week {
-    let week = new Week(input);
 
+  registerWeek(week: Week) {
     let htmlcontainer = document.createElement('div');
     htmlcontainer.id = week.id;
 
@@ -40,11 +39,6 @@ export class WeekManager {
     week.addEventListeners();
     console.log("here 2");
 
-    setTimeout(() => {
-      week.markSolvableDone('activities');
-      render(templateFunc(week), htmlcontainer);
-    }, 5_000)
-
     let updateFunction = () => {
       render(templateFunc(week), htmlcontainer);
     }
@@ -55,6 +49,12 @@ export class WeekManager {
 
     week.setUpdateFunction(updateFunction);
     week.setAlertFunction(alertFunction);
+  }
+
+  createNewWeek(input): Week {
+    let week = new Week(input);
+
+    this.registerWeek(week);
 
     return week;
   }
