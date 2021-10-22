@@ -20,9 +20,9 @@ window.onload = async function () {
   });
 
   let f = new FormHandler();
-  let alerts = new AlertHandler();
+  let alerts = new AlertHandler(document.getElementById('alert'));
 
-  alerts.hideAll();
+ // alerts.hideAll();
 
 
   let wm = new WeekManager(alerts);
@@ -70,7 +70,7 @@ window.onload = async function () {
     let exists = await WeekManager.ensureFileExists();
     console.log(exists);
   } catch (error) {
-    console.log(console.error());
-    alerts.show("error", error, 1_000);
+    console.log(error);
+    alerts.show("error", error, 10_000);
   }
 };

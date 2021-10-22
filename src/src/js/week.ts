@@ -28,6 +28,7 @@ export class Week {
 
   lastChangeTime = 123123;
   updateMe: CallableFunction
+  deleteMe: CallableFunction
   alertUser: CallableFunction
 
   hidden: boolean
@@ -80,6 +81,10 @@ export class Week {
 
   setAlertFunction(fn: CallableFunction) {
     this.alertUser = fn;
+  }
+
+  setDeleteFunction(fn: CallableFunction) {
+    this.deleteMe = fn;
   }
 
   updateLastChangeTime() {
@@ -238,6 +243,23 @@ export class Week {
       this.updateLastChangeTime()
     });
 
+    document.getElementById(`${this.id}-delete`).addEventListener('click', async () => {
+      this.menuVisible = !this.menuVisible;
+      if (this.locked) {
+        this.alertUser('error', "Please unlock before making any changes");
+        return;
+      }
+
+      let promise = window.confirm("Do you really want to delete this ?");
+      let confirmed = await promise;
+
+      if (confirmed) {
+        this.deleteMe();
+      } else {
+        this.alertUser('warning', "Please be careful");
+      }
+
+    });
   }
 
   static Validate(input): void {

@@ -105,7 +105,7 @@ body {
 }
 
 .alert-logo-container {
-  @apply flex items-center justify-center w-4/12 px-10;
+  @apply flex items-center justify-center w-1/5 px-4;
 }
 
 .alert-logo {
@@ -113,7 +113,7 @@ body {
 }
 
 .alert-heading {
-  @apply font-semibold text-xl;
+  @apply font-semibold text-xl block mb-0.5;
 }
 
 .alert-text {
