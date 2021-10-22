@@ -291,32 +291,142 @@ const $a51c7802bfe1890e$export$8613d1ca9052b22e = {
 null == $a51c7802bfe1890e$var$R || $a51c7802bfe1890e$var$R($a51c7802bfe1890e$var$P, $a51c7802bfe1890e$var$N), (null !== ($a51c7802bfe1890e$var$t = globalThis.litHtmlVersions) && void 0 !== $a51c7802bfe1890e$var$t ? $a51c7802bfe1890e$var$t : globalThis.litHtmlVersions = []).push("2.0.1");
 
 
-class $3c13b93cfbb34482$export$a99aab2a736cea3e {
-    constructor(){
-        this.ok = document.getElementById("alert-ok");
-        this.info = document.getElementById("alert-info");
-        this.warning = document.getElementById("alert-warning");
-        this.error = document.getElementById("alert-error");
-        console.log(this.ok, this.info, this.warning, this.error);
-        this.all = [
-            this.ok,
-            this.info,
-            this.warning,
-            this.error
-        ];
+
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */ const $d71bce45553af777$export$9ba3b3f20a85bfa = {
+    ATTRIBUTE: 1,
+    CHILD: 2,
+    PROPERTY: 3,
+    BOOLEAN_ATTRIBUTE: 4,
+    EVENT: 5,
+    ELEMENT: 6
+}, $d71bce45553af777$export$99b43ad1ed32e735 = (t)=>(...e)=>({
+            _$litDirective$: t,
+            values: e
+        })
+;
+class $d71bce45553af777$export$befdefbdce210f91 {
+    constructor(t){
     }
-    hideAll() {
-        this.all.forEach((ele)=>{
-            ele.style.display = "none";
+    get _$AU() {
+        return this._$AM._$AU;
+    }
+    _$AT(t, e, i) {
+        this._$Ct = t, this._$AM = e, this._$Ci = i;
+    }
+    _$AS(t, e) {
+        return this.update(t, e);
+    }
+    update(t, e) {
+        return this.render(...e);
+    }
+}
+
+
+/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */ const $6197f1f1b7c083f0$export$56cc687933817664 = $d71bce45553af777$export$99b43ad1ed32e735(class extends $d71bce45553af777$export$befdefbdce210f91 {
+    constructor(t){
+        var i;
+        if (super(t), t.type !== $d71bce45553af777$export$9ba3b3f20a85bfa.ATTRIBUTE || "class" !== t.name || (null === (i = t.strings) || void 0 === i ? void 0 : i.length) > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
+    }
+    render(t) {
+        return " " + Object.keys(t).filter((i)=>t[i]
+        ).join(" ") + " ";
+    }
+    update(i, [s]) {
+        var r, o;
+        if (void 0 === this.st) {
+            this.st = new Set, void 0 !== i.strings && (this.et = new Set(i.strings.join(" ").split(/\s/).filter((t)=>"" !== t
+            )));
+            for(const t in s)s[t] && !(null === (r = this.et) || void 0 === r ? void 0 : r.has(t)) && this.st.add(t);
+            return this.render(s);
+        }
+        const e = i.element.classList;
+        this.st.forEach((t)=>{
+            t in s || (e.remove(t), this.st.delete(t));
         });
+        for(const t in s){
+            const i = !!s[t];
+            i === this.st.has(t) || (null === (o = this.et) || void 0 === o ? void 0 : o.has(t)) || (i ? (e.add(t), this.st.add(t)) : (e.remove(t), this.st.delete(t)));
+        }
+        return $a51c7802bfe1890e$export$9c068ae9cc5db4e8;
+    }
+});
+
+
+const $3c13b93cfbb34482$var$CSS = {
+    'ok': {
+        'heading': {
+            'text-green-500': true
+        },
+        'bg': {
+            'bg-green-500': true
+        }
+    },
+    'error': {
+        'heading': {
+            'text-red-500': true
+        },
+        'bg': {
+            'bg-red-500': true
+        }
+    },
+    'warning': {
+        'heading': {
+            'text-yellow-500': true
+        },
+        'bg': {
+            'bg-yellow-500': true
+        }
+    },
+    'info': {
+        'heading': {
+            'text-blue-500': true
+        },
+        'bg': {
+            'bg-blue-500': true
+        }
+    }
+};
+class $3c13b93cfbb34482$export$a99aab2a736cea3e {
+    constructor(container){
+        this.container = container;
+        this.visible = false;
+    }
+    render() {
+        if (!this.visible) return $a51c7802bfe1890e$export$c0bb0b647f701bb5``;
+        return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
+    <div id="alert" class="alert-container">
+      <div class="alert-inner-container">
+        <div class="alert-logo-container ${$6197f1f1b7c083f0$export$56cc687933817664($3c13b93cfbb34482$var$CSS[this.type].bg)}">
+          <svg ?hidden=${this.type != 'ok'}     class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" /></svg>
+          <svg ?hidden=${this.type != 'error'}  class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z" /></svg>
+          <svg ?hidden=${this.type != 'warning'} class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z" /></svg>
+          <svg ?hidden=${this.type != 'info'}   class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z" /></svg>
+        </div>
+        <div class="px-4 py-2 text-left">
+          <span class="alert-heading ${$6197f1f1b7c083f0$export$56cc687933817664($3c13b93cfbb34482$var$CSS[this.type].heading)}">${this.type.charAt(0).toUpperCase() + this.type.substr(1)}</span>
+          <p class="alert-text actual-text">${this.message}</p>
+        </div>
+      </div>
+    </div>
+    `;
     }
     show(type, message, timeout) {
-        let target = this[type];
-        console.log(target);
-        target.style.display = "flex";
-        target.getElementsByClassName("actual-text")[0].innerText = message;
+        this.type = type;
+        this.message = message;
+        this.visible = true;
+        $a51c7802bfe1890e$export$b3890eb0ae9dca99(this.render(), this.container);
         setTimeout(()=>{
-            this.hideAll();
+            this.visible = false;
+            $a51c7802bfe1890e$export$b3890eb0ae9dca99(this.render(), this.container);
         }, timeout);
     }
 }
@@ -427,74 +537,6 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
 }
 
 
-
-
-/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */ const $d71bce45553af777$export$9ba3b3f20a85bfa = {
-    ATTRIBUTE: 1,
-    CHILD: 2,
-    PROPERTY: 3,
-    BOOLEAN_ATTRIBUTE: 4,
-    EVENT: 5,
-    ELEMENT: 6
-}, $d71bce45553af777$export$99b43ad1ed32e735 = (t)=>(...e)=>({
-            _$litDirective$: t,
-            values: e
-        })
-;
-class $d71bce45553af777$export$befdefbdce210f91 {
-    constructor(t){
-    }
-    get _$AU() {
-        return this._$AM._$AU;
-    }
-    _$AT(t, e, i) {
-        this._$Ct = t, this._$AM = e, this._$Ci = i;
-    }
-    _$AS(t, e) {
-        return this.update(t, e);
-    }
-    update(t, e) {
-        return this.render(...e);
-    }
-}
-
-
-/**
- * @license
- * Copyright 2018 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */ const $6197f1f1b7c083f0$export$56cc687933817664 = $d71bce45553af777$export$99b43ad1ed32e735(class extends $d71bce45553af777$export$befdefbdce210f91 {
-    constructor(t){
-        var i;
-        if (super(t), t.type !== $d71bce45553af777$export$9ba3b3f20a85bfa.ATTRIBUTE || "class" !== t.name || (null === (i = t.strings) || void 0 === i ? void 0 : i.length) > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
-    }
-    render(t) {
-        return " " + Object.keys(t).filter((i)=>t[i]
-        ).join(" ") + " ";
-    }
-    update(i, [s]) {
-        var r, o;
-        if (void 0 === this.st) {
-            this.st = new Set, void 0 !== i.strings && (this.et = new Set(i.strings.join(" ").split(/\s/).filter((t)=>"" !== t
-            )));
-            for(const t in s)s[t] && !(null === (r = this.et) || void 0 === r ? void 0 : r.has(t)) && this.st.add(t);
-            return this.render(s);
-        }
-        const e = i.element.classList;
-        this.st.forEach((t)=>{
-            t in s || (e.remove(t), this.st.delete(t));
-        });
-        for(const t in s){
-            const i = !!s[t];
-            i === this.st.has(t) || (null === (o = this.et) || void 0 === o ? void 0 : o.has(t)) || (i ? (e.add(t), this.st.add(t)) : (e.remove(t), this.st.delete(t)));
-        }
-        return $a51c7802bfe1890e$export$9c068ae9cc5db4e8;
-    }
-});
 
 
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
@@ -1848,8 +1890,8 @@ window.onload = async function() {
         formEnclosure.style.display = "none";
     });
     let f = new $9fdc79397460abda$export$ca95ea95faa89f36();
-    let alerts = new $3c13b93cfbb34482$export$a99aab2a736cea3e();
-    alerts.hideAll();
+    let alerts = new $3c13b93cfbb34482$export$a99aab2a736cea3e(document.getElementById('alert'));
+    // alerts.hideAll();
     let wm = new $2f25b22e70662204$export$f160779312cf57d5(alerts);
     let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`);
     ww.hidden = true;
@@ -1882,8 +1924,8 @@ window.onload = async function() {
         let exists = await $2f25b22e70662204$export$f160779312cf57d5.ensureFileExists();
         console.log(exists);
     } catch (error) {
-        console.log(console.error());
-        alerts.show("error", error, 1000);
+        console.log(error);
+        alerts.show("error", error, 10000);
     }
 };
 
