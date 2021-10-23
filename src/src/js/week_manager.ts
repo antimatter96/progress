@@ -75,6 +75,9 @@ export class WeekManager {
   }
 
   createNewWeek(input): Week {
+    if (input.deleted) {
+      return null;
+    }
     let week = new Week(input);
 
     this.registerWeek(week);
@@ -97,14 +100,23 @@ export class WeekManager {
   }
 
   async loadLocal() {
+    let text;
     try {
       let homeDir = await _homeDir();
       let file = homeDir + ".tauri_progres/data.json";
 
-      let text = await _read(file);
+      text = await _read(file);
       console.log(text);
     } catch (e) {
       throw e;
+    }
+
+    let weeks = JSON.parse(text);
+    console.log("weeks", weeks);
+    for(let i = weeks.length-1; i  > -1;i--) {
+      console.log("week", weeks[i]);
+
+      this.createNewWeek(weeks[i]);
     }
   }
 

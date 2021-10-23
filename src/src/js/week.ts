@@ -70,7 +70,7 @@ export class Week {
     this.locked = input.hasOwnProperty('locked') ? input.locked : false
 
     this.menuVisible = false;
-    this.deleted = false;
+    this.deleted = input.hasOwnProperty('deleted') ? input.deleted : false;
 
     this.updateLastChangeTime();
 
@@ -222,6 +222,10 @@ export class Week {
 
     titles.forEach((type) => {
       let ttype = type.toLowerCase();
+
+      if (this.solvable[ttype].total == 0 ){
+        return;
+      }
 
       let downBtn = document.getElementById(`${this.id}-${ttype}-minus`);
       let upBtn = document.getElementById(`${this.id}-${ttype}-plus`);
@@ -380,6 +384,10 @@ export function templateFunc(week: Week) {
   let solvables = [];
 
   solvableData.forEach((data) => {
+    if (data.total == 0) {
+      return;
+    }
+
     const btnUp = (data.total > data.done) ?
       { 'btnUp-valid': true } :
       { 'btnUp-invalid': true };

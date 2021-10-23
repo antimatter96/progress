@@ -292,7 +292,6 @@ null == $a51c7802bfe1890e$var$R || $a51c7802bfe1890e$var$R($a51c7802bfe1890e$var
 
 
 
-
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -672,7 +671,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         this.hidden = input.hasOwnProperty('hidden') ? input.hidden : false;
         this.locked = input.hasOwnProperty('locked') ? input.locked : false;
         this.menuVisible = false;
-        this.deleted = false;
+        this.deleted = input.hasOwnProperty('deleted') ? input.deleted : false;
         this.updateLastChangeTime();
         console.log(this);
     }
@@ -792,6 +791,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         ];
         titles.forEach((type)=>{
             let ttype = type.toLowerCase();
+            if (this.solvable[ttype].total == 0) return;
             let downBtn = document.getElementById(`${this.id}-${ttype}-minus`);
             let upBtn = document.getElementById(`${this.id}-${ttype}-plus`);
             upBtn.addEventListener('click', ()=>{
@@ -904,6 +904,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     });
     let solvables = [];
     solvableData.forEach((data)=>{
+        if (data.total == 0) return;
         const btnUp = data.total > data.done ? {
             'btnUp-valid': true
         } : {
@@ -1845,6 +1846,7 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         week.setDeleteFunction(deleteFucntion);
     }
     createNewWeek(input) {
+        if (input.deleted) return null;
         let week = new $850e48264ea38c74$export$fca4f8121099df57(input);
         this.registerWeek(week);
         return week;
@@ -1862,13 +1864,20 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         }
     }
     async loadLocal() {
+        let text;
         try {
             let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
             let file = homeDir + ".tauri_progres/data.json";
-            let text = await $61d50d698abff50d$export$177308921a610223(file);
+            text = await $61d50d698abff50d$export$177308921a610223(file);
             console.log(text);
         } catch (e) {
             throw e;
+        }
+        let weeks = JSON.parse(text);
+        console.log("weeks", weeks);
+        for(let i = weeks.length - 1; i > -1; i--){
+            console.log("week", weeks[i]);
+            this.createNewWeek(weeks[i]);
         }
     }
     static async ensureFileExists() {
@@ -1910,55 +1919,57 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
 }
 
 
-window.onload = async function() {
-    let formOpenBtn = document.getElementById("open-form");
-    let formCloseBtn = document.getElementById("close-form");
-    let formEnclosure = document.getElementById("form-enclosure");
-    console.log(formOpenBtn, formCloseBtn, formEnclosure);
-    formOpenBtn.addEventListener("click", ()=>{
-        formEnclosure.style.display = "flex";
-    });
-    formCloseBtn.addEventListener("click", ()=>{
-        formEnclosure.style.display = "none";
-    });
-    let f = new $9fdc79397460abda$export$ca95ea95faa89f36();
-    let alerts = new $3c13b93cfbb34482$export$a99aab2a736cea3e(document.getElementById('alert'));
-    // alerts.hideAll();
-    let wm = new $2f25b22e70662204$export$f160779312cf57d5(alerts);
-    let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":33,"s":23,"seen":true}, {"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`);
-    ww.hidden = true;
-    let w2 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
-    wm.registerWeek(w2);
-    ww.id = "asdasdasdasdasd";
-    ww.hidden = false;
-    let w3 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
-    wm.registerWeek(w3);
-    const form = document.getElementById("add-form");
-    form.addEventListener("submit", (e)=>{
-        e.preventDefault();
-        let errors = f.validate();
-        if (errors.length > 0) alerts.show("error", errors.join("\n"), 60000);
-        else {
-            let weekInput = f.submit();
-            console.log(weekInput);
-            let w = wm.createNewWeek(weekInput);
-            console.log(w);
-            let sss = JSON.stringify(w);
-            console.log(sss);
-            let w2 = new $850e48264ea38c74$export$fca4f8121099df57(JSON.parse(sss));
-            w2.name = "Arpit Jain 2";
-            console.log(w2);
-            //weeks.prepend(w2.getHTML());
-            console.log($850e48264ea38c74$export$fca4f8121099df57.Validate(JSON.parse(sss)));
-        }
-    });
-    try {
-        let exists = await $2f25b22e70662204$export$f160779312cf57d5.ensureFileExists();
-        console.log(exists);
-    } catch (error) {
-        console.log(error);
-        alerts.show("error", error, 10000);
+class $b437cb7ddfb16b51$var$Main {
+    constructor(){
+        this.formOpenBtn = document.getElementById("open-form");
+        this.formCloseBtn = document.getElementById("close-form");
+        this.formEnclosure = document.getElementById("form-enclosure");
+        this.fm = new $9fdc79397460abda$export$ca95ea95faa89f36();
+        this.am = new $3c13b93cfbb34482$export$a99aab2a736cea3e(document.getElementById('alert'));
+        this.wm = new $2f25b22e70662204$export$f160779312cf57d5(this.am);
+        this.addListeners();
     }
+    async run() {
+        // let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":33,"s":23,"seen":true}, {"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
+        //   ww.hidden = true;
+        // let w2 = new Week(ww);
+        // this.wm.registerWeek(w2);
+        //   ww.id = "asdasdasdasdasd"
+        //   ww.hidden = false;
+        // let w3 = new Week(ww);
+        // this.wm.registerWeek(w3);
+        try {
+            let exists = await $2f25b22e70662204$export$f160779312cf57d5.ensureFileExists();
+            console.log(exists);
+            this.wm.loadLocal();
+        } catch (error) {
+            console.log(error);
+            this.am.show("error", error, 10000);
+        }
+    }
+    addListeners() {
+        this.formOpenBtn.addEventListener("click", ()=>{
+            this.formEnclosure.style.display = "flex";
+        });
+        this.formCloseBtn.addEventListener("click", ()=>{
+            this.formEnclosure.style.display = "none";
+        });
+        const form = document.getElementById("add-form");
+        form.addEventListener("submit", (e)=>{
+            e.preventDefault();
+            let errors = this.fm.validate();
+            if (errors.length > 0) this.am.show("error", errors.join("\n"), 60000);
+            else {
+                let weekInput = this.fm.submit();
+                let week = this.wm.createNewWeek(weekInput);
+                console.log($850e48264ea38c74$export$fca4f8121099df57.Validate(JSON.parse(JSON.stringify(week))));
+            }
+        });
+    }
+}
+window.onload = async function() {
+    let m = new $b437cb7ddfb16b51$var$Main();
+    m.run();
 };
 
 
