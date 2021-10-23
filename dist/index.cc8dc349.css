@@ -1498,6 +1498,7 @@ body {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   width: 41.666667%;
+  max-width: 28rem;
   --tw-bg-opacity: 1;
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
   padding-left: 0px;
