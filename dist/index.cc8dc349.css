@@ -1586,7 +1586,7 @@ body {
 }
 
 .btnUp-valid:hover {
-  opacity: 0.75;
+  opacity: 0.6;
 }
 
 .btnUp-valid:focus {
@@ -1597,9 +1597,9 @@ body {
 .btnUp-invalid {
   cursor: not-allowed;
   --tw-bg-opacity: 1;
-  background-color: rgba(229, 229, 229, var(--tw-bg-opacity));
+  background-color: rgba(212, 212, 212, var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgba(63, 63, 70, var(--tw-text-opacity));
+  color: rgba(39, 39, 42, var(--tw-text-opacity));
 }
 
 .btnDown-valid {
@@ -1610,7 +1610,7 @@ body {
 }
 
 .btnDown-valid:hover {
-  opacity: 0.75;
+  opacity: 0.6;
 }
 
 .btnDown-valid:focus {
@@ -1621,9 +1621,9 @@ body {
 .btnDown-invalid {
   cursor: not-allowed;
   --tw-bg-opacity: 1;
-  background-color: rgba(229, 229, 229, var(--tw-bg-opacity));
+  background-color: rgba(212, 212, 212, var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgba(63, 63, 70, var(--tw-text-opacity));
+  color: rgba(39, 39, 42, var(--tw-text-opacity));
 }
 
 /**/

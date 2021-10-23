@@ -425,9 +425,12 @@ class $3c13b93cfbb34482$export$a99aab2a736cea3e {
         this.visible = true;
         $a51c7802bfe1890e$export$b3890eb0ae9dca99(this.render(), this.container);
         setTimeout(()=>{
-            this.visible = false;
-            $a51c7802bfe1890e$export$b3890eb0ae9dca99(this.render(), this.container);
+            this.hide();
         }, timeout);
+    }
+    hide() {
+        this.visible = false;
+        $a51c7802bfe1890e$export$b3890eb0ae9dca99(this.render(), this.container);
     }
 }
 
@@ -442,10 +445,7 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
         this.factor = document.getElementById("input-factor");
         this.assignmentTime = document.getElementById("input-assignment-time");
         this.videos = document.getElementById("input-videos");
-        console.log(this.titleInput);
-        console.log(this.titleInput, this.activities, this.tutorials, this.assignments, this.videos);
-        console.log(this.factor);
-        console.log(this.videos);
+        console.log(this.titleInput, this.activities, this.tutorials, this.assignments, this.factor, this.videos);
     }
     validate() {
         let errors = [];
@@ -672,6 +672,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         this.hidden = input.hasOwnProperty('hidden') ? input.hidden : false;
         this.locked = input.hasOwnProperty('locked') ? input.locked : false;
         this.menuVisible = false;
+        this.deleted = false;
         this.updateLastChangeTime();
         console.log(this);
     }
@@ -687,6 +688,10 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
     updateLastChangeTime() {
         this.lastChangeTime = Date.now();
         if (this.updateMe) this.updateMe();
+    }
+    flipVideo(i) {
+        if (this.videos[i].seen) this.markVideoLeft(i);
+        else this.markVideoSeen(i);
     }
     markVideoSeen(i) {
         if (this.locked) {
@@ -818,8 +823,16 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             }
             let promise = window.confirm("Do you really want to delete this ?");
             let confirmed = await promise;
-            if (confirmed) this.deleteMe();
-            else this.alertUser('warning', "Please be careful");
+            if (confirmed) {
+                this.deleted = true;
+                this.deleteMe();
+            } else this.alertUser('warning', "Please be careful");
+        });
+        this.videos.forEach((_video, i)=>{
+            let btn = document.getElementById(`${this.id}-video-${i}`);
+            btn.addEventListener('click', ()=>{
+                this.flipVideo(i);
+            });
         });
     }
     static Validate(input) {
@@ -851,23 +864,24 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
     }
 }
 function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
+    if (week.deleted) return $a51c7802bfe1890e$export$c0bb0b647f701bb5``;
     let _projected = week.getTotalMinutes();
     let _elasped = week.getElapsedMinutes();
     let _percentage = week.getPercentage(_projected, _elasped);
     let videos = [];
     week.videos.forEach((video, i)=>{
         const textClass = {
-            'bg-red-500': i % 2 == 0,
-            'bg-lime-500': i % 2 != 0
+            'bg-red-500': !video.seen,
+            'bg-lime-500': video.seen
         };
         const btnClass = {
-            'bg-red-500': video.seen,
-            'bg-lime-500': !video.seen
+            'btnDown-valid': video.seen,
+            'btnUp-valid': !video.seen
         };
         videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
     <div class="video-time px-0">
-      <p class="video-text ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m}:${video.s}</p>
-      <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}">${video.seen ? '-' : '+'}</button>
+      <p class="video-text better-shadow ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m}:${video.s}</p>
+      <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${week.id}-video-${i}">${video.seen ? '-' : '+'}</button>
     </div>
   `);
     });
@@ -1796,6 +1810,16 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         this.weeks = [];
         this.htmlWeeks = [];
         this.alerts = alerts;
+        this.lastSaveTime = Date.now();
+        this.lastUpdateTime = this.lastSaveTime;
+        setInterval(async ()=>{
+            if (this.lastUpdateTime > this.lastSaveTime) {
+                this.alerts.show('info', "Saving file", 10000);
+                await this.saveFile();
+                this.lastSaveTime = Date.now();
+                this.alerts.hide();
+            }
+        }, 10000);
     }
     registerWeek(week) {
         let htmlcontainer = document.createElement('div');
@@ -1803,24 +1827,19 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         this.htmlWeeks.unshift(htmlcontainer);
         this.weeks.unshift(week);
         this.weeksContainer.prepend(htmlcontainer);
-        $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
-        console.log("here");
-        week.addEventListeners();
-        console.log("here 2");
         let updateFunction = ()=>{
             $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
+            this.lastUpdateTime = Date.now();
         };
         let alertFunction = (type, message)=>{
             this.alerts.show(type, message, 5000);
         };
         let deleteFucntion = ()=>{
+            updateFunction();
             this.weeksContainer.removeChild(htmlcontainer);
-            this.weeks = this.weeks.filter((item)=>item.id != week.id
-            );
-            week = null;
-            console.log(this.weeks);
         };
-        console.log(this.weeks);
+        updateFunction();
+        week.addEventListeners();
         week.setUpdateFunction(updateFunction);
         week.setAlertFunction(alertFunction);
         week.setDeleteFunction(deleteFucntion);
@@ -1829,6 +1848,18 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         let week = new $850e48264ea38c74$export$fca4f8121099df57(input);
         this.registerWeek(week);
         return week;
+    }
+    async saveFile() {
+        try {
+            let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
+            let path = homeDir + ".tauri_progres/data.json";
+            let text = await $61d50d698abff50d$export$552bfb764b5cd2b4({
+                contents: JSON.stringify(this.weeks, null, 2),
+                path: path
+            });
+        } catch (e) {
+            console.log(e);
+        }
     }
     async loadLocal() {
         try {
@@ -1869,6 +1900,7 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
                     contents: "{}",
                     path: path
                 });
+                console.log(">>>>>>>>>>>>>>>", "EXISTING", text);
             } catch (error) {
                 throw error;
             }
@@ -1893,7 +1925,7 @@ window.onload = async function() {
     let alerts = new $3c13b93cfbb34482$export$a99aab2a736cea3e(document.getElementById('alert'));
     // alerts.hideAll();
     let wm = new $2f25b22e70662204$export$f160779312cf57d5(alerts);
-    let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`);
+    let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":33,"s":23,"seen":true}, {"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`);
     ww.hidden = true;
     let w2 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
     wm.registerWeek(w2);

@@ -25,17 +25,14 @@ class FormHandler {
 
     this.videos = document.getElementById("input-videos") as HTMLInputElement;
 
-    console.log(this.titleInput);
-
     console.log(
       this.titleInput,
       this.activities,
       this.tutorials,
       this.assignments,
+      this.factor,
       this.videos
     );
-    console.log(this.factor);
-    console.log(this.videos);
   }
 
   validate() {
