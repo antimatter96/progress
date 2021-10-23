@@ -17,6 +17,9 @@ export class WeekManager {
 
   alerts : AlertHandler
 
+  lastSaveTime : number
+  lastUpdateTime : number
+
   constructor(alerts: AlertHandler) {
     this.weeksContainer = document.getElementById("weeks");
 
@@ -24,6 +27,20 @@ export class WeekManager {
     this.htmlWeeks = [];
 
     this.alerts = alerts;
+
+
+    this.lastSaveTime = Date.now();
+    this.lastUpdateTime = this.lastSaveTime;
+
+
+    setInterval(async () => {
+      if(this.lastUpdateTime > this.lastSaveTime) {
+        this.alerts.show('info', "Saving file", 10_000);
+        await this.saveFile();
+        this.lastSaveTime = Date.now();
+        this.alerts.hide();
+      }
+    }, 10_000)
   }
 
 
@@ -33,15 +50,12 @@ export class WeekManager {
 
     this.htmlWeeks.unshift(htmlcontainer);
     this.weeks.unshift(week);
-    this.weeksContainer.prepend(htmlcontainer);
 
-    render(templateFunc(week), htmlcontainer);
-    console.log("here");
-    week.addEventListeners();
-    console.log("here 2");
+    this.weeksContainer.prepend(htmlcontainer);
 
     let updateFunction = () => {
       render(templateFunc(week), htmlcontainer);
+      this.lastUpdateTime = Date.now();
     }
 
     let alertFunction = (type, message) => {
@@ -49,14 +63,12 @@ export class WeekManager {
     }
 
     let deleteFucntion = () => {
+      updateFunction()
       this.weeksContainer.removeChild(htmlcontainer);
-      this.weeks = this.weeks.filter(item => item.id != week.id);
-
-      week = null;
-      console.log(this.weeks);
     }
+    updateFunction();
 
-    console.log(this.weeks);
+    week.addEventListeners();
     week.setUpdateFunction(updateFunction);
     week.setAlertFunction(alertFunction);
     week.setDeleteFunction(deleteFucntion);
@@ -68,6 +80,20 @@ export class WeekManager {
     this.registerWeek(week);
 
     return week;
+  }
+
+  async saveFile() {
+    try {
+      let homeDir = await _homeDir();
+      let path = homeDir + ".tauri_progres/data.json";
+
+      let text = await _write({
+        contents: JSON.stringify(this.weeks, null, 2),
+        path,
+      });
+    } catch(e) {
+      console.log(e)
+    }
   }
 
   async loadLocal() {
@@ -119,6 +145,8 @@ export class WeekManager {
             contents: "{}",
             path,
           });
+
+          console.log(">>>>>>>>>>>>>>>", "EXISTING", text);
         } catch (error) {
           throw error;
         }

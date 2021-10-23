@@ -33,6 +33,7 @@ export class Week {
 
   hidden: boolean
   locked: boolean
+  deleted: boolean
   menuVisible: boolean
 
   constructor(input) {
@@ -69,6 +70,7 @@ export class Week {
     this.locked = input.hasOwnProperty('locked') ? input.locked : false
 
     this.menuVisible = false;
+    this.deleted = false;
 
     this.updateLastChangeTime();
 
@@ -91,6 +93,14 @@ export class Week {
     this.lastChangeTime = Date.now();
     if (this.updateMe) {
       this.updateMe();
+    }
+  }
+
+  flipVideo(i) : void {
+    if (this.videos[i].seen) {
+      this.markVideoLeft(i);
+    } else {
+      this.markVideoSeen(i);
     }
   }
 
@@ -132,7 +142,6 @@ export class Week {
     this.updateLastChangeTime();
 
   }
-
   markSolvableNotDone(type): void {
     if (this.locked) {
       this.alertUser('error', "Please unlock before making any changes");
@@ -254,11 +263,20 @@ export class Week {
       let confirmed = await promise;
 
       if (confirmed) {
+        this.deleted = true;
         this.deleteMe();
       } else {
         this.alertUser('warning', "Please be careful");
       }
 
+    });
+
+    this.videos.forEach((_video, i) => {
+      let btn = document.getElementById(`${this.id}-video-${i}`);
+
+      btn.addEventListener('click', () => {
+        this.flipVideo(i);
+      });
     });
   }
 
@@ -310,6 +328,10 @@ export class Week {
 }
 
 export function templateFunc(week: Week) {
+  if (week.deleted) {
+    return html``
+  }
+
   let _projected = week.getTotalMinutes();
   let _elasped = week.getElapsedMinutes();
   let _percentage = week.getPercentage(_projected, _elasped);
@@ -317,19 +339,19 @@ export function templateFunc(week: Week) {
   let videos = [];
   week.videos.forEach((video, i) => {
     const textClass = {
-      'bg-red-500': i % 2 == 0,
-      'bg-lime-500': i % 2 != 0
+      'bg-red-500': !video.seen,
+      'bg-lime-500': video.seen
     };
 
     const btnClass = {
-      'bg-red-500': video.seen,
-      'bg-lime-500': !video.seen
+      'btnDown-valid': video.seen,
+      'btnUp-valid': !video.seen
     };
 
     videos.push(html`
     <div class="video-time px-0">
-      <p class="video-text ${classMap(textClass)}">${video.m}:${video.s}</p>
-      <button class="video-btn ${classMap(btnClass)}">${video.seen ? '-' : '+'}</button>
+      <p class="video-text better-shadow ${classMap(textClass)}">${video.m}:${video.s}</p>
+      <button class="video-btn ${classMap(btnClass)}" id="${week.id}-video-${i}">${video.seen ? '-' : '+'}</button>
     </div>
   `);
   });

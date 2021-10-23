@@ -63,9 +63,13 @@ class AlertHandler {
     render(this.render(), this.container);
 
     setTimeout(() => {
-      this.visible = false;
-      render(this.render(), this.container);
+      this.hide();
     }, timeout);
+  }
+
+  hide() {
+    this.visible = false;
+    render(this.render(), this.container);
   }
 }
 

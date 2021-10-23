@@ -78,19 +78,19 @@ body {
 }
 
 .btnUp-valid {
-  @apply bg-lime-500 text-white focus:outline-none hover:opacity-75;
+  @apply bg-lime-500 text-white focus:outline-none hover:opacity-60;
 }
 
 .btnUp-invalid {
-  @apply bg-trueGray-200 text-gray-700 cursor-not-allowed;
+  @apply bg-trueGray-300 text-gray-800 cursor-not-allowed;
 }
 
 .btnDown-valid {
-  @apply bg-white text-red-700 focus:outline-none hover:opacity-75;
+  @apply bg-white text-red-700 focus:outline-none hover:opacity-60;
 }
 
 .btnDown-invalid {
- @apply bg-trueGray-200 text-gray-700 cursor-not-allowed;
+ @apply bg-trueGray-300 text-gray-800 cursor-not-allowed;
 }
 
 /**/
