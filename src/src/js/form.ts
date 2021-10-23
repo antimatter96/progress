@@ -13,6 +13,7 @@ class FormHandler {
 
   videos: HTMLInputElement;
 
+  
   constructor() {
     this.titleInput = document.getElementById("input-title") as HTMLInputElement;
 
