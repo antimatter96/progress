@@ -932,8 +932,11 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     let progressColor = {
         [$850e48264ea38c74$var$progress[Math.floor(_percentage / 10)]]: true
     };
+    const animatedBorderClassMap = {
+        'gradient-border': Math.floor(_percentage / 10) == 10
+    };
     return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
-  <div class="container items-center bg-white my-4 better-shadow week-overall">
+  <div class="container items-center bg-white my-4 better-shadow week-overall ${$6197f1f1b7c083f0$export$56cc687933817664(animatedBorderClassMap)}">
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
@@ -945,7 +948,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
             </h2>
           </div>
           <div class="inline-flex items-center move-up">
-            <button class="w-auto p-2 my-2 text-base font-medium bg-white rounded-full" id="${week.id}-menu">
+            <button class="rounded-button bg-white" id="${week.id}-menu">
               <svg xmlns="http://www.w3.org/2000/svg" class="4-6 w-4" fill="none" viewBox="0 0 24 24" stroke="black">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
               </svg>
