@@ -9,10 +9,36 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_UPLOAD_ID: ${{ steps.create_release.outputs.id }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: get version
+        run: echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+      - name: create release
+        id: create_release
+        uses: actions/create-release@v1.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: app-v${{ env.PACKAGE_VERSION }}
+          release_name: "Desktop app v${{ env.PACKAGE_VERSION }}"
+          body: "See the assets to download this version and install."
+          draft: true
+          prerelease: false
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
     runs-on: macos-latest
+    needs: create-release
+
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -21,14 +47,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-          cache: 'yarn'
       - name: install Rust stable
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          cache: 'rust'
       - name: install app dependencies and build it
         run: yarn
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          releaseId: ${{ needs.create-release.outputs.RELEASE_UPLOAD_ID }}
