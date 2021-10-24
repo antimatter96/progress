@@ -1,18 +1,17 @@
-import { render } from "lit-html";
 import { AlertHandler } from "./alerts";
 import { FormHandler } from "./form";
-import { Week, templateFunc } from "./week";
+import { Week } from "./week";
 import { WeekManager } from "./week_manager";
 
 class Main {
-  formOpenBtn : HTMLElement
-  formCloseBtn : HTMLElement
-  formEnclosure : HTMLElement
+  formOpenBtn: HTMLElement
+  formCloseBtn: HTMLElement
+  formEnclosure: HTMLElement
 
 
-  wm : WeekManager
-  fm : FormHandler
-  am : AlertHandler
+  wm: WeekManager
+  fm: FormHandler
+  am: AlertHandler
 
   constructor() {
     this.formOpenBtn = document.getElementById("open-form");
@@ -29,13 +28,13 @@ class Main {
   }
 
   async run() {
-    // let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":33,"s":23,"seen":true}, {"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
-    //   ww.hidden = true;
+    // let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":33,"s":23,"seen":true}, {"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
+    // ww.hidden = true;
     // let w2 = new Week(ww);
     // this.wm.registerWeek(w2);
 
-    //   ww.id = "asdasdasdasdasd"
-    //   ww.hidden = false;
+    // ww.id = "asdasdasdasdasd"
+    // ww.hidden = false;
 
     // let w3 = new Week(ww);
     // this.wm.registerWeek(w3);
@@ -46,7 +45,7 @@ class Main {
       this.wm.loadLocal();
     } catch (error) {
       console.log(error);
-      this.am.show("error", error, 10_000);
+      this.am.show("error", error, 1_000);
     }
   }
 
@@ -54,7 +53,7 @@ class Main {
     this.formOpenBtn.addEventListener("click", () => {
       this.formEnclosure.style.display = "flex";
     });
-  
+
     this.formCloseBtn.addEventListener("click", () => {
       this.formEnclosure.style.display = "none";
     });
@@ -63,11 +62,11 @@ class Main {
     const form = document.getElementById("add-form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-  
+
       let errors = this.fm.validate();
-  
+
       if (errors.length > 0) {
-        this.am.show("error", errors.join("\n"), 60_000);
+        this.am.show("error", errors.join("\n"), 10_000);
       } else {
         let weekInput = this.fm.submit();
 
@@ -79,7 +78,7 @@ class Main {
 }
 
 window.onload = async function () {
-  let m =  new Main();
+  let m = new Main();
 
   m.run();
 

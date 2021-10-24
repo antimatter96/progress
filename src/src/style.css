@@ -7,6 +7,7 @@
 body {
   @apply font-sans;
   background-color: #f9fafe;
+  background-image: radial-gradient(circle, #fdfcfb 0%, #e2d1c3 100%);
 }
 
 .better-shadow {
@@ -19,11 +20,11 @@ body {
 }
 
 .dispay-label {
-  @apply text-xl font-semibold mr-1 sm:mr-3;
+  @apply text-lg font-semibold mr-1 sm:mr-3 tracking-tight;
 }
 
 .dispay-data {
-  @apply text-4xl font-bold;
+  @apply text-3xl font-black;
 }
 
 .dispay-container {
@@ -31,15 +32,15 @@ body {
 }
 
 .video-time {
-  @apply w-2/12 mx-5 my-3 text-2xl font-bold text-white bottom-2 shadow-sm;
+  @apply w-1/6 mx-3 my-3 text-2xl font-bold text-white bottom-2 shadow-sm;
 }
 
 .video-time.act-time {
-  @apply w-5/12 mx-1 my-2 px-0 bg-white shadow-none max-w-md;
+  @apply w-5/12 mx-2 my-2 px-0 bg-white shadow-none max-w-md;
 }
 
 .common-text {
-  @apply w-full text-center px-6 py-2;
+  @apply w-full text-center px-2 py-2 text-lg;
 }
 
 .move-up {
@@ -48,6 +49,7 @@ body {
 
 .act-text {
   @apply common-text;
+  @apply py-3;
 }
 
 .video-text {
@@ -63,7 +65,7 @@ body {
 }
 
 .video-btn {
-  @apply text-2xl w-full text-center py-1 mt-0.5;
+  @apply text-xl w-full text-center py-1 mt-0.5;
   @apply better-button;
 }
 
@@ -73,7 +75,7 @@ body {
 }
 
 .solvable-btn {
-  @apply text-2xl flex-grow w-auto py-1;
+  @apply text-xl flex-grow w-auto py-1;
   @apply better-button;
 }
 
@@ -90,7 +92,7 @@ body {
 }
 
 .btnDown-invalid {
- @apply bg-trueGray-300 text-gray-800 cursor-not-allowed;
+  @apply bg-trueGray-300 text-gray-800 cursor-not-allowed;
 }
 
 /**/
