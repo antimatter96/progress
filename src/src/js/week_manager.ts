@@ -15,10 +15,10 @@ export class WeekManager {
   htmlWeeks: Array<HTMLElement>
   weeks: Array<Week>;
 
-  alerts : AlertHandler
+  alerts: AlertHandler
 
-  lastSaveTime : number
-  lastUpdateTime : number
+  lastSaveTime: number
+  lastUpdateTime: number
 
   constructor(alerts: AlertHandler) {
     this.weeksContainer = document.getElementById("weeks");
@@ -34,7 +34,7 @@ export class WeekManager {
 
 
     setInterval(async () => {
-      if(this.lastUpdateTime > this.lastSaveTime) {
+      if (this.lastUpdateTime > this.lastSaveTime) {
         this.alerts.show('info', "Saving file", 10_000);
         await this.saveFile();
         this.lastSaveTime = Date.now();
@@ -94,7 +94,7 @@ export class WeekManager {
         contents: JSON.stringify(this.weeks, null, 2),
         path,
       });
-    } catch(e) {
+    } catch (e) {
       console.log(e)
     }
   }
@@ -113,7 +113,7 @@ export class WeekManager {
 
     let weeks = JSON.parse(text);
     console.log("weeks", weeks);
-    for(let i = weeks.length-1; i  > -1;i--) {
+    for (let i = weeks.length - 1; i > -1; i--) {
       console.log("week", weeks[i]);
 
       this.createNewWeek(weeks[i]);

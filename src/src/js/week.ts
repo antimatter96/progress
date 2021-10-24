@@ -96,7 +96,7 @@ export class Week {
     }
   }
 
-  flipVideo(i) : void {
+  flipVideo(i: number): void {
     if (this.videos[i].seen) {
       this.markVideoLeft(i);
     } else {
@@ -223,7 +223,7 @@ export class Week {
     titles.forEach((type) => {
       let ttype = type.toLowerCase();
 
-      if (this.solvable[ttype].total == 0 ){
+      if (this.solvable[ttype].total == 0) {
         return;
       }
 
@@ -399,8 +399,8 @@ export function templateFunc(week: Week) {
     const inProgress = { 'in-progress': data.total > data.done, 'done': data.total == data.done }
 
     solvables.push(html`
-    <div class="video-time act-time">
-      <h2 class="act-text ${classMap(inProgress)}">${data.title} <br>${data.done}/${data.total}</h2>
+    <div class="video-time act-time w-1/5">
+      <h2 class="act-text ${classMap(inProgress)}"><span class="tracking-tight">${data.title}</span> : ${data.done}/${data.total}</h2>
       <div class="flex justify-around mt-0.5">
         <button class="solvable-btn mr-0.5 ${classMap(btnUp)}" id="${week.id}-${data.title.toLowerCase()}-plus">+</button>
         <button class="solvable-btn ml-0.5 ${classMap(btnDown)}" id="${week.id}-${data.title.toLowerCase()}-minus">-</button>
@@ -412,11 +412,11 @@ export function templateFunc(week: Week) {
   let progressColor = { [progress[(Math.floor(_percentage / 10))]]: true };
 
   return html`
-  <div class="container items-center bg-white my-5 better-shadow week-overall">
+  <div class="container items-center bg-white my-4 better-shadow week-overall">
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
-      <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
+      <div class="pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
         <div class="w-full border-b-2 border-white justify-between inline-flex">
           <div class="inline-flex items-center">
             <h2 class="pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
@@ -431,8 +431,8 @@ export function templateFunc(week: Week) {
             </button>
 
             <div ?hidden=${!week.menuVisible} class="origin-top-right absolute top-0 right-10 mt-2 w-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-              <a class="rounded-t-md text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-lock"> ${ week.locked ? 'Unlock' : 'Lock' }  </a>
-              <a class="text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-hide"> ${ week.hidden ? 'Unhide' : 'Hide' } </a>
+              <a class="rounded-t-md text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-lock"> ${week.locked ? 'Unlock' : 'Lock'}  </a>
+              <a class="text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
               <a class="rounded-b-md text-white bg-red-800 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-delete">Delete</a>
             </div>
           </div>
@@ -460,9 +460,9 @@ export function templateFunc(week: Week) {
       </div>
 
       <!-- Videos -->
-      <div ?hidden=${week.hidden} class="pt-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full border-b-2 border-gray-600">
-          <h2 class="pb-1 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+          <h2 class="pb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
             Videos
           </h2>
           <div class="flex justify-evenly flex-wrap">
@@ -472,13 +472,13 @@ export function templateFunc(week: Week) {
       </div>
 
       <!-- Solvable -->
-      <div ?hidden=${week.hidden} class="pt-5 pb-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full">
-          <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+          <h2 class="pb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
             Solvable
           </h2>
 
-          <div class="flex justify-around">
+          <div class="flex justify-around px-5">
             ${solvables}
           </div>
         </div>

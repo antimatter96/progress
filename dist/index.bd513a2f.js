@@ -920,8 +920,8 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
             'done': data.total == data.done
         };
         solvables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
-    <div class="video-time act-time">
-      <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${data.title} <br>${data.done}/${data.total}</h2>
+    <div class="video-time act-time w-1/5">
+      <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}"><span class="tracking-tight">${data.title}</span> : ${data.done}/${data.total}</h2>
       <div class="flex justify-around mt-0.5">
         <button class="solvable-btn mr-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${week.id}-${data.title.toLowerCase()}-plus">+</button>
         <button class="solvable-btn ml-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${week.id}-${data.title.toLowerCase()}-minus">-</button>
@@ -933,11 +933,11 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
         [$850e48264ea38c74$var$progress[Math.floor(_percentage / 10)]]: true
     };
     return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
-  <div class="container items-center bg-white my-5 better-shadow week-overall">
+  <div class="container items-center bg-white my-4 better-shadow week-overall">
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
-      <div class="pt-3 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
+      <div class="pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
         <div class="w-full border-b-2 border-white justify-between inline-flex">
           <div class="inline-flex items-center">
             <h2 class="pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
@@ -981,9 +981,9 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Videos -->
-      <div ?hidden=${week.hidden} class="pt-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full border-b-2 border-gray-600">
-          <h2 class="pb-1 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+          <h2 class="pb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
             Videos
           </h2>
           <div class="flex justify-evenly flex-wrap">
@@ -993,13 +993,13 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Solvable -->
-      <div ?hidden=${week.hidden} class="pt-5 pb-5 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full">
-          <h2 class="pb-2 mb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+          <h2 class="pb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
             Solvable
           </h2>
 
-          <div class="flex justify-around">
+          <div class="flex justify-around px-5">
             ${solvables}
           </div>
         </div>
@@ -1930,12 +1930,12 @@ class $b437cb7ddfb16b51$var$Main {
         this.addListeners();
     }
     async run() {
-        // let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":33,"s":23,"seen":true}, {"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
-        //   ww.hidden = true;
+        // let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":33,"s":23,"seen":true}, {"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
+        // ww.hidden = true;
         // let w2 = new Week(ww);
         // this.wm.registerWeek(w2);
-        //   ww.id = "asdasdasdasdasd"
-        //   ww.hidden = false;
+        // ww.id = "asdasdasdasdasd"
+        // ww.hidden = false;
         // let w3 = new Week(ww);
         // this.wm.registerWeek(w3);
         try {
@@ -1944,7 +1944,7 @@ class $b437cb7ddfb16b51$var$Main {
             this.wm.loadLocal();
         } catch (error) {
             console.log(error);
-            this.am.show("error", error, 10000);
+            this.am.show("error", error, 1000);
         }
     }
     addListeners() {
@@ -1958,7 +1958,7 @@ class $b437cb7ddfb16b51$var$Main {
         form.addEventListener("submit", (e)=>{
             e.preventDefault();
             let errors = this.fm.validate();
-            if (errors.length > 0) this.am.show("error", errors.join("\n"), 60000);
+            if (errors.length > 0) this.am.show("error", errors.join("\n"), 10000);
             else {
                 let weekInput = this.fm.submit();
                 let week = this.wm.createNewWeek(weekInput);
