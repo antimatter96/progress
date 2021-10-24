@@ -28,7 +28,7 @@ jobs:
           toolchain: stable
           cache: 'rust'
       - name: install app dependencies and build it
-        run: yarn && yarn tauri build
+        run: yarn
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
