@@ -789,11 +789,6 @@ video {
   margin-bottom: 0.25rem;
 }
 
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -886,10 +881,6 @@ video {
 
 .w-24 {
   width: 6rem;
-}
-
-.w-auto {
-  width: auto;
 }
 
 .w-1\/2 {
@@ -1013,10 +1004,6 @@ video {
 
 .rounded-lg {
   border-radius: 0.5rem;
-}
-
-.rounded-full {
-  border-radius: 9999px;
 }
 
 .rounded-t-md {
@@ -1155,10 +1142,6 @@ video {
 
 .p-1 {
   padding: 0.25rem;
-}
-
-.p-2 {
-  padding: 0.5rem;
 }
 
 .p-4 {
@@ -1539,7 +1522,7 @@ body {
   font-size: 1.125rem;
   line-height: 1.75rem;
   padding-top: 0.75rem;
-  padding-bottom: 0.75rem
+  padding-bottom: 0.75rem;
 }
 
 .video-text {
@@ -1752,6 +1735,43 @@ body {
   text-transform: uppercase;
   --tw-text-opacity: 1;
   color: rgba(63, 63, 70, var(--tw-text-opacity));
+}
+
+.rounded-button {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: auto;
+  border-radius: 9999px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500
+}
+
+.gradient-border {
+  --border-width: 4px;
+  position: relative;
+}
+
+.gradient-border::after {
+  content: "";
+  top: calc(-1 * var(--border-width));
+  left: calc(-1 * var(--border-width));
+  z-index: -1;
+  width: calc(100% + var(--border-width) * 2);
+  height: calc(100% + var(--border-width) * 2);
+  background-size: 300% 300%;
+  background-position: 0 50%;
+  animation: moveGradient 4s alternate infinite;
+  position: absolute;
+  /* background-image: linear-gradient(60deg, #5f86f2, #a65ff2, #f25fd0, #f25f61, #f2cb5f, #abf25f, #5ff281, #5ff2f0); */
+  background-image: linear-gradient(60deg, #f25fd0, #f25f61, #f2cb5f);
+}
+
+@keyframes moveGradient {
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 @media (min-width: 640px) {

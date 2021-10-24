@@ -411,8 +411,12 @@ export function templateFunc(week: Week) {
 
   let progressColor = { [progress[(Math.floor(_percentage / 10))]]: true };
 
+  const animatedBorderClassMap = {
+    'gradient-border' : (Math.floor(_percentage / 10)) == 10
+  }
+
   return html`
-  <div class="container items-center bg-white my-4 better-shadow week-overall">
+  <div class="container items-center bg-white my-4 better-shadow week-overall ${classMap(animatedBorderClassMap)}">
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
