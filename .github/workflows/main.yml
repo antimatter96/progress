@@ -26,6 +26,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+          cache: 'rust'
       - name: install app dependencies and build it
         run: yarn && yarn tauri build
       - uses: tauri-apps/tauri-action@v0
