@@ -129,3 +129,8 @@ body {
 .basic-label {
   @apply block mb-1 mt-2 font-bold text-gray-700 uppercase;
 }
+
+.rounded-button {
+  @apply w-auto p-2 my-2 text-base font-medium rounded-full
+}
+
