@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200" height="75" src="./readme_assets/logo.png">
+  <img width="400" height="150" src="./readme_assets/logo.png">
 </p>
 
 # Progress
