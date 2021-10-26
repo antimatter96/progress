@@ -880,7 +880,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
         };
         videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
     <div class="video-time px-0">
-      <p class="video-text better-shadow ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m}:${video.s}</p>
+      <p class="video-text better-shadow ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
       <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${week.id}-video-${i}">${video.seen ? '-' : '+'}</button>
     </div>
   `);
@@ -1933,7 +1933,7 @@ class $b437cb7ddfb16b51$var$Main {
         this.addListeners();
     }
     async run() {
-        // let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":2}},"videos":[{"m":33,"s":23,"seen":true}, {"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
+        // let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":3}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
         // ww.hidden = true;
         // let w2 = new Week(ww);
         // this.wm.registerWeek(w2);

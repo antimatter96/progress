@@ -354,7 +354,7 @@ export function templateFunc(week: Week) {
 
     videos.push(html`
     <div class="video-time px-0">
-      <p class="video-text better-shadow ${classMap(textClass)}">${video.m}:${video.s}</p>
+      <p class="video-text better-shadow ${classMap(textClass)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2,"0")}</p>
       <button class="video-btn ${classMap(btnClass)}" id="${week.id}-video-${i}">${video.seen ? '-' : '+'}</button>
     </div>
   `);

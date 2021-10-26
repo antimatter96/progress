@@ -1,10 +1,10 @@
 [package]
 name = "app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = [ "you" ]
+version = "1.1.0"
+description = "Time tracking"
+authors = [ "antimatter96" ]
 license = ""
-repository = ""
+repository = "https://github.com/antimatter96/progress"
 default-run = "app"
 edition = "2018"
 build = "src/build.rs"
