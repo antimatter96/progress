@@ -59,7 +59,7 @@ class Main {
     });
 
 
-    const form = document.getElementById("add-form");
+    const form = document.getElementById("add-form") as HTMLFormElement;
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -69,6 +69,7 @@ class Main {
         this.am.show("error", errors.join("\n"), 10_000);
       } else {
         let weekInput = this.fm.submit();
+        form.reset();
 
         let week = this.wm.createNewWeek(weekInput);
         console.log(Week.Validate(JSON.parse(JSON.stringify(week))));

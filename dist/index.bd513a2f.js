@@ -1964,6 +1964,7 @@ class $b437cb7ddfb16b51$var$Main {
             if (errors.length > 0) this.am.show("error", errors.join("\n"), 10000);
             else {
                 let weekInput = this.fm.submit();
+                form.reset();
                 let week = this.wm.createNewWeek(weekInput);
                 console.log($850e48264ea38c74$export$fca4f8121099df57.Validate(JSON.parse(JSON.stringify(week))));
             }

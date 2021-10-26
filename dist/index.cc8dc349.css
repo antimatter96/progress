@@ -1135,11 +1135,6 @@ video {
   background-color: rgba(15, 23, 42, var(--tw-bg-opacity));
 }
 
-.invalid\:bg-red-400:invalid {
-  --tw-bg-opacity: 1;
-  background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
-}
-
 .p-1 {
   padding: 0.25rem;
 }
