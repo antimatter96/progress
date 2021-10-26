@@ -5,14 +5,21 @@ const _url = require("url");
 const urlTemplate = require("url-template");
 const octokit = new oct.Octokit({ auth: process.env.GH_TOKEN });
 
-const FILE_NAME = "calc_1.0.0_x64.dmg";
-const filePath = _path.join(
-  __dirname,
-  "/src-tauri/target/release/bundle/dmg",
-  FILE_NAME
-);
-
 async function main() {
+  // == check for dmg version
+
+  let tauriConfig = JSON.parse(fs.readFileSync('./src-tauri/tauri.conf.json', 'utf8'));
+  let version = tauriConfig.package.version;
+
+  let fileName = `calc_${version}_x64.dmg`
+  const filePath = _path.join(
+    __dirname,
+    "/src-tauri/target/release/bundle/dmg",
+    fileName
+  );
+
+  // == create release
+
   let epoch = Date.now();
   let dt = new Date(epoch);
 
@@ -23,8 +30,10 @@ async function main() {
     name: `Build - ${dt.toLocaleString()}`,
   });
 
+  // == upload asset
+
   const url = urlTemplate.parse(uploadUrl).expand({
-    name: FILE_NAME,
+    name: fileName,
   });
   const size = fs.statSync(filePath).size;
 
