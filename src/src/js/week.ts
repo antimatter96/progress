@@ -420,15 +420,15 @@ export function templateFunc(week: Week) {
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
-      <div class="pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
-        <div class="w-full border-b-2 border-white justify-between inline-flex">
-          <div class="inline-flex items-center">
-            <h2 class="pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
+      <div class="week-heading-draggable pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
+        <div class="week-heading-draggable w-full border-b-2 border-white justify-between inline-flex">
+          <div class="week-heading-draggable inline-flex items-center">
+            <h2 class="week-heading-draggable pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
               ${week.name}
             </h2>
           </div>
-          <div class="inline-flex items-center move-up">
-            <button class="rounded-button bg-white" id="${week.id}-menu">
+          <div class="week-heading-draggable inline-flex items-center move-up">
+            <button class="week-heading-draggable rounded-button bg-white" id="${week.id}-menu">
               <svg xmlns="http://www.w3.org/2000/svg" class="4-6 w-4" fill="none" viewBox="0 0 24 24" stroke="black">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
               </svg>

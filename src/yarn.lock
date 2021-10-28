@@ -1127,6 +1127,11 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
+atoa@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/atoa/-/atoa-1.0.0.tgz#0cc0e91a480e738f923ebc103676471779b34a49"
+  integrity sha1-DMDpGkgOc4+SPrwQNnZHF3mzSkk=
+
 available-typed-arrays@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
@@ -1548,6 +1553,14 @@ content-disposition@0.5.2:
   resolved "https://registry.yarnpkg.com/content-disposition/-/content-disposition-0.5.2.tgz#0cf68bb9ddf5f2be7961c3a85178cb85dba78cb4"
   integrity sha1-DPaLud318r55YcOoUXjLhdunjLQ=
 
+contra@1.9.4:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/contra/-/contra-1.9.4.tgz#f53bde42d7e5b5985cae4d99a8d610526de8f28d"
+  integrity sha1-9TveQtfltZhcrk2ZqNYQUm3o8o0=
+  dependencies:
+    atoa "1.0.0"
+    ticky "1.0.1"
+
 convert-source-map@^1.7.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.8.0.tgz#f3373c32d21b4d780dd8004514684fb791ca4369"
@@ -1622,6 +1635,13 @@ cross-spawn@^6.0.4:
     semver "^5.5.0"
     shebang-command "^1.2.0"
     which "^1.2.9"
+
+crossvent@1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/crossvent/-/crossvent-1.5.5.tgz#ad20878e4921e9be73d9d6976f8b2ecd0f71a0b1"
+  integrity sha1-rSCHjkkh6b5z2daXb4suzQ9xoLE=
+  dependencies:
+    custom-event "^1.0.0"
 
 crypto-browserify@^3.12.0:
   version "3.12.0"
@@ -1779,6 +1799,11 @@ cssstyle@^1.1.1:
   integrity sha512-GBrLZYZ4X4x6/QEoBnIrqb8B/f5l4+8me2dkom/j1Gtbxy0kBv6OGzKuAsGM75bkGwGAFkt56Iwg28S3XTZgSA==
   dependencies:
     cssom "0.3.x"
+
+custom-event@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/custom-event/-/custom-event-1.0.1.tgz#5d02a46850adf1b4a317946a3928fccb5bfd0425"
+  integrity sha1-XQKkaFCt8bSjF5RqOSj8y1v9BCU=
 
 dashdash@^1.12.0:
   version "1.14.1"
@@ -1938,6 +1963,14 @@ dotenv@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-7.0.0.tgz#a2be3cd52736673206e8a85fb5210eea29628e7c"
   integrity sha512-M3NhsLbV1i6HuGzBUH8vXrtxOk+tWmzWKDMbAVSUp3Zsjm7ywFeuwrUXhmhQyRK1q5B5GGy7hcXPbj3bnfZg2g==
+
+dragula@^3.7.3:
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/dragula/-/dragula-3.7.3.tgz#909460fd0b4acba5409c6dbb1b64d24f5bc9efb6"
+  integrity sha512-/rRg4zRhcpf81TyDhaHLtXt6sEywdfpv1cRUMeFFy7DuypH2U0WUL0GTdyAQvXegviT4PJK4KuMmOaIDpICseQ==
+  dependencies:
+    contra "1.9.4"
+    crossvent "1.5.5"
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"
@@ -4651,6 +4684,11 @@ terser@^5.2.0, terser@^5.8.0:
     commander "^2.20.0"
     source-map "~0.7.2"
     source-map-support "~0.5.20"
+
+ticky@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ticky/-/ticky-1.0.1.tgz#b7cfa71e768f1c9000c497b9151b30947c50e46d"
+  integrity sha1-t8+nHnaPHJAAxJe5FRswlHxQ5G0=
 
 timers-browserify@^2.0.11:
   version "2.0.12"

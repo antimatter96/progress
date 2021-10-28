@@ -1,3 +1,16 @@
+function $parcel$interopDefault(a) {
+  return a && a.__esModule ? a.default : a;
+}
+var $parcel$global =
+typeof globalThis !== 'undefined'
+  ? globalThis
+  : typeof self !== 'undefined'
+  ? self
+  : typeof window !== 'undefined'
+  ? window
+  : typeof global !== 'undefined'
+  ? global
+  : {};
 /**
  * @license
  * Copyright 2017 Google LLC
@@ -940,15 +953,15 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     <div class="text-blueGray-700 rounded-lg">
 
       <!-- Heading -->
-      <div class="pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
-        <div class="w-full border-b-2 border-white justify-between inline-flex">
-          <div class="inline-flex items-center">
-            <h2 class="pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
+      <div class="week-heading-draggable pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
+        <div class="week-heading-draggable w-full border-b-2 border-white justify-between inline-flex">
+          <div class="week-heading-draggable inline-flex items-center">
+            <h2 class="week-heading-draggable pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
               ${week.name}
             </h2>
           </div>
-          <div class="inline-flex items-center move-up">
-            <button class="rounded-button bg-white" id="${week.id}-menu">
+          <div class="week-heading-draggable inline-flex items-center move-up">
+            <button class="week-heading-draggable rounded-button bg-white" id="${week.id}-menu">
               <svg xmlns="http://www.w3.org/2000/svg" class="4-6 w-4" fill="none" viewBox="0 0 24 24" stroke="black">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
               </svg>
@@ -1808,6 +1821,813 @@ async function $877b126e36883e53$export$e434c7255acda994(path) {
 
 
 
+var $09f30e741db80808$exports = {};
+'use strict';
+var $4eac73c568364dc5$exports = {};
+'use strict';
+var $4c46a2b84c6fbefa$exports = {};
+$4c46a2b84c6fbefa$exports = function atoa(a, n) {
+    return Array.prototype.slice.call(a, n);
+};
+
+
+var $402e721010f624ec$exports = {};
+'use strict';
+var $59172cb9d7f751f2$exports = {};
+var $59172cb9d7f751f2$var$si = typeof setImmediate === 'function', $59172cb9d7f751f2$var$tick;
+if ($59172cb9d7f751f2$var$si) $59172cb9d7f751f2$var$tick = function(fn) {
+    setImmediate(fn);
+};
+else $59172cb9d7f751f2$var$tick = function(fn) {
+    setTimeout(fn, 0);
+};
+$59172cb9d7f751f2$exports = $59172cb9d7f751f2$var$tick;
+
+
+$402e721010f624ec$exports = function debounce(fn, args, ctx) {
+    if (!fn) return;
+    $59172cb9d7f751f2$exports(function run() {
+        fn.apply(ctx || null, args || []);
+    });
+};
+
+
+$4eac73c568364dc5$exports = function emitter(thing, options) {
+    var opts = options || {
+    };
+    var evt = {
+    };
+    if (thing === undefined) thing = {
+    };
+    thing.on = function(type, fn) {
+        if (!evt[type]) evt[type] = [
+            fn
+        ];
+        else evt[type].push(fn);
+        return thing;
+    };
+    thing.once = function(type, fn) {
+        fn._once = true; // thing.off(fn) still works!
+        thing.on(type, fn);
+        return thing;
+    };
+    thing.off = function(type, fn) {
+        var c = arguments.length;
+        if (c === 1) delete evt[type];
+        else if (c === 0) evt = {
+        };
+        else {
+            var et = evt[type];
+            if (!et) return thing;
+            et.splice(et.indexOf(fn), 1);
+        }
+        return thing;
+    };
+    thing.emit = function() {
+        var args = $4c46a2b84c6fbefa$exports(arguments);
+        return thing.emitterSnapshot(args.shift()).apply(this, args);
+    };
+    thing.emitterSnapshot = function(type) {
+        var et = (evt[type] || []).slice(0);
+        return function() {
+            var args = $4c46a2b84c6fbefa$exports(arguments);
+            var ctx = this || thing;
+            if (type === 'error' && opts.throws !== false && !et.length) throw args.length === 1 ? args[0] : args;
+            et.forEach(function emitter(listen) {
+                if (opts.async) $402e721010f624ec$exports(listen, args, ctx);
+                else listen.apply(ctx, args);
+                if (listen._once) thing.off(type, listen);
+            });
+            return thing;
+        };
+    };
+    return thing;
+};
+
+
+var $ececc6f691b03e13$exports = {};
+'use strict';
+var $33907575323dc26e$exports = {};
+var $33907575323dc26e$var$NativeCustomEvent = $parcel$global.CustomEvent;
+function $33907575323dc26e$var$useNative() {
+    try {
+        var p = new $33907575323dc26e$var$NativeCustomEvent('cat', {
+            detail: {
+                foo: 'bar'
+            }
+        });
+        return 'cat' === p.type && 'bar' === p.detail.foo;
+    } catch (e) {
+    }
+    return false;
+}
+/**
+ * Cross-browser `CustomEvent` constructor.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent.CustomEvent
+ *
+ * @public
+ */ $33907575323dc26e$exports = $33907575323dc26e$var$useNative() ? $33907575323dc26e$var$NativeCustomEvent : // IE >= 9
+'undefined' !== typeof document && 'function' === typeof document.createEvent ? function CustomEvent(type, params) {
+    var e = document.createEvent('CustomEvent');
+    if (params) e.initCustomEvent(type, params.bubbles, params.cancelable, params.detail);
+    else e.initCustomEvent(type, false, false, void 0);
+    return e;
+} : // IE <= 8
+function CustomEvent(type, params) {
+    var e = document.createEventObject();
+    e.type = type;
+    if (params) {
+        e.bubbles = Boolean(params.bubbles);
+        e.cancelable = Boolean(params.cancelable);
+        e.detail = params.detail;
+    } else {
+        e.bubbles = false;
+        e.cancelable = false;
+        e.detail = void 0;
+    }
+    return e;
+};
+
+
+var $ff6f9a541bed0afd$exports = {};
+'use strict';
+var $ff6f9a541bed0afd$var$eventmap = [];
+var $ff6f9a541bed0afd$var$eventname = '';
+var $ff6f9a541bed0afd$var$ron = /^on/;
+for($ff6f9a541bed0afd$var$eventname in $parcel$global)if ($ff6f9a541bed0afd$var$ron.test($ff6f9a541bed0afd$var$eventname)) $ff6f9a541bed0afd$var$eventmap.push($ff6f9a541bed0afd$var$eventname.slice(2));
+$ff6f9a541bed0afd$exports = $ff6f9a541bed0afd$var$eventmap;
+
+
+var $ececc6f691b03e13$var$doc = $parcel$global.document;
+var $ececc6f691b03e13$var$addEvent = $ececc6f691b03e13$var$addEventEasy;
+var $ececc6f691b03e13$var$removeEvent = $ececc6f691b03e13$var$removeEventEasy;
+var $ececc6f691b03e13$var$hardCache = [];
+if (!$parcel$global.addEventListener) {
+    $ececc6f691b03e13$var$addEvent = $ececc6f691b03e13$var$addEventHard;
+    $ececc6f691b03e13$var$removeEvent = $ececc6f691b03e13$var$removeEventHard;
+}
+$ececc6f691b03e13$exports = {
+    add: $ececc6f691b03e13$var$addEvent,
+    remove: $ececc6f691b03e13$var$removeEvent,
+    fabricate: $ececc6f691b03e13$var$fabricateEvent
+};
+function $ececc6f691b03e13$var$addEventEasy(el, type, fn, capturing) {
+    return el.addEventListener(type, fn, capturing);
+}
+function $ececc6f691b03e13$var$addEventHard(el, type, fn) {
+    return el.attachEvent('on' + type, $ececc6f691b03e13$var$wrap(el, type, fn));
+}
+function $ececc6f691b03e13$var$removeEventEasy(el, type, fn, capturing) {
+    return el.removeEventListener(type, fn, capturing);
+}
+function $ececc6f691b03e13$var$removeEventHard(el, type, fn) {
+    var listener = $ececc6f691b03e13$var$unwrap(el, type, fn);
+    if (listener) return el.detachEvent('on' + type, listener);
+}
+function $ececc6f691b03e13$var$fabricateEvent(el, type, model) {
+    var e = $ff6f9a541bed0afd$exports.indexOf(type) === -1 ? makeCustomEvent() : makeClassicEvent();
+    if (el.dispatchEvent) el.dispatchEvent(e);
+    else el.fireEvent('on' + type, e);
+    function makeClassicEvent() {
+        var e;
+        if ($ececc6f691b03e13$var$doc.createEvent) {
+            e = $ececc6f691b03e13$var$doc.createEvent('Event');
+            e.initEvent(type, true, true);
+        } else if ($ececc6f691b03e13$var$doc.createEventObject) e = $ececc6f691b03e13$var$doc.createEventObject();
+        return e;
+    }
+    function makeCustomEvent() {
+        return new $33907575323dc26e$exports(type, {
+            detail: model
+        });
+    }
+}
+function $ececc6f691b03e13$var$wrapperFactory(el, type, fn) {
+    return function wrapper(originalEvent) {
+        var e = originalEvent || $parcel$global.event;
+        e.target = e.target || e.srcElement;
+        e.preventDefault = e.preventDefault || function preventDefault() {
+            e.returnValue = false;
+        };
+        e.stopPropagation = e.stopPropagation || function stopPropagation() {
+            e.cancelBubble = true;
+        };
+        e.which = e.which || e.keyCode;
+        fn.call(el, e);
+    };
+}
+function $ececc6f691b03e13$var$wrap(el, type, fn) {
+    var wrapper = $ececc6f691b03e13$var$unwrap(el, type, fn) || $ececc6f691b03e13$var$wrapperFactory(el, type, fn);
+    $ececc6f691b03e13$var$hardCache.push({
+        wrapper: wrapper,
+        element: el,
+        type: type,
+        fn: fn
+    });
+    return wrapper;
+}
+function $ececc6f691b03e13$var$unwrap(el, type, fn) {
+    var i = $ececc6f691b03e13$var$find(el, type, fn);
+    if (i) {
+        var wrapper = $ececc6f691b03e13$var$hardCache[i].wrapper;
+        $ececc6f691b03e13$var$hardCache.splice(i, 1); // free up a tad of memory
+        return wrapper;
+    }
+}
+function $ececc6f691b03e13$var$find(el, type, fn) {
+    var i, item;
+    for(i = 0; i < $ececc6f691b03e13$var$hardCache.length; i++){
+        item = $ececc6f691b03e13$var$hardCache[i];
+        if (item.element === el && item.type === type && item.fn === fn) return i;
+    }
+}
+
+
+var $b91e76632f4b3a1d$exports = {};
+'use strict';
+var $b91e76632f4b3a1d$var$cache = {
+};
+var $b91e76632f4b3a1d$var$start = '(?:^|\\s)';
+var $b91e76632f4b3a1d$var$end = '(?:\\s|$)';
+function $b91e76632f4b3a1d$var$lookupClass(className) {
+    var cached = $b91e76632f4b3a1d$var$cache[className];
+    if (cached) cached.lastIndex = 0;
+    else $b91e76632f4b3a1d$var$cache[className] = cached = new RegExp($b91e76632f4b3a1d$var$start + className + $b91e76632f4b3a1d$var$end, 'g');
+    return cached;
+}
+function $b91e76632f4b3a1d$var$addClass(el, className) {
+    var current = el.className;
+    if (!current.length) el.className = className;
+    else if (!$b91e76632f4b3a1d$var$lookupClass(className).test(current)) el.className += ' ' + className;
+}
+function $b91e76632f4b3a1d$var$rmClass(el, className) {
+    el.className = el.className.replace($b91e76632f4b3a1d$var$lookupClass(className), ' ').trim();
+}
+$b91e76632f4b3a1d$exports = {
+    add: $b91e76632f4b3a1d$var$addClass,
+    rm: $b91e76632f4b3a1d$var$rmClass
+};
+
+
+var $09f30e741db80808$var$doc = document;
+var $09f30e741db80808$var$documentElement = $09f30e741db80808$var$doc.documentElement;
+function $09f30e741db80808$var$dragula(initialContainers, options) {
+    var len = arguments.length;
+    if (len === 1 && Array.isArray(initialContainers) === false) {
+        options = initialContainers;
+        initialContainers = [];
+    }
+    var _mirror; // mirror image
+    var _source; // source container
+    var _item; // item being dragged
+    var _offsetX; // reference x
+    var _offsetY; // reference y
+    var _moveX; // reference move x
+    var _moveY; // reference move y
+    var _initialSibling; // reference sibling when grabbed
+    var _currentSibling; // reference sibling now
+    var _copy; // item used for copying
+    var _renderTimer; // timer for setTimeout renderMirrorImage
+    var _lastDropTarget = null; // last container item was over
+    var _grabbed; // holds mousedown context until first mousemove
+    var o = options || {
+    };
+    if (o.moves === void 0) o.moves = $09f30e741db80808$var$always;
+    if (o.accepts === void 0) o.accepts = $09f30e741db80808$var$always;
+    if (o.invalid === void 0) o.invalid = invalidTarget;
+    if (o.containers === void 0) o.containers = initialContainers || [];
+    if (o.isContainer === void 0) o.isContainer = $09f30e741db80808$var$never;
+    if (o.copy === void 0) o.copy = false;
+    if (o.copySortSource === void 0) o.copySortSource = false;
+    if (o.revertOnSpill === void 0) o.revertOnSpill = false;
+    if (o.removeOnSpill === void 0) o.removeOnSpill = false;
+    if (o.direction === void 0) o.direction = 'vertical';
+    if (o.ignoreInputTextSelection === void 0) o.ignoreInputTextSelection = true;
+    if (o.mirrorContainer === void 0) o.mirrorContainer = $09f30e741db80808$var$doc.body;
+    var drake = $4eac73c568364dc5$exports({
+        containers: o.containers,
+        start: manualStart,
+        end: end,
+        cancel: cancel,
+        remove: remove,
+        destroy: destroy,
+        canMove: canMove,
+        dragging: false
+    });
+    if (o.removeOnSpill === true) drake.on('over', spillOver).on('out', spillOut);
+    events();
+    function isContainer(el) {
+        return drake.containers.indexOf(el) !== -1 || o.isContainer(el);
+    }
+    function events(remove) {
+        var op = remove ? 'remove' : 'add';
+        $09f30e741db80808$var$touchy($09f30e741db80808$var$documentElement, op, 'mousedown', grab);
+        $09f30e741db80808$var$touchy($09f30e741db80808$var$documentElement, op, 'mouseup', release);
+    }
+    function eventualMovements(remove) {
+        var op = remove ? 'remove' : 'add';
+        $09f30e741db80808$var$touchy($09f30e741db80808$var$documentElement, op, 'mousemove', startBecauseMouseMoved);
+    }
+    function movements(remove) {
+        var op = remove ? 'remove' : 'add';
+        $ececc6f691b03e13$exports[op]($09f30e741db80808$var$documentElement, 'selectstart', preventGrabbed); // IE8
+        $ececc6f691b03e13$exports[op]($09f30e741db80808$var$documentElement, 'click', preventGrabbed);
+    }
+    function destroy() {
+        events(true);
+        release({
+        });
+    }
+    function preventGrabbed(e) {
+        if (_grabbed) {
+            e.preventDefault();
+        }
+    }
+    function grab(e) {
+        _moveX = e.clientX;
+        _moveY = e.clientY;
+        var ignore = $09f30e741db80808$var$whichMouseButton(e) !== 1 || e.metaKey || e.ctrlKey;
+        if (ignore) {
+            return; // we only care about honest-to-god left clicks and touch events
+        }
+        var item = e.target;
+        var context = canStart(item);
+        if (!context) {
+            return;
+        }
+        _grabbed = context;
+        eventualMovements();
+        if (e.type === 'mousedown') {
+            if ($09f30e741db80808$var$isInput(item)) {
+                item.focus(); // fixes https://github.com/bevacqua/dragula/issues/176
+            } else {
+                e.preventDefault(); // fixes https://github.com/bevacqua/dragula/issues/155
+            }
+        }
+    }
+    function startBecauseMouseMoved(e) {
+        if (!_grabbed) {
+            return;
+        }
+        if ($09f30e741db80808$var$whichMouseButton(e) === 0) {
+            release({
+            });
+            return; // when text is selected on an input and then dragged, mouseup doesn't fire. this is our only hope
+        }
+        // truthy check fixes #239, equality fixes #207, fixes #501
+        if (e.clientX !== void 0 && Math.abs(e.clientX - _moveX) <= (o.slideFactorX || 0) && e.clientY !== void 0 && Math.abs(e.clientY - _moveY) <= (o.slideFactorY || 0)) {
+            return;
+        }
+        if (o.ignoreInputTextSelection) {
+            var clientX = $09f30e741db80808$var$getCoord('clientX', e) || 0;
+            var clientY = $09f30e741db80808$var$getCoord('clientY', e) || 0;
+            var elementBehindCursor = $09f30e741db80808$var$doc.elementFromPoint(clientX, clientY);
+            if ($09f30e741db80808$var$isInput(elementBehindCursor)) {
+                return;
+            }
+        }
+        var grabbed = _grabbed; // call to end() unsets _grabbed
+        eventualMovements(true);
+        movements();
+        end();
+        start(grabbed);
+        var offset = $09f30e741db80808$var$getOffset(_item);
+        _offsetX = $09f30e741db80808$var$getCoord('pageX', e) - offset.left;
+        _offsetY = $09f30e741db80808$var$getCoord('pageY', e) - offset.top;
+        $b91e76632f4b3a1d$exports.add(_copy || _item, 'gu-transit');
+        renderMirrorImage();
+        drag(e);
+    }
+    function canStart(item) {
+        if (drake.dragging && _mirror) {
+            return;
+        }
+        if (isContainer(item)) {
+            return; // don't drag container itself
+        }
+        var handle = item;
+        while($09f30e741db80808$var$getParent(item) && isContainer($09f30e741db80808$var$getParent(item)) === false){
+            if (o.invalid(item, handle)) {
+                return;
+            }
+            item = $09f30e741db80808$var$getParent(item); // drag target should be a top element
+            if (!item) {
+                return;
+            }
+        }
+        var source = $09f30e741db80808$var$getParent(item);
+        if (!source) {
+            return;
+        }
+        if (o.invalid(item, handle)) {
+            return;
+        }
+        var movable = o.moves(item, source, handle, $09f30e741db80808$var$nextEl(item));
+        if (!movable) {
+            return;
+        }
+        return {
+            item: item,
+            source: source
+        };
+    }
+    function canMove(item) {
+        return !!canStart(item);
+    }
+    function manualStart(item) {
+        var context = canStart(item);
+        if (context) {
+            start(context);
+        }
+    }
+    function start(context) {
+        if (isCopy(context.item, context.source)) {
+            _copy = context.item.cloneNode(true);
+            drake.emit('cloned', _copy, context.item, 'copy');
+        }
+        _source = context.source;
+        _item = context.item;
+        _initialSibling = _currentSibling = $09f30e741db80808$var$nextEl(context.item);
+        drake.dragging = true;
+        drake.emit('drag', _item, _source);
+    }
+    function invalidTarget() {
+        return false;
+    }
+    function end() {
+        if (!drake.dragging) {
+            return;
+        }
+        var item = _copy || _item;
+        drop(item, $09f30e741db80808$var$getParent(item));
+    }
+    function ungrab() {
+        _grabbed = false;
+        eventualMovements(true);
+        movements(true);
+    }
+    function release(e) {
+        ungrab();
+        if (!drake.dragging) {
+            return;
+        }
+        var item = _copy || _item;
+        var clientX = $09f30e741db80808$var$getCoord('clientX', e) || 0;
+        var clientY = $09f30e741db80808$var$getCoord('clientY', e) || 0;
+        var elementBehindCursor = $09f30e741db80808$var$getElementBehindPoint(_mirror, clientX, clientY);
+        var dropTarget = findDropTarget(elementBehindCursor, clientX, clientY);
+        if (dropTarget && (_copy && o.copySortSource || !_copy || dropTarget !== _source)) {
+            drop(item, dropTarget);
+        } else if (o.removeOnSpill) {
+            remove();
+        } else {
+            cancel();
+        }
+    }
+    function drop(item, target) {
+        var parent = $09f30e741db80808$var$getParent(item);
+        if (_copy && o.copySortSource && target === _source) {
+            parent.removeChild(_item);
+        }
+        if (isInitialPlacement(target)) {
+            drake.emit('cancel', item, _source, _source);
+        } else {
+            drake.emit('drop', item, target, _source, _currentSibling);
+        }
+        cleanup();
+    }
+    function remove() {
+        if (!drake.dragging) {
+            return;
+        }
+        var item = _copy || _item;
+        var parent = $09f30e741db80808$var$getParent(item);
+        if (parent) {
+            parent.removeChild(item);
+        }
+        drake.emit(_copy ? 'cancel' : 'remove', item, parent, _source);
+        cleanup();
+    }
+    function cancel(revert) {
+        if (!drake.dragging) {
+            return;
+        }
+        var reverts = arguments.length > 0 ? revert : o.revertOnSpill;
+        var item = _copy || _item;
+        var parent = $09f30e741db80808$var$getParent(item);
+        var initial = isInitialPlacement(parent);
+        if (initial === false && reverts) {
+            if (_copy) {
+                if (parent) {
+                    parent.removeChild(_copy);
+                }
+            } else {
+                _source.insertBefore(item, _initialSibling);
+            }
+        }
+        if (initial || reverts) {
+            drake.emit('cancel', item, _source, _source);
+        } else {
+            drake.emit('drop', item, parent, _source, _currentSibling);
+        }
+        cleanup();
+    }
+    function cleanup() {
+        var item = _copy || _item;
+        ungrab();
+        removeMirrorImage();
+        if (item) {
+            $b91e76632f4b3a1d$exports.rm(item, 'gu-transit');
+        }
+        if (_renderTimer) {
+            clearTimeout(_renderTimer);
+        }
+        drake.dragging = false;
+        if (_lastDropTarget) {
+            drake.emit('out', item, _lastDropTarget, _source);
+        }
+        drake.emit('dragend', item);
+        _source = _item = _copy = _initialSibling = _currentSibling = _renderTimer = _lastDropTarget = null;
+    }
+    function isInitialPlacement(target, s) {
+        var sibling;
+        if (s !== void 0) {
+            sibling = s;
+        } else if (_mirror) {
+            sibling = _currentSibling;
+        } else {
+            sibling = $09f30e741db80808$var$nextEl(_copy || _item);
+        }
+        return target === _source && sibling === _initialSibling;
+    }
+    function findDropTarget(elementBehindCursor, clientX, clientY) {
+        var target = elementBehindCursor;
+        while(target && !accepted()){
+            target = $09f30e741db80808$var$getParent(target);
+        }
+        return target;
+        function accepted() {
+            var droppable = isContainer(target);
+            if (droppable === false) {
+                return false;
+            }
+            var immediate = getImmediateChild(target, elementBehindCursor);
+            var reference = getReference(target, immediate, clientX, clientY);
+            var initial = isInitialPlacement(target, reference);
+            if (initial) {
+                return true; // should always be able to drop it right back where it was
+            }
+            return o.accepts(_item, target, _source, reference);
+        }
+    }
+    function drag(e) {
+        if (!_mirror) {
+            return;
+        }
+        e.preventDefault();
+        var clientX = $09f30e741db80808$var$getCoord('clientX', e) || 0;
+        var clientY = $09f30e741db80808$var$getCoord('clientY', e) || 0;
+        var x = clientX - _offsetX;
+        var y = clientY - _offsetY;
+        _mirror.style.left = x + 'px';
+        _mirror.style.top = y + 'px';
+        var item = _copy || _item;
+        var elementBehindCursor = $09f30e741db80808$var$getElementBehindPoint(_mirror, clientX, clientY);
+        var dropTarget = findDropTarget(elementBehindCursor, clientX, clientY);
+        var changed = dropTarget !== null && dropTarget !== _lastDropTarget;
+        if (changed || dropTarget === null) {
+            out();
+            _lastDropTarget = dropTarget;
+            over();
+        }
+        var parent = $09f30e741db80808$var$getParent(item);
+        if (dropTarget === _source && _copy && !o.copySortSource) {
+            if (parent) {
+                parent.removeChild(item);
+            }
+            return;
+        }
+        var reference;
+        var immediate = getImmediateChild(dropTarget, elementBehindCursor);
+        if (immediate !== null) {
+            reference = getReference(dropTarget, immediate, clientX, clientY);
+        } else if (o.revertOnSpill === true && !_copy) {
+            reference = _initialSibling;
+            dropTarget = _source;
+        } else {
+            if (_copy && parent) {
+                parent.removeChild(item);
+            }
+            return;
+        }
+        if (reference === null && changed || reference !== item && reference !== $09f30e741db80808$var$nextEl(item)) {
+            _currentSibling = reference;
+            dropTarget.insertBefore(item, reference);
+            drake.emit('shadow', item, dropTarget, _source);
+        }
+        function moved(type) {
+            drake.emit(type, item, _lastDropTarget, _source);
+        }
+        function over() {
+            if (changed) {
+                moved('over');
+            }
+        }
+        function out() {
+            if (_lastDropTarget) {
+                moved('out');
+            }
+        }
+    }
+    function spillOver(el) {
+        $b91e76632f4b3a1d$exports.rm(el, 'gu-hide');
+    }
+    function spillOut(el) {
+        if (drake.dragging) {
+            $b91e76632f4b3a1d$exports.add(el, 'gu-hide');
+        }
+    }
+    function renderMirrorImage() {
+        if (_mirror) {
+            return;
+        }
+        var rect = _item.getBoundingClientRect();
+        _mirror = _item.cloneNode(true);
+        _mirror.style.width = $09f30e741db80808$var$getRectWidth(rect) + 'px';
+        _mirror.style.height = $09f30e741db80808$var$getRectHeight(rect) + 'px';
+        $b91e76632f4b3a1d$exports.rm(_mirror, 'gu-transit');
+        $b91e76632f4b3a1d$exports.add(_mirror, 'gu-mirror');
+        o.mirrorContainer.appendChild(_mirror);
+        $09f30e741db80808$var$touchy($09f30e741db80808$var$documentElement, 'add', 'mousemove', drag);
+        $b91e76632f4b3a1d$exports.add(o.mirrorContainer, 'gu-unselectable');
+        drake.emit('cloned', _mirror, _item, 'mirror');
+    }
+    function removeMirrorImage() {
+        if (_mirror) {
+            $b91e76632f4b3a1d$exports.rm(o.mirrorContainer, 'gu-unselectable');
+            $09f30e741db80808$var$touchy($09f30e741db80808$var$documentElement, 'remove', 'mousemove', drag);
+            $09f30e741db80808$var$getParent(_mirror).removeChild(_mirror);
+            _mirror = null;
+        }
+    }
+    function getImmediateChild(dropTarget, target) {
+        var immediate = target;
+        while(immediate !== dropTarget && $09f30e741db80808$var$getParent(immediate) !== dropTarget){
+            immediate = $09f30e741db80808$var$getParent(immediate);
+        }
+        if (immediate === $09f30e741db80808$var$documentElement) {
+            return null;
+        }
+        return immediate;
+    }
+    function getReference(dropTarget, target, x, y) {
+        var horizontal = o.direction === 'horizontal';
+        var reference = target !== dropTarget ? inside() : outside();
+        return reference;
+        function outside() {
+            var len = dropTarget.children.length;
+            var i;
+            var el;
+            var rect;
+            for(i = 0; i < len; i++){
+                el = dropTarget.children[i];
+                rect = el.getBoundingClientRect();
+                if (horizontal && rect.left + rect.width / 2 > x) {
+                    return el;
+                }
+                if (!horizontal && rect.top + rect.height / 2 > y) {
+                    return el;
+                }
+            }
+            return null;
+        }
+        function inside() {
+            var rect = target.getBoundingClientRect();
+            if (horizontal) {
+                return resolve(x > rect.left + $09f30e741db80808$var$getRectWidth(rect) / 2);
+            }
+            return resolve(y > rect.top + $09f30e741db80808$var$getRectHeight(rect) / 2);
+        }
+        function resolve(after) {
+            return after ? $09f30e741db80808$var$nextEl(target) : target;
+        }
+    }
+    function isCopy(item, container) {
+        return typeof o.copy === 'boolean' ? o.copy : o.copy(item, container);
+    }
+    return drake;
+}
+function $09f30e741db80808$var$touchy(el, op, type, fn) {
+    var touch = {
+        mouseup: 'touchend',
+        mousedown: 'touchstart',
+        mousemove: 'touchmove'
+    };
+    var pointers = {
+        mouseup: 'pointerup',
+        mousedown: 'pointerdown',
+        mousemove: 'pointermove'
+    };
+    var microsoft = {
+        mouseup: 'MSPointerUp',
+        mousedown: 'MSPointerDown',
+        mousemove: 'MSPointerMove'
+    };
+    if ($parcel$global.navigator.pointerEnabled) $ececc6f691b03e13$exports[op](el, pointers[type], fn);
+    else if ($parcel$global.navigator.msPointerEnabled) $ececc6f691b03e13$exports[op](el, microsoft[type], fn);
+    else {
+        $ececc6f691b03e13$exports[op](el, touch[type], fn);
+        $ececc6f691b03e13$exports[op](el, type, fn);
+    }
+}
+function $09f30e741db80808$var$whichMouseButton(e) {
+    if (e.touches !== void 0) return e.touches.length;
+    if (e.which !== void 0 && e.which !== 0) return e.which;
+     // see https://github.com/bevacqua/dragula/issues/261
+    if (e.buttons !== void 0) return e.buttons;
+    var button = e.button;
+    if (button !== void 0) return button & 1 ? 1 : button & 2 ? 3 : button & 4 ? 2 : 0;
+}
+function $09f30e741db80808$var$getOffset(el) {
+    var rect = el.getBoundingClientRect();
+    return {
+        left: rect.left + $09f30e741db80808$var$getScroll('scrollLeft', 'pageXOffset'),
+        top: rect.top + $09f30e741db80808$var$getScroll('scrollTop', 'pageYOffset')
+    };
+}
+function $09f30e741db80808$var$getScroll(scrollProp, offsetProp) {
+    if (typeof $parcel$global[offsetProp] !== 'undefined') return $parcel$global[offsetProp];
+    if ($09f30e741db80808$var$documentElement.clientHeight) return $09f30e741db80808$var$documentElement[scrollProp];
+    return $09f30e741db80808$var$doc.body[scrollProp];
+}
+function $09f30e741db80808$var$getElementBehindPoint(point, x, y) {
+    point = point || {
+    };
+    var state = point.className || '';
+    var el;
+    point.className += ' gu-hide';
+    el = $09f30e741db80808$var$doc.elementFromPoint(x, y);
+    point.className = state;
+    return el;
+}
+function $09f30e741db80808$var$never() {
+    return false;
+}
+function $09f30e741db80808$var$always() {
+    return true;
+}
+function $09f30e741db80808$var$getRectWidth(rect) {
+    return rect.width || rect.right - rect.left;
+}
+function $09f30e741db80808$var$getRectHeight(rect) {
+    return rect.height || rect.bottom - rect.top;
+}
+function $09f30e741db80808$var$getParent(el) {
+    return el.parentNode === $09f30e741db80808$var$doc ? null : el.parentNode;
+}
+function $09f30e741db80808$var$isInput(el) {
+    return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || $09f30e741db80808$var$isEditable(el);
+}
+function $09f30e741db80808$var$isEditable(el) {
+    if (!el) return false;
+     // no parents were editable
+    if (el.contentEditable === 'false') return false;
+     // stop the lookup
+    if (el.contentEditable === 'true') return true;
+     // found a contentEditable element in the chain
+    return $09f30e741db80808$var$isEditable($09f30e741db80808$var$getParent(el)); // contentEditable is set to 'inherit'
+}
+function $09f30e741db80808$var$nextEl(el) {
+    function manually() {
+        var sibling = el;
+        do {
+            sibling = sibling.nextSibling;
+        }while (sibling && sibling.nodeType !== 1)
+        return sibling;
+    }
+    return el.nextElementSibling || manually();
+}
+function $09f30e741db80808$var$getEventHost(e) {
+    // on touchend event, we have to use `e.changedTouches`
+    // see http://stackoverflow.com/questions/7192563/touchend-event-properties
+    // see https://github.com/bevacqua/dragula/issues/34
+    if (e.targetTouches && e.targetTouches.length) return e.targetTouches[0];
+    if (e.changedTouches && e.changedTouches.length) return e.changedTouches[0];
+    return e;
+}
+function $09f30e741db80808$var$getCoord(coord, e) {
+    var host = $09f30e741db80808$var$getEventHost(e);
+    var missMap = {
+        pageX: 'clientX',
+        pageY: 'clientY' // IE8
+    };
+    if (coord in missMap && !(coord in host) && missMap[coord] in host) coord = missMap[coord];
+    return host[coord];
+}
+$09f30e741db80808$exports = $09f30e741db80808$var$dragula;
+
+
 class $2f25b22e70662204$export$f160779312cf57d5 {
     constructor(alerts){
         this.weeksContainer = document.getElementById("weeks");
@@ -1823,7 +2643,8 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
                 this.lastSaveTime = Date.now();
                 this.alerts.hide();
             }
-        }, 10000);
+        }, 5000);
+        this.registerDraggable();
     }
     registerWeek(week) {
         let htmlcontainer = document.createElement('div');
@@ -1853,6 +2674,32 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         let week = new $850e48264ea38c74$export$fca4f8121099df57(input);
         this.registerWeek(week);
         return week;
+    }
+    registerDraggable() {
+        var drake = (/*@__PURE__*/$parcel$interopDefault($09f30e741db80808$exports))([
+            this.weeksContainer
+        ], {
+            copy: false,
+            removeOnSpill: false,
+            slideFactorY: 25,
+            moves: (_el, _target, source, _sibling)=>{
+                return source.classList.contains("week-heading-draggable");
+            }
+        });
+        drake.on("drop", (el, _target, _source, sibling)=>{
+            let weekThatWasMovedIndex = this.weeks.findIndex((week, index)=>{
+                return week.id == el.id;
+            });
+            let weekThatWasMoved = this.weeks[weekThatWasMovedIndex];
+            this.weeks.splice(weekThatWasMovedIndex, 1);
+            if (sibling == null) this.weeks.push(weekThatWasMoved);
+            else {
+                let weekThatComesAfterThis = this.weeks.findIndex((week, index)=>{
+                    return week.id == sibling.id;
+                });
+                this.weeks.splice(weekThatComesAfterThis, 0, weekThatWasMoved);
+            }
+        });
     }
     async saveFile() {
         try {
@@ -1933,14 +2780,25 @@ class $b437cb7ddfb16b51$var$Main {
         this.addListeners();
     }
     async run() {
-        // let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":3}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
+        // let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":3}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
         // ww.hidden = true;
         // let w2 = new Week(ww);
         // this.wm.registerWeek(w2);
-        // ww.id = "asdasdasdasdasd"
+        // ww.id = "2"
+        // ww.name = "2";
         // ww.hidden = false;
         // let w3 = new Week(ww);
         // this.wm.registerWeek(w3);
+        // ww.id = "3"
+        // ww.name = "3";
+        // ww.hidden = false;
+        // let w4 = new Week(ww);
+        // this.wm.registerWeek(w4);
+        // ww.id = "4"
+        // ww.name = "4";
+        // ww.hidden = false;
+        // let w5 = new Week(ww);
+        // this.wm.registerWeek(w5);
         try {
             let exists = await $2f25b22e70662204$export$f160779312cf57d5.ensureFileExists();
             console.log(exists);

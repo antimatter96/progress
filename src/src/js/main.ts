@@ -28,16 +28,35 @@ class Main {
   }
 
   async run() {
-    // let ww = JSON.parse(`{"id":"763405e5-405c-4fc1-872d-48ce24e87fc5","name":"Maths Week 1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":3}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
-    // ww.hidden = true;
-    // let w2 = new Week(ww);
-    // this.wm.registerWeek(w2);
+    let trial = () => {
+      let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":3}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
+      ww.hidden = true;
+      let w2 = new Week(ww);
+      this.wm.registerWeek(w2);
 
-    // ww.id = "asdasdasdasdasd"
-    // ww.hidden = false;
+      ww.id = "2"
+      ww.name = "2";
+      ww.hidden = false;
 
-    // let w3 = new Week(ww);
-    // this.wm.registerWeek(w3);
+      let w3 = new Week(ww);
+      this.wm.registerWeek(w3);
+
+      ww.id = "3"
+      ww.name = "3";
+      ww.hidden = false;
+
+      let w4 = new Week(ww);
+      this.wm.registerWeek(w4);
+
+      ww.id = "4"
+      ww.name = "4";
+      ww.hidden = false;
+
+      let w5 = new Week(ww);
+      this.wm.registerWeek(w5);
+    }
+
+    // trial();
 
     try {
       let exists = await WeekManager.ensureFileExists();

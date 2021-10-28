@@ -7,6 +7,7 @@ import { homeDir as _homeDir } from "@tauri-apps/api/path";
 import { render } from "lit-html";
 import { templateFunc, Week } from "./week";
 import { AlertHandler } from './alerts'
+import dragula from "dragula";
 
 export class WeekManager {
 
@@ -40,9 +41,11 @@ export class WeekManager {
         this.lastSaveTime = Date.now();
         this.alerts.hide();
       }
-    }, 10_000)
-  }
+    }, 5_000);
 
+
+    this.registerDraggable();
+  }
 
   registerWeek(week: Week) {
     let htmlcontainer = document.createElement('div');
@@ -83,6 +86,38 @@ export class WeekManager {
     this.registerWeek(week);
 
     return week;
+  }
+
+  registerDraggable() {
+    var drake = dragula([this.weeksContainer], {
+      copy: false,
+      removeOnSpill: false,
+      slideFactorY: 25,
+      moves: (_el, _target, source, _sibling) => {
+        return source.classList.contains("week-heading-draggable");
+      }
+    });
+
+
+    drake.on("drop", (el, _target, _source, sibling) => {
+      let weekThatWasMovedIndex = this.weeks.findIndex((week, index) => {
+        return week.id == el.id;
+      });
+
+      let weekThatWasMoved = this.weeks[weekThatWasMovedIndex];
+      this.weeks.splice(weekThatWasMovedIndex, 1);
+
+      if (sibling == null) {
+        this.weeks.push(weekThatWasMoved);
+      } else {
+        let weekThatComesAfterThis = this.weeks.findIndex((week, index) => {
+          return week.id == sibling.id;
+        });
+        this.weeks.splice(weekThatComesAfterThis, 0, weekThatWasMoved);
+      }
+
+      this.saveFile();
+    })
   }
 
   async saveFile() {
