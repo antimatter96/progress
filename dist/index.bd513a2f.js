@@ -2699,6 +2699,7 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
                 });
                 this.weeks.splice(weekThatComesAfterThis, 0, weekThatWasMoved);
             }
+            this.saveFile();
         });
     }
     async saveFile() {
@@ -2780,25 +2781,28 @@ class $b437cb7ddfb16b51$var$Main {
         this.addListeners();
     }
     async run() {
-        // let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":3}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
-        // ww.hidden = true;
-        // let w2 = new Week(ww);
-        // this.wm.registerWeek(w2);
-        // ww.id = "2"
-        // ww.name = "2";
-        // ww.hidden = false;
-        // let w3 = new Week(ww);
-        // this.wm.registerWeek(w3);
-        // ww.id = "3"
-        // ww.name = "3";
-        // ww.hidden = false;
-        // let w4 = new Week(ww);
-        // this.wm.registerWeek(w4);
-        // ww.id = "4"
-        // ww.name = "4";
-        // ww.hidden = false;
-        // let w5 = new Week(ww);
-        // this.wm.registerWeek(w5);
+        let trial = ()=>{
+            let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":3}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`);
+            ww.hidden = true;
+            let w2 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
+            this.wm.registerWeek(w2);
+            ww.id = "2";
+            ww.name = "2";
+            ww.hidden = false;
+            let w3 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
+            this.wm.registerWeek(w3);
+            ww.id = "3";
+            ww.name = "3";
+            ww.hidden = false;
+            let w4 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
+            this.wm.registerWeek(w4);
+            ww.id = "4";
+            ww.name = "4";
+            ww.hidden = false;
+            let w5 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
+            this.wm.registerWeek(w5);
+        };
+        // trial();
         try {
             let exists = await $2f25b22e70662204$export$f160779312cf57d5.ensureFileExists();
             console.log(exists);
