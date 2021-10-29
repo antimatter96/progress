@@ -7,7 +7,8 @@
   },
   "source": "src/index.html",
   "dependencies": {
-    "@parcel/reporter-bundle-analyzer": "^2.0.0",
+    "@types/canvas-confetti": "^1.4.2",
+    "canvas-confetti": "^1.4.0",
     "dragula": "^3.7.3",
     "lit-html": "^2.0.1",
     "parcel": "^2.0.0",

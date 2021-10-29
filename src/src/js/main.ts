@@ -8,7 +8,6 @@ class Main {
   formCloseBtn: HTMLElement
   formEnclosure: HTMLElement
 
-
   wm: WeekManager
   fm: FormHandler
   am: AlertHandler
@@ -20,16 +19,14 @@ class Main {
 
     this.fm = new FormHandler();
     this.am = new AlertHandler(document.getElementById('alert'));
-
     this.wm = new WeekManager(this.am);
-
 
     this.addListeners()
   }
 
   async run() {
     let trial = () => {
-      let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":3}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
+      let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":0},"tutorials":{"total":1,"left":0},"assignments":{"total":2,"left":1}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`)
       ww.hidden = true;
       let w2 = new Week(ww);
       this.wm.registerWeek(w2);
@@ -100,8 +97,5 @@ class Main {
 window.onload = async function () {
   let m = new Main();
 
-  m.run();
-
-
-
+  await m.run();
 };

@@ -8,6 +8,10 @@ import { render } from "lit-html";
 import { templateFunc, Week } from "./week";
 import { AlertHandler } from './alerts'
 import dragula from "dragula";
+import confetti from "canvas-confetti"
+
+const BASE_DIR = ".tauri_progres"
+const DATA_FILE_NAME = BASE_DIR + "/data.json"
 
 export class WeekManager {
 
@@ -21,6 +25,8 @@ export class WeekManager {
   lastSaveTime: number
   lastUpdateTime: number
 
+  myConfettiCanvas: HTMLCanvasElement;
+
   constructor(alerts: AlertHandler) {
     this.weeksContainer = document.getElementById("weeks");
 
@@ -32,7 +38,6 @@ export class WeekManager {
 
     this.lastSaveTime = Date.now();
     this.lastUpdateTime = this.lastSaveTime;
-
 
     setInterval(async () => {
       if (this.lastUpdateTime > this.lastSaveTime) {
@@ -56,7 +61,10 @@ export class WeekManager {
 
     this.weeksContainer.prepend(htmlcontainer);
 
-    let updateFunction = () => {
+    let updateFunction = (done: boolean) => {
+      if (done) {
+        this.launchConfetti();
+      }
       render(templateFunc(week), htmlcontainer);
       this.lastUpdateTime = Date.now();
     }
@@ -66,10 +74,10 @@ export class WeekManager {
     }
 
     let deleteFucntion = () => {
-      updateFunction()
+      updateFunction(false)
       this.weeksContainer.removeChild(htmlcontainer);
     }
-    updateFunction();
+    updateFunction(false);
 
     week.addEventListeners();
     week.setUpdateFunction(updateFunction);
@@ -88,8 +96,27 @@ export class WeekManager {
     return week;
   }
 
+  launchConfetti() {
+    let randCord = () => (Math.random() * (1.1 - (-0.1)) + (-0.1));
+    let duration = 5 * 1000;
+    let animationEnd = Date.now() + duration;
+    let defaults = { startVelocity: 50, spread: 120, zIndex: 0 };
+
+    let interval = setInterval(function () {
+      let timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      let particleCount = 100 * (timeLeft / duration);
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randCord(), y: 0.1 + randCord() } }));
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randCord(), y: 0.1 + randCord() } }));
+    }, 250);
+  }
+
   registerDraggable() {
-    var drake = dragula([this.weeksContainer], {
+    let drake = dragula([this.weeksContainer], {
       copy: false,
       removeOnSpill: false,
       slideFactorY: 25,
@@ -97,7 +124,6 @@ export class WeekManager {
         return source.classList.contains("week-heading-draggable");
       }
     });
-
 
     drake.on("drop", (el, _target, _source, sibling) => {
       let weekThatWasMovedIndex = this.weeks.findIndex((week, index) => {
@@ -123,7 +149,7 @@ export class WeekManager {
   async saveFile() {
     try {
       let homeDir = await _homeDir();
-      let path = homeDir + ".tauri_progres/data.json";
+      let path = homeDir + DATA_FILE_NAME;
 
       let text = await _write({
         contents: JSON.stringify(this.weeks, null, 2),
@@ -138,7 +164,7 @@ export class WeekManager {
     let text;
     try {
       let homeDir = await _homeDir();
-      let file = homeDir + ".tauri_progres/data.json";
+      let file = homeDir + DATA_FILE_NAME;
 
       text = await _read(file);
       console.log(text);
@@ -161,7 +187,7 @@ export class WeekManager {
     let homeDir;
     try {
       homeDir = await _homeDir();
-      let dataDir = homeDir + ".tauri_progres";
+      let dataDir = homeDir + BASE_DIR;
       let created = await _createDir(dataDir);
       console.log("Created", created);
     } catch (e) {
@@ -176,7 +202,7 @@ export class WeekManager {
     // Folder now exists
     try {
       let homeDir = await _homeDir();
-      let file = homeDir + ".tauri_progres/data.json";
+      let file = homeDir + DATA_FILE_NAME;
 
       let text = await _read(file);
       console.log(text);
@@ -186,7 +212,7 @@ export class WeekManager {
         // no file exists, create now
         try {
           let homeDir = await _homeDir();
-          let path = homeDir + ".tauri_progres/data.json";
+          let path = homeDir + DATA_FILE_NAME;
 
           let text = await _write({
             contents: "{}",

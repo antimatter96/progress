@@ -68,11 +68,11 @@ export class Week {
 
     this.hidden = input.hasOwnProperty('hidden') ? input.hidden : false
     this.locked = input.hasOwnProperty('locked') ? input.locked : false
-
-    this.menuVisible = false;
     this.deleted = input.hasOwnProperty('deleted') ? input.deleted : false;
 
-    this.updateLastChangeTime();
+    this.menuVisible = false;
+
+    this.updateLastChangeTime(false);
 
     console.log(this);
   }
@@ -89,10 +89,10 @@ export class Week {
     this.deleteMe = fn;
   }
 
-  updateLastChangeTime() {
+  updateLastChangeTime(someProgress: boolean) {
     this.lastChangeTime = Date.now();
     if (this.updateMe) {
-      this.updateMe();
+      this.updateMe(someProgress && this.isDone());
     }
   }
 
@@ -114,7 +114,7 @@ export class Week {
       return;
     }
     this.videos[i].seen = true;
-    this.updateLastChangeTime();
+    this.updateLastChangeTime(true);
   }
   markVideoLeft(i): void {
     if (this.locked) {
@@ -126,7 +126,7 @@ export class Week {
       return;
     }
     this.videos[i].seen = false;
-    this.updateLastChangeTime();
+    this.updateLastChangeTime(false);
   }
 
   markSolvableDone(type): void {
@@ -139,8 +139,7 @@ export class Week {
       return;
     }
     this.solvable[type].left -= 1;
-    this.updateLastChangeTime();
-
+    this.updateLastChangeTime(true);
   }
   markSolvableNotDone(type): void {
     if (this.locked) {
@@ -152,7 +151,7 @@ export class Week {
       return;
     }
     this.solvable[type].left += 1;
-    this.updateLastChangeTime();
+    this.updateLastChangeTime(false);
   }
 
   validateSelf() { }
@@ -209,12 +208,12 @@ export class Week {
     return (100 * (left) / total);
   }
 
-  _increment(e) {
-    console.log(e);
-  }
+  isDone() {
+    let _projected = this.getTotalMinutes();
+    let _elasped = this.getElapsedMinutes();
+    let _percentage = this.getPercentage(_projected, _elasped);
 
-  _decrement(e) {
-    console.log(e);
+    return (Math.floor(_percentage / 10)) == 10
   }
 
   addEventListeners() {
@@ -241,19 +240,19 @@ export class Week {
 
     document.getElementById(`${this.id}-menu`).addEventListener('click', () => {
       this.menuVisible = !this.menuVisible;
-      this.updateLastChangeTime()
+      this.updateLastChangeTime(false)
     });
 
     document.getElementById(`${this.id}-hide`).addEventListener('click', () => {
       this.menuVisible = !this.menuVisible;
       this.hidden = !this.hidden;
-      this.updateLastChangeTime()
+      this.updateLastChangeTime(false)
     });
 
     document.getElementById(`${this.id}-lock`).addEventListener('click', () => {
       this.menuVisible = !this.menuVisible;
       this.locked = !this.locked;
-      this.updateLastChangeTime()
+      this.updateLastChangeTime(false)
     });
 
     document.getElementById(`${this.id}-delete`).addEventListener('click', async () => {
@@ -272,7 +271,6 @@ export class Week {
       } else {
         this.alertUser('warning', "Please be careful");
       }
-
     });
 
     this.videos.forEach((_video, i) => {
@@ -336,6 +334,8 @@ export function templateFunc(week: Week) {
     return html``
   }
 
+  let id = week.id;
+
   let _projected = week.getTotalMinutes();
   let _elasped = week.getElapsedMinutes();
   let _percentage = week.getPercentage(_projected, _elasped);
@@ -354,8 +354,8 @@ export function templateFunc(week: Week) {
 
     videos.push(html`
     <div class="video-time px-0">
-      <p class="video-text better-shadow ${classMap(textClass)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2,"0")}</p>
-      <button class="video-btn ${classMap(btnClass)}" id="${week.id}-video-${i}">${video.seen ? '-' : '+'}</button>
+      <p class="video-text better-shadow ${classMap(textClass)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
+      <button class="video-btn ${classMap(btnClass)}" id="${id}-video-${i}">${video.seen ? '-' : '+'}</button>
     </div>
   `);
   });
@@ -388,13 +388,8 @@ export function templateFunc(week: Week) {
       return;
     }
 
-    const btnUp = (data.total > data.done) ?
-      { 'btnUp-valid': true } :
-      { 'btnUp-invalid': true };
-
-    const btnDown = (data.done > 0) ?
-      { 'btnDown-valid': true } :
-      { 'btnDown-invalid': true };
+    const btnUp = { [(data.total > data.done) ? 'btnUp-valid' : 'btnUp-invalid']: true }
+    const btnDown = { [(data.done > 0) ? 'btnDown-valid' : 'btnDown-invalid']: true };
 
     const inProgress = { 'in-progress': data.total > data.done, 'done': data.total == data.done }
 
@@ -402,17 +397,18 @@ export function templateFunc(week: Week) {
     <div class="video-time act-time w-1/5">
       <h2 class="act-text ${classMap(inProgress)}"><span class="tracking-tight">${data.title}</span> : ${data.done}/${data.total}</h2>
       <div class="flex justify-around mt-0.5">
-        <button class="solvable-btn mr-0.5 ${classMap(btnUp)}" id="${week.id}-${data.title.toLowerCase()}-plus">+</button>
-        <button class="solvable-btn ml-0.5 ${classMap(btnDown)}" id="${week.id}-${data.title.toLowerCase()}-minus">-</button>
+        <button class="solvable-btn mr-0.5 ${classMap(btnUp)}" id="${id}-${data.title.toLowerCase()}-plus">+</button>
+        <button class="solvable-btn ml-0.5 ${classMap(btnDown)}" id="${id}-${data.title.toLowerCase()}-minus">-</button>
       </div>
     </div>
   `);
   })
 
+
   let progressColor = { [progress[(Math.floor(_percentage / 10))]]: true };
 
   const animatedBorderClassMap = {
-    'gradient-border' : (Math.floor(_percentage / 10)) == 10
+    'gradient-border': (Math.floor(_percentage / 10)) == 10
   }
 
   return html`
@@ -428,16 +424,16 @@ export function templateFunc(week: Week) {
             </h2>
           </div>
           <div class="week-heading-draggable inline-flex items-center move-up">
-            <button class="week-heading-draggable rounded-button bg-white" id="${week.id}-menu">
+            <button class="week-heading-draggable rounded-button bg-white" id="${id}-menu">
               <svg xmlns="http://www.w3.org/2000/svg" class="4-6 w-4" fill="none" viewBox="0 0 24 24" stroke="black">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
               </svg>
             </button>
 
             <div ?hidden=${!week.menuVisible} class="origin-top-right absolute top-0 right-10 mt-2 w-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-              <a class="rounded-t-md text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-lock"> ${week.locked ? 'Unlock' : 'Lock'}  </a>
-              <a class="text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
-              <a class="rounded-b-md text-white bg-red-800 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-delete">Delete</a>
+              <a class="rounded-t-md text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'}  </a>
+              <a class="text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
+              <a class="rounded-b-md text-white bg-red-800 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-delete">Delete</a>
             </div>
           </div>
         </div>

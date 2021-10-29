@@ -418,10 +418,10 @@ class $3c13b93cfbb34482$export$a99aab2a736cea3e {
     <div id="alert" class="alert-container">
       <div class="alert-inner-container">
         <div class="alert-logo-container ${$6197f1f1b7c083f0$export$56cc687933817664($3c13b93cfbb34482$var$CSS[this.type].bg)}">
-          <svg ?hidden=${this.type != 'ok'}     class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" /></svg>
-          <svg ?hidden=${this.type != 'error'}  class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z" /></svg>
+          <svg ?hidden=${this.type != 'ok'}      class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" /></svg>
+          <svg ?hidden=${this.type != 'error'}   class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z" /></svg>
           <svg ?hidden=${this.type != 'warning'} class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z" /></svg>
-          <svg ?hidden=${this.type != 'info'}   class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z" /></svg>
+          <svg ?hidden=${this.type != 'info'}    class="alert-logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z" /></svg>
         </div>
         <div class="px-4 py-2 text-left">
           <span class="alert-heading ${$6197f1f1b7c083f0$export$56cc687933817664($3c13b93cfbb34482$var$CSS[this.type].heading)}">${this.type.charAt(0).toUpperCase() + this.type.substr(1)}</span>
@@ -683,9 +683,9 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         };
         this.hidden = input.hasOwnProperty('hidden') ? input.hidden : false;
         this.locked = input.hasOwnProperty('locked') ? input.locked : false;
-        this.menuVisible = false;
         this.deleted = input.hasOwnProperty('deleted') ? input.deleted : false;
-        this.updateLastChangeTime();
+        this.menuVisible = false;
+        this.updateLastChangeTime(false);
         console.log(this);
     }
     setUpdateFunction(fn) {
@@ -697,9 +697,9 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
     setDeleteFunction(fn) {
         this.deleteMe = fn;
     }
-    updateLastChangeTime() {
+    updateLastChangeTime(someProgress) {
         this.lastChangeTime = Date.now();
-        if (this.updateMe) this.updateMe();
+        if (this.updateMe) this.updateMe(someProgress && this.isDone());
     }
     flipVideo(i) {
         if (this.videos[i].seen) this.markVideoLeft(i);
@@ -715,7 +715,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             return;
         }
         this.videos[i].seen = true;
-        this.updateLastChangeTime();
+        this.updateLastChangeTime(true);
     }
     markVideoLeft(i) {
         if (this.locked) {
@@ -727,7 +727,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             return;
         }
         this.videos[i].seen = false;
-        this.updateLastChangeTime();
+        this.updateLastChangeTime(false);
     }
     markSolvableDone(type) {
         if (this.locked) {
@@ -739,7 +739,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             return;
         }
         this.solvable[type].left -= 1;
-        this.updateLastChangeTime();
+        this.updateLastChangeTime(true);
     }
     markSolvableNotDone(type) {
         if (this.locked) {
@@ -751,7 +751,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             return;
         }
         this.solvable[type].left += 1;
-        this.updateLastChangeTime();
+        this.updateLastChangeTime(false);
     }
     validateSelf() {
     }
@@ -790,11 +790,11 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
     getPercentage(total, left) {
         return 100 * left / total;
     }
-    _increment(e) {
-        console.log(e);
-    }
-    _decrement(e) {
-        console.log(e);
+    isDone() {
+        let _projected = this.getTotalMinutes();
+        let _elasped = this.getElapsedMinutes();
+        let _percentage = this.getPercentage(_projected, _elasped);
+        return Math.floor(_percentage / 10) == 10;
     }
     addEventListeners() {
         let titles = [
@@ -816,17 +816,17 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         });
         document.getElementById(`${this.id}-menu`).addEventListener('click', ()=>{
             this.menuVisible = !this.menuVisible;
-            this.updateLastChangeTime();
+            this.updateLastChangeTime(false);
         });
         document.getElementById(`${this.id}-hide`).addEventListener('click', ()=>{
             this.menuVisible = !this.menuVisible;
             this.hidden = !this.hidden;
-            this.updateLastChangeTime();
+            this.updateLastChangeTime(false);
         });
         document.getElementById(`${this.id}-lock`).addEventListener('click', ()=>{
             this.menuVisible = !this.menuVisible;
             this.locked = !this.locked;
-            this.updateLastChangeTime();
+            this.updateLastChangeTime(false);
         });
         document.getElementById(`${this.id}-delete`).addEventListener('click', async ()=>{
             this.menuVisible = !this.menuVisible;
@@ -878,6 +878,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
 }
 function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     if (week.deleted) return $a51c7802bfe1890e$export$c0bb0b647f701bb5``;
+    let id = week.id;
     let _projected = week.getTotalMinutes();
     let _elasped = week.getElapsedMinutes();
     let _percentage = week.getPercentage(_projected, _elasped);
@@ -894,7 +895,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
         videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
     <div class="video-time px-0">
       <p class="video-text better-shadow ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
-      <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${week.id}-video-${i}">${video.seen ? '-' : '+'}</button>
+      <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${id}-video-${i}">${video.seen ? '-' : '+'}</button>
     </div>
   `);
     });
@@ -918,15 +919,11 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     let solvables = [];
     solvableData.forEach((data)=>{
         if (data.total == 0) return;
-        const btnUp = data.total > data.done ? {
-            'btnUp-valid': true
-        } : {
-            'btnUp-invalid': true
+        const btnUp = {
+            [data.total > data.done ? 'btnUp-valid' : 'btnUp-invalid']: true
         };
-        const btnDown = data.done > 0 ? {
-            'btnDown-valid': true
-        } : {
-            'btnDown-invalid': true
+        const btnDown = {
+            [data.done > 0 ? 'btnDown-valid' : 'btnDown-invalid']: true
         };
         const inProgress = {
             'in-progress': data.total > data.done,
@@ -936,8 +933,8 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     <div class="video-time act-time w-1/5">
       <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}"><span class="tracking-tight">${data.title}</span> : ${data.done}/${data.total}</h2>
       <div class="flex justify-around mt-0.5">
-        <button class="solvable-btn mr-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${week.id}-${data.title.toLowerCase()}-plus">+</button>
-        <button class="solvable-btn ml-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${week.id}-${data.title.toLowerCase()}-minus">-</button>
+        <button class="solvable-btn mr-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${id}-${data.title.toLowerCase()}-plus">+</button>
+        <button class="solvable-btn ml-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${id}-${data.title.toLowerCase()}-minus">-</button>
       </div>
     </div>
   `);
@@ -961,16 +958,16 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
             </h2>
           </div>
           <div class="week-heading-draggable inline-flex items-center move-up">
-            <button class="week-heading-draggable rounded-button bg-white" id="${week.id}-menu">
+            <button class="week-heading-draggable rounded-button bg-white" id="${id}-menu">
               <svg xmlns="http://www.w3.org/2000/svg" class="4-6 w-4" fill="none" viewBox="0 0 24 24" stroke="black">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
               </svg>
             </button>
 
             <div ?hidden=${!week.menuVisible} class="origin-top-right absolute top-0 right-10 mt-2 w-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-              <a class="rounded-t-md text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-lock"> ${week.locked ? 'Unlock' : 'Lock'}  </a>
-              <a class="text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
-              <a class="rounded-b-md text-white bg-red-800 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${week.id}-delete">Delete</a>
+              <a class="rounded-t-md text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'}  </a>
+              <a class="text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
+              <a class="rounded-b-md text-white bg-red-800 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-delete">Delete</a>
             </div>
           </div>
         </div>
@@ -2628,6 +2625,472 @@ function $09f30e741db80808$var$getCoord(coord, e) {
 $09f30e741db80808$exports = $09f30e741db80808$var$dragula;
 
 
+// canvas-confetti v1.4.0 built on 2021-03-10T12:32:33.488Z
+var $e5681fb9ff8b31c4$var$module = {
+};
+(function main(global, module, isWorker, workerSize) {
+    var canUseWorker = !!(global.Worker && global.Blob && global.Promise && global.OffscreenCanvas && global.OffscreenCanvasRenderingContext2D && global.HTMLCanvasElement && global.HTMLCanvasElement.prototype.transferControlToOffscreen && global.URL && global.URL.createObjectURL);
+    function noop() {
+    }
+    // create a promise if it exists, otherwise, just
+    // call the function directly
+    function promise(func) {
+        var ModulePromise = module.exports.Promise;
+        var Prom = ModulePromise !== void 0 ? ModulePromise : global.Promise;
+        if (typeof Prom === 'function') return new Prom(func);
+        func(noop, noop);
+        return null;
+    }
+    var raf = function() {
+        var TIME = Math.floor(1000 / 60);
+        var frame, cancel;
+        var frames = {
+        };
+        var lastFrameTime = 0;
+        if (typeof requestAnimationFrame === 'function' && typeof cancelAnimationFrame === 'function') {
+            frame = function(cb) {
+                var id = Math.random();
+                frames[id] = requestAnimationFrame(function onFrame(time) {
+                    if (lastFrameTime === time || lastFrameTime + TIME - 1 < time) {
+                        lastFrameTime = time;
+                        delete frames[id];
+                        cb();
+                    } else frames[id] = requestAnimationFrame(onFrame);
+                });
+                return id;
+            };
+            cancel = function(id) {
+                if (frames[id]) cancelAnimationFrame(frames[id]);
+            };
+        } else {
+            frame = function(cb) {
+                return setTimeout(cb, TIME);
+            };
+            cancel = function(timer) {
+                return clearTimeout(timer);
+            };
+        }
+        return {
+            frame: frame,
+            cancel: cancel
+        };
+    }();
+    var getWorker = function() {
+        var worker;
+        var prom;
+        var resolves = {
+        };
+        function decorate(worker) {
+            function execute(options, callback) {
+                worker.postMessage({
+                    options: options || {
+                    },
+                    callback: callback
+                });
+            }
+            worker.init = function initWorker(canvas) {
+                var offscreen = canvas.transferControlToOffscreen();
+                worker.postMessage({
+                    canvas: offscreen
+                }, [
+                    offscreen
+                ]);
+            };
+            worker.fire = function fireWorker(options, size, done) {
+                if (prom) {
+                    execute(options, null);
+                    return prom;
+                }
+                var id = Math.random().toString(36).slice(2);
+                prom = promise(function(resolve) {
+                    function workerDone(msg) {
+                        if (msg.data.callback !== id) return;
+                        delete resolves[id];
+                        worker.removeEventListener('message', workerDone);
+                        prom = null;
+                        done();
+                        resolve();
+                    }
+                    worker.addEventListener('message', workerDone);
+                    execute(options, id);
+                    resolves[id] = workerDone.bind(null, {
+                        data: {
+                            callback: id
+                        }
+                    });
+                });
+                return prom;
+            };
+            worker.reset = function resetWorker() {
+                worker.postMessage({
+                    reset: true
+                });
+                for(var id in resolves){
+                    resolves[id]();
+                    delete resolves[id];
+                }
+            };
+        }
+        return function() {
+            if (worker) return worker;
+            if (!isWorker && canUseWorker) {
+                var code = [
+                    'var CONFETTI, SIZE = {}, module = {};',
+                    '(' + main.toString() + ')(this, module, true, SIZE);',
+                    'onmessage = function(msg) {',
+                    '  if (msg.data.options) {',
+                    '    CONFETTI(msg.data.options).then(function () {',
+                    '      if (msg.data.callback) {',
+                    '        postMessage({ callback: msg.data.callback });',
+                    '      }',
+                    '    });',
+                    '  } else if (msg.data.reset) {',
+                    '    CONFETTI.reset();',
+                    '  } else if (msg.data.resize) {',
+                    '    SIZE.width = msg.data.resize.width;',
+                    '    SIZE.height = msg.data.resize.height;',
+                    '  } else if (msg.data.canvas) {',
+                    '    SIZE.width = msg.data.canvas.width;',
+                    '    SIZE.height = msg.data.canvas.height;',
+                    '    CONFETTI = module.exports.create(msg.data.canvas);',
+                    '  }',
+                    '}', 
+                ].join('\n');
+                try {
+                    worker = new Worker(URL.createObjectURL(new Blob([
+                        code
+                    ])));
+                } catch (e) {
+                    // eslint-disable-next-line no-console
+                    typeof console.warn === 'function' && console.warn('🎊 Could not load worker', e);
+                    return null;
+                }
+                decorate(worker);
+            }
+            return worker;
+        };
+    }();
+    var defaults = {
+        particleCount: 50,
+        angle: 90,
+        spread: 45,
+        startVelocity: 45,
+        decay: 0.9,
+        gravity: 1,
+        drift: 0,
+        ticks: 200,
+        x: 0.5,
+        y: 0.5,
+        shapes: [
+            'square',
+            'circle'
+        ],
+        zIndex: 100,
+        colors: [
+            '#26ccff',
+            '#a25afd',
+            '#ff5e7e',
+            '#88ff5a',
+            '#fcff42',
+            '#ffa62d',
+            '#ff36ff'
+        ],
+        // probably should be true, but back-compat
+        disableForReducedMotion: false,
+        scalar: 1
+    };
+    function convert(val, transform) {
+        return transform ? transform(val) : val;
+    }
+    function isOk(val) {
+        return !(val === null || val === undefined);
+    }
+    function prop(options, name, transform) {
+        return convert(options && isOk(options[name]) ? options[name] : defaults[name], transform);
+    }
+    function onlyPositiveInt(number) {
+        return number < 0 ? 0 : Math.floor(number);
+    }
+    function randomInt(min, max) {
+        // [min, max)
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+    function toDecimal(str) {
+        return parseInt(str, 16);
+    }
+    function colorsToRgb(colors) {
+        return colors.map(hexToRgb);
+    }
+    function hexToRgb(str) {
+        var val = String(str).replace(/[^0-9a-f]/gi, '');
+        if (val.length < 6) val = val[0] + val[0] + val[1] + val[1] + val[2] + val[2];
+        return {
+            r: toDecimal(val.substring(0, 2)),
+            g: toDecimal(val.substring(2, 4)),
+            b: toDecimal(val.substring(4, 6))
+        };
+    }
+    function getOrigin(options) {
+        var origin = prop(options, 'origin', Object);
+        origin.x = prop(origin, 'x', Number);
+        origin.y = prop(origin, 'y', Number);
+        return origin;
+    }
+    function setCanvasWindowSize(canvas) {
+        canvas.width = document.documentElement.clientWidth;
+        canvas.height = document.documentElement.clientHeight;
+    }
+    function setCanvasRectSize(canvas) {
+        var rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+    }
+    function getCanvas(zIndex) {
+        var canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0px';
+        canvas.style.left = '0px';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = zIndex;
+        return canvas;
+    }
+    function ellipse(context, x, y, radiusX, radiusY, rotation, startAngle, endAngle, antiClockwise) {
+        context.save();
+        context.translate(x, y);
+        context.rotate(rotation);
+        context.scale(radiusX, radiusY);
+        context.arc(0, 0, 1, startAngle, endAngle, antiClockwise);
+        context.restore();
+    }
+    function randomPhysics(opts) {
+        var radAngle = opts.angle * (Math.PI / 180);
+        var radSpread = opts.spread * (Math.PI / 180);
+        return {
+            x: opts.x,
+            y: opts.y,
+            wobble: Math.random() * 10,
+            velocity: opts.startVelocity * 0.5 + Math.random() * opts.startVelocity,
+            angle2D: -radAngle + (0.5 * radSpread - Math.random() * radSpread),
+            tiltAngle: Math.random() * Math.PI,
+            color: opts.color,
+            shape: opts.shape,
+            tick: 0,
+            totalTicks: opts.ticks,
+            decay: opts.decay,
+            drift: opts.drift,
+            random: Math.random() + 5,
+            tiltSin: 0,
+            tiltCos: 0,
+            wobbleX: 0,
+            wobbleY: 0,
+            gravity: opts.gravity * 3,
+            ovalScalar: 0.6,
+            scalar: opts.scalar
+        };
+    }
+    function updateFetti(context, fetti) {
+        fetti.x += Math.cos(fetti.angle2D) * fetti.velocity + fetti.drift;
+        fetti.y += Math.sin(fetti.angle2D) * fetti.velocity + fetti.gravity;
+        fetti.wobble += 0.1;
+        fetti.velocity *= fetti.decay;
+        fetti.tiltAngle += 0.1;
+        fetti.tiltSin = Math.sin(fetti.tiltAngle);
+        fetti.tiltCos = Math.cos(fetti.tiltAngle);
+        fetti.random = Math.random() + 5;
+        fetti.wobbleX = fetti.x + 10 * fetti.scalar * Math.cos(fetti.wobble);
+        fetti.wobbleY = fetti.y + 10 * fetti.scalar * Math.sin(fetti.wobble);
+        var progress = (fetti.tick++) / fetti.totalTicks;
+        var x1 = fetti.x + fetti.random * fetti.tiltCos;
+        var y1 = fetti.y + fetti.random * fetti.tiltSin;
+        var x2 = fetti.wobbleX + fetti.random * fetti.tiltCos;
+        var y2 = fetti.wobbleY + fetti.random * fetti.tiltSin;
+        context.fillStyle = 'rgba(' + fetti.color.r + ', ' + fetti.color.g + ', ' + fetti.color.b + ', ' + (1 - progress) + ')';
+        context.beginPath();
+        if (fetti.shape === 'circle') context.ellipse ? context.ellipse(fetti.x, fetti.y, Math.abs(x2 - x1) * fetti.ovalScalar, Math.abs(y2 - y1) * fetti.ovalScalar, Math.PI / 10 * fetti.wobble, 0, 2 * Math.PI) : ellipse(context, fetti.x, fetti.y, Math.abs(x2 - x1) * fetti.ovalScalar, Math.abs(y2 - y1) * fetti.ovalScalar, Math.PI / 10 * fetti.wobble, 0, 2 * Math.PI);
+        else {
+            context.moveTo(Math.floor(fetti.x), Math.floor(fetti.y));
+            context.lineTo(Math.floor(fetti.wobbleX), Math.floor(y1));
+            context.lineTo(Math.floor(x2), Math.floor(y2));
+            context.lineTo(Math.floor(x1), Math.floor(fetti.wobbleY));
+        }
+        context.closePath();
+        context.fill();
+        return fetti.tick < fetti.totalTicks;
+    }
+    function animate(canvas, fettis, resizer, size, done) {
+        var animatingFettis = fettis.slice();
+        var context = canvas.getContext('2d');
+        var animationFrame;
+        var destroy;
+        var prom = promise(function(resolve) {
+            function onDone() {
+                animationFrame = destroy = null;
+                context.clearRect(0, 0, size.width, size.height);
+                done();
+                resolve();
+            }
+            function update() {
+                if (isWorker && !(size.width === workerSize.width && size.height === workerSize.height)) {
+                    size.width = canvas.width = workerSize.width;
+                    size.height = canvas.height = workerSize.height;
+                }
+                if (!size.width && !size.height) {
+                    resizer(canvas);
+                    size.width = canvas.width;
+                    size.height = canvas.height;
+                }
+                context.clearRect(0, 0, size.width, size.height);
+                animatingFettis = animatingFettis.filter(function(fetti) {
+                    return updateFetti(context, fetti);
+                });
+                if (animatingFettis.length) animationFrame = raf.frame(update);
+                else onDone();
+            }
+            animationFrame = raf.frame(update);
+            destroy = onDone;
+        });
+        return {
+            addFettis: function(fettis) {
+                animatingFettis = animatingFettis.concat(fettis);
+                return prom;
+            },
+            canvas: canvas,
+            promise: prom,
+            reset: function() {
+                if (animationFrame) raf.cancel(animationFrame);
+                if (destroy) destroy();
+            }
+        };
+    }
+    function confettiCannon(canvas, globalOpts) {
+        var isLibCanvas = !canvas;
+        var allowResize = !!prop(globalOpts || {
+        }, 'resize');
+        var globalDisableForReducedMotion = prop(globalOpts, 'disableForReducedMotion', Boolean);
+        var shouldUseWorker = canUseWorker && !!prop(globalOpts || {
+        }, 'useWorker');
+        var worker = shouldUseWorker ? getWorker() : null;
+        var resizer = isLibCanvas ? setCanvasWindowSize : setCanvasRectSize;
+        var initialized = canvas && worker ? !!canvas.__confetti_initialized : false;
+        var preferLessMotion = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion)').matches;
+        var animationObj;
+        function fireLocal(options, size, done) {
+            var particleCount = prop(options, 'particleCount', onlyPositiveInt);
+            var angle = prop(options, 'angle', Number);
+            var spread = prop(options, 'spread', Number);
+            var startVelocity = prop(options, 'startVelocity', Number);
+            var decay = prop(options, 'decay', Number);
+            var gravity = prop(options, 'gravity', Number);
+            var drift = prop(options, 'drift', Number);
+            var colors = prop(options, 'colors', colorsToRgb);
+            var ticks = prop(options, 'ticks', Number);
+            var shapes = prop(options, 'shapes');
+            var scalar = prop(options, 'scalar');
+            var origin = getOrigin(options);
+            var temp = particleCount;
+            var fettis = [];
+            var startX = canvas.width * origin.x;
+            var startY = canvas.height * origin.y;
+            while(temp--)fettis.push(randomPhysics({
+                x: startX,
+                y: startY,
+                angle: angle,
+                spread: spread,
+                startVelocity: startVelocity,
+                color: colors[temp % colors.length],
+                shape: shapes[randomInt(0, shapes.length)],
+                ticks: ticks,
+                decay: decay,
+                gravity: gravity,
+                drift: drift,
+                scalar: scalar
+            }));
+            // if we have a previous canvas already animating,
+            // add to it
+            if (animationObj) return animationObj.addFettis(fettis);
+            animationObj = animate(canvas, fettis, resizer, size, done);
+            return animationObj.promise;
+        }
+        function fire(options) {
+            var disableForReducedMotion = globalDisableForReducedMotion || prop(options, 'disableForReducedMotion', Boolean);
+            var zIndex = prop(options, 'zIndex', Number);
+            if (disableForReducedMotion && preferLessMotion) return promise(function(resolve) {
+                resolve();
+            });
+            if (isLibCanvas && animationObj) // use existing canvas from in-progress animation
+            canvas = animationObj.canvas;
+            else if (isLibCanvas && !canvas) {
+                // create and initialize a new canvas
+                canvas = getCanvas(zIndex);
+                document.body.appendChild(canvas);
+            }
+            if (allowResize && !initialized) // initialize the size of a user-supplied canvas
+            resizer(canvas);
+            var size = {
+                width: canvas.width,
+                height: canvas.height
+            };
+            if (worker && !initialized) worker.init(canvas);
+            initialized = true;
+            if (worker) canvas.__confetti_initialized = true;
+            function onResize() {
+                if (worker) {
+                    // TODO this really shouldn't be immediate, because it is expensive
+                    var obj = {
+                        getBoundingClientRect: function() {
+                            if (!isLibCanvas) return canvas.getBoundingClientRect();
+                        }
+                    };
+                    resizer(obj);
+                    worker.postMessage({
+                        resize: {
+                            width: obj.width,
+                            height: obj.height
+                        }
+                    });
+                    return;
+                }
+                // don't actually query the size here, since this
+                // can execute frequently and rapidly
+                size.width = size.height = null;
+            }
+            function done() {
+                animationObj = null;
+                if (allowResize) global.removeEventListener('resize', onResize);
+                if (isLibCanvas && canvas) {
+                    document.body.removeChild(canvas);
+                    canvas = null;
+                    initialized = false;
+                }
+            }
+            if (allowResize) global.addEventListener('resize', onResize, false);
+            if (worker) return worker.fire(options, size, done);
+            return fireLocal(options, size, done);
+        }
+        fire.reset = function() {
+            if (worker) worker.reset();
+            if (animationObj) animationObj.reset();
+        };
+        return fire;
+    }
+    module.exports = confettiCannon(null, {
+        useWorker: true,
+        resize: true
+    });
+    module.exports.create = confettiCannon;
+})(function() {
+    if (typeof window !== 'undefined') return window;
+    if (typeof self !== 'undefined') return self;
+    return this || {
+    };
+}(), $e5681fb9ff8b31c4$var$module, false);
+var // end source content
+$e5681fb9ff8b31c4$export$2e2bcd8739ae039 = $e5681fb9ff8b31c4$var$module.exports;
+var $e5681fb9ff8b31c4$export$185802fd694ee1f5 = $e5681fb9ff8b31c4$var$module.exports.create;
+
+
+const $2f25b22e70662204$var$BASE_DIR = ".tauri_progres";
+const $2f25b22e70662204$var$DATA_FILE_NAME = $2f25b22e70662204$var$BASE_DIR + "/data.json";
 class $2f25b22e70662204$export$f160779312cf57d5 {
     constructor(alerts){
         this.weeksContainer = document.getElementById("weeks");
@@ -2652,7 +3115,8 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         this.htmlWeeks.unshift(htmlcontainer);
         this.weeks.unshift(week);
         this.weeksContainer.prepend(htmlcontainer);
-        let updateFunction = ()=>{
+        let updateFunction = (done)=>{
+            if (done) this.launchConfetti();
             $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
             this.lastUpdateTime = Date.now();
         };
@@ -2660,10 +3124,10 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
             this.alerts.show(type, message, 5000);
         };
         let deleteFucntion = ()=>{
-            updateFunction();
+            updateFunction(false);
             this.weeksContainer.removeChild(htmlcontainer);
         };
-        updateFunction();
+        updateFunction(false);
         week.addEventListeners();
         week.setUpdateFunction(updateFunction);
         week.setAlertFunction(alertFunction);
@@ -2675,8 +3139,40 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         this.registerWeek(week);
         return week;
     }
+    launchConfetti() {
+        let randCord = ()=>Math.random() * (1.1 - -0.1) + -0.1
+        ;
+        let duration = 5000;
+        let animationEnd = Date.now() + duration;
+        let defaults = {
+            startVelocity: 50,
+            spread: 120,
+            zIndex: 0
+        };
+        let interval = setInterval(function() {
+            let timeLeft = animationEnd - Date.now();
+            if (timeLeft <= 0) return clearInterval(interval);
+            let particleCount = 100 * (timeLeft / duration);
+            $e5681fb9ff8b31c4$export$2e2bcd8739ae039(Object.assign({
+            }, defaults, {
+                particleCount: particleCount,
+                origin: {
+                    x: randCord(),
+                    y: 0.1 + randCord()
+                }
+            }));
+            $e5681fb9ff8b31c4$export$2e2bcd8739ae039(Object.assign({
+            }, defaults, {
+                particleCount: particleCount,
+                origin: {
+                    x: randCord(),
+                    y: 0.1 + randCord()
+                }
+            }));
+        }, 250);
+    }
     registerDraggable() {
-        var drake = (/*@__PURE__*/$parcel$interopDefault($09f30e741db80808$exports))([
+        let drake = (/*@__PURE__*/$parcel$interopDefault($09f30e741db80808$exports))([
             this.weeksContainer
         ], {
             copy: false,
@@ -2705,7 +3201,7 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
     async saveFile() {
         try {
             let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
-            let path = homeDir + ".tauri_progres/data.json";
+            let path = homeDir + $2f25b22e70662204$var$DATA_FILE_NAME;
             let text = await $61d50d698abff50d$export$552bfb764b5cd2b4({
                 contents: JSON.stringify(this.weeks, null, 2),
                 path: path
@@ -2718,7 +3214,7 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         let text;
         try {
             let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
-            let file = homeDir + ".tauri_progres/data.json";
+            let file = homeDir + $2f25b22e70662204$var$DATA_FILE_NAME;
             text = await $61d50d698abff50d$export$177308921a610223(file);
             console.log(text);
         } catch (e) {
@@ -2736,7 +3232,7 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         let homeDir;
         try {
             homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
-            let dataDir = homeDir + ".tauri_progres";
+            let dataDir = homeDir + $2f25b22e70662204$var$BASE_DIR;
             let created = await $61d50d698abff50d$export$8ffa162de829532c(dataDir);
             console.log("Created", created);
         } catch (e) {
@@ -2747,7 +3243,7 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         // Folder now exists
         try {
             let homeDir1 = await $877b126e36883e53$export$e401803eb3bf9d2f();
-            let file = homeDir1 + ".tauri_progres/data.json";
+            let file = homeDir1 + $2f25b22e70662204$var$DATA_FILE_NAME;
             let text = await $61d50d698abff50d$export$177308921a610223(file);
             console.log(text);
         } catch (e1) {
@@ -2755,7 +3251,7 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
             if (typeof e1 == 'string' && e1.includes("os error 2")) // no file exists, create now
             try {
                 let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
-                let path = homeDir + ".tauri_progres/data.json";
+                let path = homeDir + $2f25b22e70662204$var$DATA_FILE_NAME;
                 let text = await $61d50d698abff50d$export$552bfb764b5cd2b4({
                     contents: "{}",
                     path: path
@@ -2782,7 +3278,7 @@ class $b437cb7ddfb16b51$var$Main {
     }
     async run() {
         let trial = ()=>{
-            let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":1},"tutorials":{"total":1,"left":1},"assignments":{"total":2,"left":3}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`);
+            let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":0},"tutorials":{"total":1,"left":0},"assignments":{"total":2,"left":1}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`);
             ww.hidden = true;
             let w2 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w2);
@@ -2835,7 +3331,7 @@ class $b437cb7ddfb16b51$var$Main {
 }
 window.onload = async function() {
     let m = new $b437cb7ddfb16b51$var$Main();
-    m.run();
+    await m.run();
 };
 
 
