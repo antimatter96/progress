@@ -36,6 +36,8 @@ export class Week {
   deleted: boolean
   menuVisible: boolean
 
+  hideMenuTimer: NodeJS.Timeout
+
   constructor(input) {
     this.id = input.hasOwnProperty('id') ? input.id : uuid();
     this.name = input.name;
@@ -239,23 +241,35 @@ export class Week {
     });
 
     document.getElementById(`${this.id}-menu`).addEventListener('click', () => {
+      clearTimeout(this.hideMenuTimer);
+
       this.menuVisible = !this.menuVisible;
       this.updateLastChangeTime(false)
+
+      if (this.menuVisible) {
+        this.hideMenuTimer = setTimeout(() => {
+          this.menuVisible = !this.menuVisible;
+          this.updateLastChangeTime(false)
+        }, 5_000)
+      }
     });
 
     document.getElementById(`${this.id}-hide`).addEventListener('click', () => {
+      clearTimeout(this.hideMenuTimer);
       this.menuVisible = !this.menuVisible;
       this.hidden = !this.hidden;
       this.updateLastChangeTime(false)
     });
 
     document.getElementById(`${this.id}-lock`).addEventListener('click', () => {
+      clearTimeout(this.hideMenuTimer);
       this.menuVisible = !this.menuVisible;
       this.locked = !this.locked;
       this.updateLastChangeTime(false)
     });
 
     document.getElementById(`${this.id}-delete`).addEventListener('click', async () => {
+      clearTimeout(this.hideMenuTimer);
       this.menuVisible = !this.menuVisible;
       if (this.locked) {
         this.alertUser('error', "Please unlock before making any changes");
@@ -430,10 +444,12 @@ export function templateFunc(week: Week) {
               </svg>
             </button>
 
-            <div ?hidden=${!week.menuVisible} class="origin-top-right absolute top-0 right-10 mt-2 w-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-              <a class="rounded-t-md text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'}  </a>
-              <a class="text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
-              <a class="rounded-b-md text-white bg-red-800 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-delete">Delete</a>
+            <div ?hidden=${!week.menuVisible}>
+              <div class="dropdown-menu absolute w-60 shadow-lg bg-white divide-x divide-gray-100 right-10 grid grid-cols-3">
+                <a class="text-gray-900" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'} </a>
+                <a class="text-gray-900" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
+                <a class="text-white bg-red-800" id="${id}-delete">Delete</a>
+              </div>
             </div>
           </div>
         </div>

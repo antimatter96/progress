@@ -815,20 +815,28 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             });
         });
         document.getElementById(`${this.id}-menu`).addEventListener('click', ()=>{
+            clearTimeout(this.hideMenuTimer);
             this.menuVisible = !this.menuVisible;
             this.updateLastChangeTime(false);
+            if (this.menuVisible) this.hideMenuTimer = setTimeout(()=>{
+                this.menuVisible = !this.menuVisible;
+                this.updateLastChangeTime(false);
+            }, 5000);
         });
         document.getElementById(`${this.id}-hide`).addEventListener('click', ()=>{
+            clearTimeout(this.hideMenuTimer);
             this.menuVisible = !this.menuVisible;
             this.hidden = !this.hidden;
             this.updateLastChangeTime(false);
         });
         document.getElementById(`${this.id}-lock`).addEventListener('click', ()=>{
+            clearTimeout(this.hideMenuTimer);
             this.menuVisible = !this.menuVisible;
             this.locked = !this.locked;
             this.updateLastChangeTime(false);
         });
         document.getElementById(`${this.id}-delete`).addEventListener('click', async ()=>{
+            clearTimeout(this.hideMenuTimer);
             this.menuVisible = !this.menuVisible;
             if (this.locked) {
                 this.alertUser('error', "Please unlock before making any changes");
@@ -964,10 +972,12 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
               </svg>
             </button>
 
-            <div ?hidden=${!week.menuVisible} class="origin-top-right absolute top-0 right-10 mt-2 w-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-              <a class="rounded-t-md text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'}  </a>
-              <a class="text-gray-900 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
-              <a class="rounded-b-md text-white bg-red-800 block px-4 py-2 text-sm hover:opacity-50" role="menuitem" tabindex="-1" id="${id}-delete">Delete</a>
+            <div ?hidden=${!week.menuVisible}>
+              <div class="dropdown-menu absolute w-60 shadow-lg bg-white divide-x divide-gray-100 right-10 grid grid-cols-3">
+                <a class="text-gray-900" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'} </a>
+                <a class="text-gray-900" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
+                <a class="text-white bg-red-800" id="${id}-delete">Delete</a>
+              </div>
             </div>
           </div>
         </div>
@@ -3116,9 +3126,11 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         this.weeks.unshift(week);
         this.weeksContainer.prepend(htmlcontainer);
         let updateFunction = (done)=>{
+            console.log('rstart', Date.now());
             if (done) this.launchConfetti();
             $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
             this.lastUpdateTime = Date.now();
+            console.log('rend', Date.now());
         };
         let alertFunction = (type, message)=>{
             this.alerts.show(type, message, 5000);
@@ -3278,28 +3290,29 @@ class $b437cb7ddfb16b51$var$Main {
     }
     async run() {
         let trial = ()=>{
-            let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":0},"tutorials":{"total":1,"left":0},"assignments":{"total":2,"left":1}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":false}],"lastChangeTime":1634845763686}`);
-            ww.hidden = true;
+            let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":0},"tutorials":{"total":1,"left":0},"assignments":{"total":2,"left":1}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":true}],"lastChangeTime":1634845763686}`);
+            ww.hidden = false;
             let w2 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w2);
             ww.id = "2";
             ww.name = "2";
-            ww.hidden = false;
+            ww.hidden = true;
             let w3 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w3);
             ww.id = "3";
             ww.name = "3";
-            ww.hidden = false;
+            ww.hidden = true;
             let w4 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w4);
             ww.id = "4";
             ww.name = "4";
-            ww.hidden = false;
+            ww.hidden = true;
             let w5 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w5);
         };
-        // trial();
-        try {
+        if (window.__TAURI__) ;
+        else trial();
+        if (window.__TAURI__) try {
             let exists = await $2f25b22e70662204$export$f160779312cf57d5.ensureFileExists();
             console.log(exists);
             this.wm.loadLocal();

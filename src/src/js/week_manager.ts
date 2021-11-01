@@ -62,11 +62,13 @@ export class WeekManager {
     this.weeksContainer.prepend(htmlcontainer);
 
     let updateFunction = (done: boolean) => {
+      console.log('rstart', Date.now());
       if (done) {
         this.launchConfetti();
       }
       render(templateFunc(week), htmlcontainer);
       this.lastUpdateTime = Date.now();
+      console.log('rend', Date.now());
     }
 
     let alertFunction = (type, message) => {
