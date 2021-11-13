@@ -11,7 +11,7 @@
     "canvas-confetti": "^1.4.0",
     "dragula": "^3.7.3",
     "lit-html": "^2.0.1",
-    "parcel": "^2.0.0",
+    "parcel": "^2.0.1",
     "postcss": "^8.3.9",
     "posthtml": "^0.16.5",
     "posthtml-include": "^1.7.2",

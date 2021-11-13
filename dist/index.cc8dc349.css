@@ -889,10 +889,6 @@ video {
   display: none;
 }
 
-.h-4 {
-  height: 1rem;
-}
-
 .w-4 {
   width: 1rem;
 }
@@ -1012,10 +1008,6 @@ video {
   white-space: nowrap;
 }
 
-.rounded-sm {
-  border-radius: 0.125rem;
-}
-
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -1027,16 +1019,6 @@ video {
 .border-white {
   --tw-border-opacity: 1;
   border-color: rgba(255, 255, 255, var(--tw-border-opacity));
-}
-
-.border-lime-400 {
-  --tw-border-opacity: 1;
-  border-color: rgba(163, 230, 53, var(--tw-border-opacity));
-}
-
-.border-red-400 {
-  --tw-border-opacity: 1;
-  border-color: rgba(248, 113, 113, var(--tw-border-opacity));
 }
 
 .border-gray-600 {
@@ -1185,6 +1167,11 @@ video {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .pt-1 {
@@ -1401,6 +1388,25 @@ body {
 .better-shadow {
   border: 1px solid transparent !important;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+#nav {
+  position: sticky;
+  top: 0px;
+  z-index: 50;
+  --tw-bg-opacity: 1;
+  background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(51, 65, 85, var(--tw-text-opacity));
+  border: 1px solid transparent;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-bottom: 2px white solid;
+  border-left: 0px solid white;
+  border-right: 0px solid white;
+}
+
+#nav.displaced {
+  border-bottom: 2px transparent solid;
 }
 
 .week-overall {
@@ -1762,6 +1768,54 @@ body {
 
 .dropdown-menu a:hover {
   opacity: 0.5;
+}
+
+.floating-action-button {
+  display: inline-block;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 9999px;
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+  font-weight: 900;
+  text-align: center;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  border-width: 1px;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.floating-action-button:hover {
+  opacity: 0.8;
+}
+
+.floating-action-button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.floating-action-button.open {
+  --tw-bg-opacity: 1;
+  background-color: rgba(132, 204, 22, var(--tw-bg-opacity));
+}
+
+.floating-action-button.close {
+  --tw-bg-opacity: 1;
+  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+}
+
+.floating-action-button::before {
+  content: "+";
+}
+
+.floating-action-button.close::before {
+  content: "×";
+}
+
+.floating-action-button::before {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 @media (min-width: 640px) {

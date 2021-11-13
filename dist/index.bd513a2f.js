@@ -55,12 +55,12 @@ const $a51c7802bfe1890e$var$i = globalThis.trustedTypes, $a51c7802bfe1890e$var$s
     ];
 };
 class $a51c7802bfe1890e$var$P {
-    constructor({ strings: t , _$litType$: s  }, n){
+    constructor({ strings: t2 , _$litType$: s1  }, n1){
         let l;
         this.parts = [];
         let r = 0, d = 0;
-        const u = t.length - 1, c = this.parts, [v, a] = $a51c7802bfe1890e$var$C(t, s);
-        if (this.el = $a51c7802bfe1890e$var$P.createElement(v, n), $a51c7802bfe1890e$var$A.currentNode = this.el.content, 2 === s) {
+        const u = t2.length - 1, c = this.parts, [v, a] = $a51c7802bfe1890e$var$C(t2, s1);
+        if (this.el = $a51c7802bfe1890e$var$P.createElement(v, n1), $a51c7802bfe1890e$var$A.currentNode = this.el.content, 2 === s1) {
             const t = this.el.content, i = t.firstChild;
             i.remove(), t.append(...i.childNodes);
         }
@@ -84,7 +84,7 @@ class $a51c7802bfe1890e$var$P {
                             index: r
                         });
                     }
-                    for (const i1 of t)l.removeAttribute(i1);
+                    for (const i2 of t)l.removeAttribute(i2);
                 }
                 if ($a51c7802bfe1890e$var$g.test(l.tagName)) {
                     const t = l.textContent.split($a51c7802bfe1890e$var$e), s = t.length - 1;
@@ -113,9 +113,9 @@ class $a51c7802bfe1890e$var$P {
             r++;
         }
     }
-    static createElement(t, i) {
+    static createElement(t1, i3) {
         const s = $a51c7802bfe1890e$var$l.createElement("template");
-        return s.innerHTML = t, s;
+        return s.innerHTML = t1, s;
     }
 }
 function $a51c7802bfe1890e$var$V(t, i, s = t, e) {
@@ -135,29 +135,29 @@ class $a51c7802bfe1890e$var$E {
     get _$AU() {
         return this._$AM._$AU;
     }
-    p(t) {
+    p(t3) {
         var i;
-        const { el: { content: s  } , parts: e  } = this._$AD, o = (null !== (i = null == t ? void 0 : t.creationScope) && void 0 !== i ? i : $a51c7802bfe1890e$var$l).importNode(s, !0);
+        const { el: { content: s  } , parts: e  } = this._$AD, o = (null !== (i = null == t3 ? void 0 : t3.creationScope) && void 0 !== i ? i : $a51c7802bfe1890e$var$l).importNode(s, !0);
         $a51c7802bfe1890e$var$A.currentNode = o;
         let n = $a51c7802bfe1890e$var$A.nextNode(), h = 0, r = 0, d = e[0];
         for(; void 0 !== d;){
             if (h === d.index) {
                 let i;
-                2 === d.type ? i = new $a51c7802bfe1890e$var$N(n, n.nextSibling, this, t) : 1 === d.type ? i = new d.ctor(n, d.name, d.strings, this, t) : 6 === d.type && (i = new $a51c7802bfe1890e$var$I(n, this, t)), this.v.push(i), d = e[++r];
+                2 === d.type ? i = new $a51c7802bfe1890e$var$N(n, n.nextSibling, this, t3) : 1 === d.type ? i = new d.ctor(n, d.name, d.strings, this, t3) : 6 === d.type && (i = new $a51c7802bfe1890e$var$I(n, this, t3)), this.v.push(i), d = e[++r];
             }
             h !== (null == d ? void 0 : d.index) && (n = $a51c7802bfe1890e$var$A.nextNode(), h++);
         }
         return o;
     }
-    m(t) {
+    m(t4) {
         let i = 0;
-        for (const s of this.v)void 0 !== s && (void 0 !== s.strings ? (s._$AI(t, s, i), i += s.strings.length - 2) : s._$AI(t[i])), i++;
+        for (const s of this.v)void 0 !== s && (void 0 !== s.strings ? (s._$AI(t4, s, i), i += s.strings.length - 2) : s._$AI(t4[i])), i++;
     }
 }
 class $a51c7802bfe1890e$var$N {
-    constructor(t, i, s, e){
+    constructor(t5, i4, s, e){
         var o;
-        this.type = 2, this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee, this._$AN = void 0, this._$AA = t, this._$AB = i, this._$AM = s, this.options = e, this._$Cg = null === (o = null == e ? void 0 : e.isConnected) || void 0 === o || o;
+        this.type = 2, this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee, this._$AN = void 0, this._$AA = t5, this._$AB = i4, this._$AM = s, this.options = e, this._$Cg = null === (o = null == e ? void 0 : e.isConnected) || void 0 === o || o;
     }
     get _$AU() {
         var t, i;
@@ -174,53 +174,53 @@ class $a51c7802bfe1890e$var$N {
     get endNode() {
         return this._$AB;
     }
-    _$AI(t, i = this) {
-        t = $a51c7802bfe1890e$var$V(this, t, i), $a51c7802bfe1890e$var$r(t) ? t === $a51c7802bfe1890e$export$45b790e32b2810ee || null == t || "" === t ? (this._$AH !== $a51c7802bfe1890e$export$45b790e32b2810ee && this._$AR(), this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee) : t !== this._$AH && t !== $a51c7802bfe1890e$export$9c068ae9cc5db4e8 && this.$(t) : void 0 !== t._$litType$ ? this.T(t) : void 0 !== t.nodeType ? this.S(t) : $a51c7802bfe1890e$var$u(t) ? this.M(t) : this.$(t);
+    _$AI(t6, i5 = this) {
+        t6 = $a51c7802bfe1890e$var$V(this, t6, i5), $a51c7802bfe1890e$var$r(t6) ? t6 === $a51c7802bfe1890e$export$45b790e32b2810ee || null == t6 || "" === t6 ? (this._$AH !== $a51c7802bfe1890e$export$45b790e32b2810ee && this._$AR(), this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee) : t6 !== this._$AH && t6 !== $a51c7802bfe1890e$export$9c068ae9cc5db4e8 && this.$(t6) : void 0 !== t6._$litType$ ? this.T(t6) : void 0 !== t6.nodeType ? this.S(t6) : $a51c7802bfe1890e$var$u(t6) ? this.M(t6) : this.$(t6);
     }
-    A(t, i = this._$AB) {
-        return this._$AA.parentNode.insertBefore(t, i);
+    A(t7, i6 = this._$AB) {
+        return this._$AA.parentNode.insertBefore(t7, i6);
     }
-    S(t) {
-        this._$AH !== t && (this._$AR(), this._$AH = this.A(t));
+    S(t8) {
+        this._$AH !== t8 && (this._$AR(), this._$AH = this.A(t8));
     }
-    $(t) {
-        this._$AH !== $a51c7802bfe1890e$export$45b790e32b2810ee && $a51c7802bfe1890e$var$r(this._$AH) ? this._$AA.nextSibling.data = t : this.S($a51c7802bfe1890e$var$l.createTextNode(t)), this._$AH = t;
+    $(t9) {
+        this._$AH !== $a51c7802bfe1890e$export$45b790e32b2810ee && $a51c7802bfe1890e$var$r(this._$AH) ? this._$AA.nextSibling.data = t9 : this.S($a51c7802bfe1890e$var$l.createTextNode(t9)), this._$AH = t9;
     }
-    T(t) {
+    T(t10) {
         var i;
-        const { values: s , _$litType$: e  } = t, o = "number" == typeof e ? this._$AC(t) : (void 0 === e.el && (e.el = $a51c7802bfe1890e$var$P.createElement(e.h, this.options)), e);
+        const { values: s , _$litType$: e  } = t10, o = "number" == typeof e ? this._$AC(t10) : (void 0 === e.el && (e.el = $a51c7802bfe1890e$var$P.createElement(e.h, this.options)), e);
         if ((null === (i = this._$AH) || void 0 === i ? void 0 : i._$AD) === o) this._$AH.m(s);
         else {
             const t = new $a51c7802bfe1890e$var$E(o, this), i = t.p(this.options);
             t.m(s), this.S(i), this._$AH = t;
         }
     }
-    _$AC(t) {
-        let i = $a51c7802bfe1890e$var$x.get(t.strings);
-        return void 0 === i && $a51c7802bfe1890e$var$x.set(t.strings, i = new $a51c7802bfe1890e$var$P(t)), i;
+    _$AC(t11) {
+        let i = $a51c7802bfe1890e$var$x.get(t11.strings);
+        return void 0 === i && $a51c7802bfe1890e$var$x.set(t11.strings, i = new $a51c7802bfe1890e$var$P(t11)), i;
     }
-    M(t) {
+    M(t12) {
         $a51c7802bfe1890e$var$d(this._$AH) || (this._$AH = [], this._$AR());
         const i = this._$AH;
         let s, e = 0;
-        for (const o of t)e === i.length ? i.push(s = new $a51c7802bfe1890e$var$N(this.A($a51c7802bfe1890e$var$h()), this.A($a51c7802bfe1890e$var$h()), this, this.options)) : s = i[e], s._$AI(o), e++;
+        for (const o of t12)e === i.length ? i.push(s = new $a51c7802bfe1890e$var$N(this.A($a51c7802bfe1890e$var$h()), this.A($a51c7802bfe1890e$var$h()), this, this.options)) : s = i[e], s._$AI(o), e++;
         e < i.length && (this._$AR(s && s._$AB.nextSibling, e), i.length = e);
     }
-    _$AR(t = this._$AA.nextSibling, i) {
+    _$AR(t13 = this._$AA.nextSibling, i7) {
         var s;
-        for(null === (s = this._$AP) || void 0 === s || s.call(this, !1, !0, i); t && t !== this._$AB;){
-            const i = t.nextSibling;
-            t.remove(), t = i;
+        for(null === (s = this._$AP) || void 0 === s || s.call(this, !1, !0, i7); t13 && t13 !== this._$AB;){
+            const i = t13.nextSibling;
+            t13.remove(), t13 = i;
         }
     }
-    setConnected(t) {
+    setConnected(t14) {
         var i;
-        void 0 === this._$AM && (this._$Cg = t, null === (i = this._$AP) || void 0 === i || i.call(this, t));
+        void 0 === this._$AM && (this._$Cg = t14, null === (i = this._$AP) || void 0 === i || i.call(this, t14));
     }
 }
 class $a51c7802bfe1890e$var$S {
-    constructor(t, i, s, e, o){
-        this.type = 1, this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee, this._$AN = void 0, this.element = t, this.name = i, this._$AM = e, this.options = o, s.length > 2 || "" !== s[0] || "" !== s[1] ? (this._$AH = Array(s.length - 1).fill(new String), this.strings = s) : this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee;
+    constructor(t15, i8, s2, e1, o){
+        this.type = 1, this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee, this._$AN = void 0, this.element = t15, this.name = i8, this._$AM = e1, this.options = o, s2.length > 2 || "" !== s2[0] || "" !== s2[1] ? (this._$AH = Array(s2.length - 1).fill(new String), this.strings = s2) : this._$AH = $a51c7802bfe1890e$export$45b790e32b2810ee;
     }
     get tagName() {
         return this.element.tagName;
@@ -228,61 +228,61 @@ class $a51c7802bfe1890e$var$S {
     get _$AU() {
         return this._$AM._$AU;
     }
-    _$AI(t, i = this, s, e) {
+    _$AI(t16, i9 = this, s3, e2) {
         const o = this.strings;
         let n = !1;
-        if (void 0 === o) t = $a51c7802bfe1890e$var$V(this, t, i, 0), n = !$a51c7802bfe1890e$var$r(t) || t !== this._$AH && t !== $a51c7802bfe1890e$export$9c068ae9cc5db4e8, n && (this._$AH = t);
+        if (void 0 === o) t16 = $a51c7802bfe1890e$var$V(this, t16, i9, 0), n = !$a51c7802bfe1890e$var$r(t16) || t16 !== this._$AH && t16 !== $a51c7802bfe1890e$export$9c068ae9cc5db4e8, n && (this._$AH = t16);
         else {
-            const e = t;
+            const e = t16;
             let l, h;
-            for(t = o[0], l = 0; l < o.length - 1; l++)h = $a51c7802bfe1890e$var$V(this, e[s + l], i, l), h === $a51c7802bfe1890e$export$9c068ae9cc5db4e8 && (h = this._$AH[l]), n || (n = !$a51c7802bfe1890e$var$r(h) || h !== this._$AH[l]), h === $a51c7802bfe1890e$export$45b790e32b2810ee ? t = $a51c7802bfe1890e$export$45b790e32b2810ee : t !== $a51c7802bfe1890e$export$45b790e32b2810ee && (t += (null != h ? h : "") + o[l + 1]), this._$AH[l] = h;
+            for(t16 = o[0], l = 0; l < o.length - 1; l++)h = $a51c7802bfe1890e$var$V(this, e[s3 + l], i9, l), h === $a51c7802bfe1890e$export$9c068ae9cc5db4e8 && (h = this._$AH[l]), n || (n = !$a51c7802bfe1890e$var$r(h) || h !== this._$AH[l]), h === $a51c7802bfe1890e$export$45b790e32b2810ee ? t16 = $a51c7802bfe1890e$export$45b790e32b2810ee : t16 !== $a51c7802bfe1890e$export$45b790e32b2810ee && (t16 += (null != h ? h : "") + o[l + 1]), this._$AH[l] = h;
         }
-        n && !e && this.k(t);
+        n && !e2 && this.k(t16);
     }
-    k(t) {
-        t === $a51c7802bfe1890e$export$45b790e32b2810ee ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, null != t ? t : "");
+    k(t17) {
+        t17 === $a51c7802bfe1890e$export$45b790e32b2810ee ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, null != t17 ? t17 : "");
     }
 }
 class $a51c7802bfe1890e$var$M extends $a51c7802bfe1890e$var$S {
     constructor(){
         super(...arguments), this.type = 3;
     }
-    k(t) {
-        this.element[this.name] = t === $a51c7802bfe1890e$export$45b790e32b2810ee ? void 0 : t;
+    k(t18) {
+        this.element[this.name] = t18 === $a51c7802bfe1890e$export$45b790e32b2810ee ? void 0 : t18;
     }
 }
 class $a51c7802bfe1890e$var$k extends $a51c7802bfe1890e$var$S {
     constructor(){
         super(...arguments), this.type = 4;
     }
-    k(t) {
-        t && t !== $a51c7802bfe1890e$export$45b790e32b2810ee ? this.element.setAttribute(this.name, "") : this.element.removeAttribute(this.name);
+    k(t19) {
+        t19 && t19 !== $a51c7802bfe1890e$export$45b790e32b2810ee ? this.element.setAttribute(this.name, "") : this.element.removeAttribute(this.name);
     }
 }
 class $a51c7802bfe1890e$var$H extends $a51c7802bfe1890e$var$S {
-    constructor(t, i, s, e, o){
-        super(t, i, s, e, o), this.type = 5;
+    constructor(t20, i10, s4, e3, o1){
+        super(t20, i10, s4, e3, o1), this.type = 5;
     }
-    _$AI(t, i = this) {
+    _$AI(t21, i11 = this) {
         var s;
-        if ((t = null !== (s = $a51c7802bfe1890e$var$V(this, t, i, 0)) && void 0 !== s ? s : $a51c7802bfe1890e$export$45b790e32b2810ee) === $a51c7802bfe1890e$export$9c068ae9cc5db4e8) return;
-        const e = this._$AH, o = t === $a51c7802bfe1890e$export$45b790e32b2810ee && e !== $a51c7802bfe1890e$export$45b790e32b2810ee || t.capture !== e.capture || t.once !== e.once || t.passive !== e.passive, n = t !== $a51c7802bfe1890e$export$45b790e32b2810ee && (e === $a51c7802bfe1890e$export$45b790e32b2810ee || o);
-        o && this.element.removeEventListener(this.name, this, e), n && this.element.addEventListener(this.name, this, t), this._$AH = t;
+        if ((t21 = null !== (s = $a51c7802bfe1890e$var$V(this, t21, i11, 0)) && void 0 !== s ? s : $a51c7802bfe1890e$export$45b790e32b2810ee) === $a51c7802bfe1890e$export$9c068ae9cc5db4e8) return;
+        const e = this._$AH, o = t21 === $a51c7802bfe1890e$export$45b790e32b2810ee && e !== $a51c7802bfe1890e$export$45b790e32b2810ee || t21.capture !== e.capture || t21.once !== e.once || t21.passive !== e.passive, n = t21 !== $a51c7802bfe1890e$export$45b790e32b2810ee && (e === $a51c7802bfe1890e$export$45b790e32b2810ee || o);
+        o && this.element.removeEventListener(this.name, this, e), n && this.element.addEventListener(this.name, this, t21), this._$AH = t21;
     }
-    handleEvent(t) {
+    handleEvent(t22) {
         var i, s;
-        "function" == typeof this._$AH ? this._$AH.call(null !== (s = null === (i = this.options) || void 0 === i ? void 0 : i.host) && void 0 !== s ? s : this.element, t) : this._$AH.handleEvent(t);
+        "function" == typeof this._$AH ? this._$AH.call(null !== (s = null === (i = this.options) || void 0 === i ? void 0 : i.host) && void 0 !== s ? s : this.element, t22) : this._$AH.handleEvent(t22);
     }
 }
 class $a51c7802bfe1890e$var$I {
-    constructor(t, i, s){
-        this.element = t, this.type = 6, this._$AN = void 0, this._$AM = i, this.options = s;
+    constructor(t23, i12, s5){
+        this.element = t23, this.type = 6, this._$AN = void 0, this._$AM = i12, this.options = s5;
     }
     get _$AU() {
         return this._$AM._$AU;
     }
-    _$AI(t) {
-        $a51c7802bfe1890e$var$V(this, t);
+    _$AI(t24) {
+        $a51c7802bfe1890e$var$V(this, t24);
     }
 }
 const $a51c7802bfe1890e$export$8613d1ca9052b22e = {
@@ -327,14 +327,14 @@ class $d71bce45553af777$export$befdefbdce210f91 {
     get _$AU() {
         return this._$AM._$AU;
     }
-    _$AT(t, e, i) {
-        this._$Ct = t, this._$AM = e, this._$Ci = i;
+    _$AT(t1, e, i) {
+        this._$Ct = t1, this._$AM = e, this._$Ci = i;
     }
-    _$AS(t, e) {
-        return this.update(t, e);
+    _$AS(t2, e1) {
+        return this.update(t2, e1);
     }
-    update(t, e) {
-        return this.render(...e);
+    update(t3, e2) {
+        return this.render(...e2);
     }
 }
 
@@ -344,12 +344,12 @@ class $d71bce45553af777$export$befdefbdce210f91 {
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */ const $6197f1f1b7c083f0$export$56cc687933817664 = $d71bce45553af777$export$99b43ad1ed32e735(class extends $d71bce45553af777$export$befdefbdce210f91 {
-    constructor(t){
+    constructor(t4){
         var i;
-        if (super(t), t.type !== $d71bce45553af777$export$9ba3b3f20a85bfa.ATTRIBUTE || "class" !== t.name || (null === (i = t.strings) || void 0 === i ? void 0 : i.length) > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
+        if (super(t4), t4.type !== $d71bce45553af777$export$9ba3b3f20a85bfa.ATTRIBUTE || "class" !== t4.name || (null === (i = t4.strings) || void 0 === i ? void 0 : i.length) > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
     }
-    render(t) {
-        return " " + Object.keys(t).filter((i)=>t[i]
+    render(t1) {
+        return " " + Object.keys(t1).filter((i)=>t1[i]
         ).join(" ") + " ";
     }
     update(i, [s]) {
@@ -357,16 +357,16 @@ class $d71bce45553af777$export$befdefbdce210f91 {
         if (void 0 === this.st) {
             this.st = new Set, void 0 !== i.strings && (this.et = new Set(i.strings.join(" ").split(/\s/).filter((t)=>"" !== t
             )));
-            for(const t in s)s[t] && !(null === (r = this.et) || void 0 === r ? void 0 : r.has(t)) && this.st.add(t);
+            for(const t2 in s)s[t2] && !(null === (r = this.et) || void 0 === r ? void 0 : r.has(t2)) && this.st.add(t2);
             return this.render(s);
         }
         const e = i.element.classList;
         this.st.forEach((t)=>{
             t in s || (e.remove(t), this.st.delete(t));
         });
-        for(const t in s){
-            const i = !!s[t];
-            i === this.st.has(t) || (null === (o = this.et) || void 0 === o ? void 0 : o.has(t)) || (i ? (e.add(t), this.st.add(t)) : (e.remove(t), this.st.delete(t)));
+        for(const t3 in s){
+            const i = !!s[t3];
+            i === this.st.has(t3) || (null === (o = this.et) || void 0 === o ? void 0 : o.has(t3)) || (i ? (e.add(t3), this.st.add(t3)) : (e.remove(t3), this.st.delete(t3)));
         }
         return $a51c7802bfe1890e$export$9c068ae9cc5db4e8;
     }
@@ -447,9 +447,12 @@ class $3c13b93cfbb34482$export$a99aab2a736cea3e {
 }
 
 
+
 const $9fdc79397460abda$var$minuteSeconds = /^\d+:[0-5]\d$/;
 class $9fdc79397460abda$export$ca95ea95faa89f36 {
     constructor(){
+    }
+    validate() {
         this.titleInput = document.getElementById("input-title");
         this.activities = document.getElementById("input-activities");
         this.tutorials = document.getElementById("input-tutorials");
@@ -458,8 +461,6 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
         this.assignmentTime = document.getElementById("input-assignment-time");
         this.videos = document.getElementById("input-videos");
         console.log(this.titleInput, this.activities, this.tutorials, this.assignments, this.factor, this.videos);
-    }
-    validate() {
         let errors = [];
         console.log("titleInput", this.titleInput.value);
         console.log("activities", this.activities.value);
@@ -546,6 +547,87 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
         }
         return input;
     }
+}
+function $9fdc79397460abda$export$2cbce0dece413a39(visible) {
+    return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
+    <div ?hidden=${!visible} id="form-enclosure" class="container items-center bg-white my-5 better-shadow">
+    <div class="text-blueGray-700 rounded-lg">
+
+      <div class="py-4 px-5 mx-auto border-b-2 border-gray-600">
+        <h2 class="text-2xl font-bold text-black lg:text-x lg:mr-8">Add a new week</h2>
+      </div>
+
+      <form id="add-form" class="w-full px-10 pt-2">
+        <div class="w-full p-4 pb-6 mx-auto">
+          <div class="flex flex-wrap -mx-3">
+            <div class="w-full px-3 mb-3">
+              <label class="basic-label tracking-wide text-left" for="input-title">
+                Title
+              </label>
+              <input id='input-title' required class="mb-3 basic-input" type="text" placeholder="Maths Week 1">
+            </div>
+          </div>
+
+          <div class="flex justify-evenly mb-6 flex-wrap">
+            <div class="px-1 w-1/3">
+              <label class="basic-label text-center" for="input-activities">
+                Activities
+              </label>
+              <input id='input-activities' data-name='Activities' required class="text-center basic-input"
+                id="grid-first-name" type="number" min="0" step="1" placeholder="1">
+            </div>
+
+            <div class="px-1 w-1/3">
+              <label class="basic-label text-center" for="input-tutorials">
+                Tutorials
+              </label>
+              <input id='input-tutorials' data-name='Tutorials' required class="text-center basic-input"
+                id="grid-first-name" type="number" min="0" step="1" placeholder="1">
+            </div>
+
+            <div class="px-1 w-1/3">
+              <label class="basic-label text-center" for="input-assignments">
+                Assignments
+              </label>
+              <input id='input-assignments' data-name='Assignments' required class="text-center basic-input"
+                id="grid-first-name" type="number" min="0" step="1" placeholder="2">
+            </div>
+
+            <div class="px-1 w-1/2">
+              <label class="basic-label text-center" for="input-factor">
+                Factor
+              </label>
+              <input id='input-factor' data-name='Factor' required class="text-center basic-input" id="grid-first-name"
+                type="number" min="0.05" step="0.05" placeholder="0.75">
+            </div>
+
+            <div class="px-1 w-1/2">
+              <label class="basic-label text-center" for="input-assignment-time">
+                Time per Assignment
+              </label>
+              <input id='input-assignment-time' data-name='Assignment Time' required class="text-center basic-input"
+                id="grid-first-name" type="number" min="0" step="5" placeholder="30">
+            </div>
+          </div>
+
+          <label>
+            <span class="block mb-2 text-xd font-bold tracking-wide text-gray-700 uppercase">Video Lengths</span>
+            <textarea id='input-videos' class="basic-input mt-1 mb-3 form-textarea" rows="4"
+              placeholder="10:59  12:22"></textarea>
+          </label>
+
+          <div class="text-center">
+            <button type="submit"
+              class="w-full px-6 py-3 text-base font-medium leading-6 text-white bg-lime-500 better-button">
+              Add
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  `;
 }
 
 
@@ -691,66 +773,66 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
     setUpdateFunction(fn) {
         this.updateMe = fn;
     }
-    setAlertFunction(fn) {
-        this.alertUser = fn;
+    setAlertFunction(fn1) {
+        this.alertUser = fn1;
     }
-    setDeleteFunction(fn) {
-        this.deleteMe = fn;
+    setDeleteFunction(fn2) {
+        this.deleteMe = fn2;
     }
     updateLastChangeTime(someProgress) {
         this.lastChangeTime = Date.now();
         if (this.updateMe) this.updateMe(someProgress && this.isDone());
     }
-    flipVideo(i) {
-        if (this.videos[i].seen) this.markVideoLeft(i);
-        else this.markVideoSeen(i);
+    flipVideo(i3) {
+        if (this.videos[i3].seen) this.markVideoLeft(i3);
+        else this.markVideoSeen(i3);
     }
-    markVideoSeen(i) {
+    markVideoSeen(i1) {
         if (this.locked) {
             this.alertUser('error', "Please unlock before making any changes");
             return;
         }
-        if (this.videos[i].seen) {
+        if (this.videos[i1].seen) {
             this.alertUser('error', "Already done");
             return;
         }
-        this.videos[i].seen = true;
+        this.videos[i1].seen = true;
         this.updateLastChangeTime(true);
     }
-    markVideoLeft(i) {
+    markVideoLeft(i2) {
         if (this.locked) {
             this.alertUser('error', "Please unlock before making any changes");
             return;
         }
-        if (!this.videos[i].seen) {
+        if (!this.videos[i2].seen) {
             this.alertUser('error', "Already done");
             return;
         }
-        this.videos[i].seen = false;
+        this.videos[i2].seen = false;
         this.updateLastChangeTime(false);
     }
-    markSolvableDone(type) {
+    markSolvableDone(type2) {
         if (this.locked) {
             this.alertUser('error', "Please unlock before making any changes");
             return;
         }
-        if (this.solvable[type].left <= 0) {
+        if (this.solvable[type2].left <= 0) {
             this.alertUser('error', "Already done");
             return;
         }
-        this.solvable[type].left -= 1;
+        this.solvable[type2].left -= 1;
         this.updateLastChangeTime(true);
     }
-    markSolvableNotDone(type) {
+    markSolvableNotDone(type1) {
         if (this.locked) {
             this.alertUser('error', "Please unlock before making any changes");
             return;
         }
-        if (this.solvable[type].left + 1 > this.solvable[type].total) {
+        if (this.solvable[type1].left + 1 > this.solvable[type1].total) {
             this.alertUser('error', "Already done");
             return;
         }
-        this.solvable[type].left += 1;
+        this.solvable[type1].left += 1;
         this.updateLastChangeTime(false);
     }
     validateSelf() {
@@ -787,8 +869,8 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         m /= this.factor * 60;
         return m;
     }
-    getPercentage(total, left) {
-        return 100 * left / total;
+    getPercentage(total1, left1) {
+        return 100 * left1 / total1;
     }
     isDone() {
         let _projected = this.getTotalMinutes();
@@ -856,10 +938,10 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             });
         });
     }
-    static Validate(input) {
-        if (!input.id || !input.name) throw new Error(`${input.id} ${input.name}`);
-        if (!Number.isFinite(input.factor) || !Number.isInteger(input.solvableTime)) throw new Error();
-        input.videos.forEach((video)=>{
+    static Validate(input1) {
+        if (!input1.id || !input1.name) throw new Error(`${input1.id} ${input1.name}`);
+        if (!Number.isFinite(input1.factor) || !Number.isInteger(input1.solvableTime)) throw new Error();
+        input1.videos.forEach((video)=>{
             if (!Number.isInteger(video.m) || !Number.isInteger(video.s)) throw new Error();
             if (video.s < 0 || video.s >= 60) throw new Error();
             if (video.m < 0) throw new Error();
@@ -869,16 +951,16 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             "tutorials",
             "assignments"
         ].forEach((key)=>{
-            let total = input.solvable[key].total;
-            let left = input.solvable[key].left;
+            let total = input1.solvable[key].total;
+            let left = input1.solvable[key].left;
             if (!Number.isInteger(total) || !Number.isInteger(left)) throw new Error();
             if (total < 0 || left < 0 || left > total) throw new Error();
         });
     }
-    static Parse(input) {
+    static Parse(input2) {
         try {
-            $850e48264ea38c74$export$fca4f8121099df57.Validate(input);
-            return new $850e48264ea38c74$export$fca4f8121099df57(input);
+            $850e48264ea38c74$export$fca4f8121099df57.Validate(input2);
+            return new $850e48264ea38c74$export$fca4f8121099df57(input2);
         } catch (e) {
             return null;
         }
@@ -1993,9 +2075,9 @@ function $ececc6f691b03e13$var$removeEventHard(el, type, fn) {
     if (listener) return el.detachEvent('on' + type, listener);
 }
 function $ececc6f691b03e13$var$fabricateEvent(el, type, model) {
-    var e = $ff6f9a541bed0afd$exports.indexOf(type) === -1 ? makeCustomEvent() : makeClassicEvent();
-    if (el.dispatchEvent) el.dispatchEvent(e);
-    else el.fireEvent('on' + type, e);
+    var e1 = $ff6f9a541bed0afd$exports.indexOf(type) === -1 ? makeCustomEvent() : makeClassicEvent();
+    if (el.dispatchEvent) el.dispatchEvent(e1);
+    else el.fireEvent('on' + type, e1);
     function makeClassicEvent() {
         var e;
         if ($ececc6f691b03e13$var$doc.createEvent) {
@@ -2080,8 +2162,8 @@ $b91e76632f4b3a1d$exports = {
 var $09f30e741db80808$var$doc = document;
 var $09f30e741db80808$var$documentElement = $09f30e741db80808$var$doc.documentElement;
 function $09f30e741db80808$var$dragula(initialContainers, options) {
-    var len = arguments.length;
-    if (len === 1 && Array.isArray(initialContainers) === false) {
+    var len1 = arguments.length;
+    if (len1 === 1 && Array.isArray(initialContainers) === false) {
         options = initialContainers;
         initialContainers = [];
     }
@@ -2117,7 +2199,7 @@ function $09f30e741db80808$var$dragula(initialContainers, options) {
         start: manualStart,
         end: end,
         cancel: cancel,
-        remove: remove,
+        remove: remove1,
         destroy: destroy,
         canMove: canMove,
         dragging: false
@@ -2287,7 +2369,7 @@ function $09f30e741db80808$var$dragula(initialContainers, options) {
         if (dropTarget && (_copy && o.copySortSource || !_copy || dropTarget !== _source)) {
             drop(item, dropTarget);
         } else if (o.removeOnSpill) {
-            remove();
+            remove1();
         } else {
             cancel();
         }
@@ -2304,7 +2386,7 @@ function $09f30e741db80808$var$dragula(initialContainers, options) {
         }
         cleanup();
     }
-    function remove() {
+    function remove1() {
         if (!drake.dragging) {
             return;
         }
@@ -2686,7 +2768,7 @@ var $e5681fb9ff8b31c4$var$module = {
         };
     }();
     var getWorker = function() {
-        var worker;
+        var worker1;
         var prom;
         var resolves = {
         };
@@ -2742,7 +2824,7 @@ var $e5681fb9ff8b31c4$var$module = {
             };
         }
         return function() {
-            if (worker) return worker;
+            if (worker1) return worker1;
             if (!isWorker && canUseWorker) {
                 var code = [
                     'var CONFETTI, SIZE = {}, module = {};',
@@ -2767,7 +2849,7 @@ var $e5681fb9ff8b31c4$var$module = {
                     '}', 
                 ].join('\n');
                 try {
-                    worker = new Worker(URL.createObjectURL(new Blob([
+                    worker1 = new Worker(URL.createObjectURL(new Blob([
                         code
                     ])));
                 } catch (e) {
@@ -2775,9 +2857,9 @@ var $e5681fb9ff8b31c4$var$module = {
                     typeof console.warn === 'function' && console.warn('🎊 Could not load worker', e);
                     return null;
                 }
-                decorate(worker);
+                decorate(worker1);
             }
-            return worker;
+            return worker1;
         };
     }();
     var defaults = {
@@ -2927,8 +3009,8 @@ var $e5681fb9ff8b31c4$var$module = {
         context.fill();
         return fetti.tick < fetti.totalTicks;
     }
-    function animate(canvas, fettis, resizer, size, done) {
-        var animatingFettis = fettis.slice();
+    function animate(canvas, fettis1, resizer, size, done) {
+        var animatingFettis = fettis1.slice();
         var context = canvas.getContext('2d');
         var animationFrame;
         var destroy;
@@ -3119,16 +3201,16 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         }, 5000);
         this.registerDraggable();
     }
-    registerWeek(week) {
+    registerWeek(week1) {
         let htmlcontainer = document.createElement('div');
-        htmlcontainer.id = week.id;
+        htmlcontainer.id = week1.id;
         this.htmlWeeks.unshift(htmlcontainer);
-        this.weeks.unshift(week);
+        this.weeks.unshift(week1);
         this.weeksContainer.prepend(htmlcontainer);
         let updateFunction = (done)=>{
             console.log('rstart', Date.now());
             if (done) this.launchConfetti();
-            $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week), htmlcontainer);
+            $a51c7802bfe1890e$export$b3890eb0ae9dca99($850e48264ea38c74$export$b93cec6dd11b1714(week1), htmlcontainer);
             this.lastUpdateTime = Date.now();
             console.log('rend', Date.now());
         };
@@ -3140,10 +3222,10 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
             this.weeksContainer.removeChild(htmlcontainer);
         };
         updateFunction(false);
-        week.addEventListeners();
-        week.setUpdateFunction(updateFunction);
-        week.setAlertFunction(alertFunction);
-        week.setDeleteFunction(deleteFucntion);
+        week1.addEventListeners();
+        week1.setUpdateFunction(updateFunction);
+        week1.setAlertFunction(alertFunction);
+        week1.setDeleteFunction(deleteFucntion);
     }
     createNewWeek(input) {
         if (input.deleted) return null;
@@ -3254,8 +3336,8 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         }
         // Folder now exists
         try {
-            let homeDir1 = await $877b126e36883e53$export$e401803eb3bf9d2f();
-            let file = homeDir1 + $2f25b22e70662204$var$DATA_FILE_NAME;
+            let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
+            let file = homeDir + $2f25b22e70662204$var$DATA_FILE_NAME;
             let text = await $61d50d698abff50d$export$177308921a610223(file);
             console.log(text);
         } catch (e1) {
@@ -3278,15 +3360,36 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
 }
 
 
+
+var $b437cb7ddfb16b51$var$displaceHeader = function() {
+    var target;
+    var limit;
+    var flag = false;
+    function popp() {
+        if (window.scrollY >= limit && !flag) target.classList.add("displaced");
+        else if (window.scrollY <= limit) target.classList.remove("displaced");
+    }
+    return {
+        init: function(item) {
+            target = document.getElementById(item);
+            limit = target.offsetHeight;
+            window.addEventListener("scroll", popp);
+        }
+    };
+}();
 class $b437cb7ddfb16b51$var$Main {
     constructor(){
-        this.formOpenBtn = document.getElementById("open-form");
-        this.formCloseBtn = document.getElementById("close-form");
-        this.formEnclosure = document.getElementById("form-enclosure");
+        this.formToggleBtn = document.getElementById("fab");
+        this.formEnclosure = document.createElement("div");
         this.fm = new $9fdc79397460abda$export$ca95ea95faa89f36();
         this.am = new $3c13b93cfbb34482$export$a99aab2a736cea3e(document.getElementById('alert'));
         this.wm = new $2f25b22e70662204$export$f160779312cf57d5(this.am);
+        this.formOpen = false;
+        let weeks = document.getElementById("weeks");
+        weeks.parentNode.insertBefore(this.formEnclosure, weeks);
         this.addListeners();
+        //render(templateFunc(week), htmlcontainer);
+        $b437cb7ddfb16b51$var$displaceHeader.init("nav");
     }
     async run() {
         let trial = ()=>{
@@ -3322,24 +3425,34 @@ class $b437cb7ddfb16b51$var$Main {
         }
     }
     addListeners() {
-        this.formOpenBtn.addEventListener("click", ()=>{
-            this.formEnclosure.style.display = "flex";
-        });
-        this.formCloseBtn.addEventListener("click", ()=>{
-            this.formEnclosure.style.display = "none";
-        });
-        const form = document.getElementById("add-form");
-        form.addEventListener("submit", (e)=>{
-            e.preventDefault();
-            let errors = this.fm.validate();
-            if (errors.length > 0) this.am.show("error", errors.join("\n"), 10000);
-            else {
-                let weekInput = this.fm.submit();
-                form.reset();
-                let week = this.wm.createNewWeek(weekInput);
-                console.log($850e48264ea38c74$export$fca4f8121099df57.Validate(JSON.parse(JSON.stringify(week))));
+        this.formToggleBtn.addEventListener("click", (e)=>{
+            if (!window.__TAURI__ && this.formOpen) e.preventDefault(); // don't scroll up if form is closed
+            this.formOpen = !this.formOpen;
+            $a51c7802bfe1890e$export$b3890eb0ae9dca99($9fdc79397460abda$export$2cbce0dece413a39(this.formOpen), this.formEnclosure);
+            if (this.formOpen) {
+                this.formToggleBtn.classList.remove("open");
+                this.formToggleBtn.classList.add("close");
+            } else {
+                this.formToggleBtn.classList.remove("close");
+                this.formToggleBtn.classList.add("open");
+            }
+            if (this.formOpen) {
+                let form = document.getElementById("add-form");
+                form.addEventListener("submit", this.submitHandler.bind(this));
             }
         });
+    }
+    submitHandler(e) {
+        e.preventDefault();
+        let errors = this.fm.validate();
+        if (errors.length > 0) this.am.show("error", errors.join("\n"), 10000);
+        else {
+            let weekInput = this.fm.submit();
+            let form = e.target;
+            form.reset();
+            let week = this.wm.createNewWeek(weekInput);
+            console.log($850e48264ea38c74$export$fca4f8121099df57.Validate(JSON.parse(JSON.stringify(week))));
+        }
     }
 }
 window.onload = async function() {

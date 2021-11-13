@@ -1,28 +1,59 @@
 import { AlertHandler } from "./alerts";
-import { FormHandler } from "./form";
+import { FormHandler, formTemplate } from "./form";
 import { Week } from "./week";
 import { WeekManager } from "./week_manager";
+import { render } from 'lit-html';
+
+var displaceHeader = (function () {
+	var target;
+	var limit;
+	var flag = false;
+	function popp() {
+		if (window.scrollY >= limit && !flag) {
+			target.classList.add("displaced");
+		} else if (window.scrollY <= limit) {
+			target.classList.remove("displaced");
+		}
+	}
+	return {
+		init: function (item) {
+			target = document.getElementById(item);
+			limit = target.offsetHeight;
+			window.addEventListener("scroll", popp);
+		}
+	};
+})();
 
 class Main {
-  formOpenBtn: HTMLElement
-  formCloseBtn: HTMLElement
+  formToggleBtn: HTMLElement
   formEnclosure: HTMLElement
 
   wm: WeekManager
   fm: FormHandler
   am: AlertHandler
 
+  formOpen: boolean
+
   constructor() {
-    this.formOpenBtn = document.getElementById("open-form");
-    this.formCloseBtn = document.getElementById("close-form");
-    this.formEnclosure = document.getElementById("form-enclosure");
+    this.formToggleBtn = document.getElementById("fab");
+
+    this.formEnclosure = document.createElement("div");
 
     this.fm = new FormHandler();
     this.am = new AlertHandler(document.getElementById('alert'));
     this.wm = new WeekManager(this.am);
 
+    this.formOpen = false;
+
+    let weeks = document.getElementById("weeks");
+    weeks.parentNode.insertBefore(this.formEnclosure, weeks);
+
     this.addListeners()
+    //render(templateFunc(week), htmlcontainer);
+
+    displaceHeader.init("nav");
   }
+
 
   async run() {
     let trial = () => {
@@ -72,31 +103,44 @@ class Main {
   }
 
   addListeners() {
-    this.formOpenBtn.addEventListener("click", () => {
-      this.formEnclosure.style.display = "flex";
-    });
+    this.formToggleBtn.addEventListener("click", (e) => {
+      if(!window.__TAURI__ && this.formOpen) {
+        e.preventDefault(); // don't scroll up if form is closed
+      }
+      this.formOpen = !this.formOpen;
 
-    this.formCloseBtn.addEventListener("click", () => {
-      this.formEnclosure.style.display = "none";
-    });
+      render(formTemplate(this.formOpen), this.formEnclosure);
 
-
-    const form = document.getElementById("add-form") as HTMLFormElement;
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      let errors = this.fm.validate();
-
-      if (errors.length > 0) {
-        this.am.show("error", errors.join("\n"), 10_000);
+      if(this.formOpen) {
+        this.formToggleBtn.classList.remove("open");
+        this.formToggleBtn.classList.add("close");
       } else {
-        let weekInput = this.fm.submit();
-        form.reset();
+        this.formToggleBtn.classList.remove("close");
+        this.formToggleBtn.classList.add("open");
+      }
 
-        let week = this.wm.createNewWeek(weekInput);
-        console.log(Week.Validate(JSON.parse(JSON.stringify(week))));
+      if(this.formOpen) {
+        let form = document.getElementById("add-form") as HTMLFormElement;
+        form.addEventListener("submit", this.submitHandler.bind(this));
       }
     });
+  }
+
+  submitHandler(e: Event) {
+    e.preventDefault();
+
+    let errors = this.fm.validate();
+
+    if (errors.length > 0) {
+      this.am.show("error", errors.join("\n"), 10_000);
+    } else {
+      let weekInput = this.fm.submit();
+      let form = e.target as HTMLFormElement;
+      form.reset()
+
+      let week = this.wm.createNewWeek(weekInput);
+      console.log(Week.Validate(JSON.parse(JSON.stringify(week))));
+    }
   }
 }
 

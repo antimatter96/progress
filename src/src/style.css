@@ -16,6 +16,17 @@ body {
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
+#nav {
+  @apply bg-white text-blueGray-700 better-shadow sticky top-0 z-50;
+  border-bottom: 2px white solid;
+  border-left: 0px solid white;
+  border-right: 0px solid white;
+}
+
+#nav.displaced {
+	border-bottom: 2px transparent solid;
+}
+
 .week-overall {
   border-width: 0px !important;
 }
@@ -169,4 +180,35 @@ body {
 
 .dropdown-menu a {
   @apply block py-2 text-sm hover:opacity-50 text-center;
+}
+
+.floating-action-button {
+  @apply w-10 h-10 inline-block;
+  @apply text-white rounded-full;
+  @apply font-black;
+  @apply text-3xl text-center;
+  @apply better-button;
+
+  @apply focus:outline-none hover:opacity-80;
+}
+
+.floating-action-button.open {
+  @apply bg-lime-500;
+}
+
+.floating-action-button.close {
+  @apply bg-red-500;
+}
+
+.floating-action-button::before {
+  content: "+";
+}
+
+.floating-action-button.close::before {
+  content: "×";
+}
+
+.floating-action-button::before {
+  top: 50%;
+  transform: translateY(-50%);
 }

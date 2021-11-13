@@ -10,10 +10,18 @@
 
 <body class="max-w-screen-md mx-auto my-1 px-1">
   <div id="alert"></div>
-  <div id="app" class="containter shadow-sm py-2 px-5 border-grey-50">
-    <include src="./src/html_components/header.html"></include>
+  <div id="app" class="containter shadow-sm py-2 px-5 border-grey-50 relative">
+    <div id="nav" class="container">
+
+      <div class="flex flex-wrap py-2 px-5 mx-auto items-center flex-row justify-between">
+        <div class="inline-flex items-center">
+          <h2 class="block p-1 text-3xl font-bold text-black">Progress </h2>
+        </div>
+        <a href="#" id="fab" class="floating-action-button open"></a>
+      </div>
+    </div>
+
     <hr class="my-4 border-gray-900">
-    <include src="./src/html_components/form.html"></include>
     <div id="weeks">
     </div>
   </div>
