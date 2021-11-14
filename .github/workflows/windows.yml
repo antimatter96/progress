@@ -6,7 +6,6 @@ name: Build, release, upload
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  workflow_call:
     inputs:
       tag:
         description: 'tag id'
@@ -35,6 +34,6 @@ jobs:
         with:
           toolchain: stable
       - name: install app dependencies and build it
-        run: yarn && yarn build
+        run: yarn && yarn tauri build
       - name: Test
         run: ls src-tauri/target/release/bundle/**/**
