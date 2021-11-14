@@ -6,17 +6,26 @@ name: Build, release, upload
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      tag:
+        description: 'tag id'
+        default: 'alpha-0.0.01'
+        required: true
+        type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     # The type of runner that the job will run on
-    runs-on: macos-latest
+    runs-on: windows-latest
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ inputs.tag }}
       - name: setup node
         uses: actions/setup-node@v1
         with:
@@ -26,14 +35,6 @@ jobs:
         with:
           toolchain: stable
       - name: install app dependencies and build it
-        run: yarn
-      - uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          releaseId: ${{ needs.create-release.outputs.RELEASE_UPLOAD_ID }}
-          tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: "App v__VERSION__"
-          releaseBody: "See the assets to download this version and install."
-          releaseDraft: true
-          prerelease: false
+        run: yarn && yarn build
+      - name: Test
+        run: ls src-tauri/target/release/bundle/**/**
