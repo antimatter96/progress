@@ -35,5 +35,15 @@ jobs:
           toolchain: stable
       - name: install app dependencies and build it
         run: yarn && yarn tauri build
+      - name: get version
+        run : echo "PACKAGE_VERSION=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
+      - name: get filename
+        run : echo "FILE_NAME=$(./src-tauri/target/release/bundle/msi/calc_"{{ env.PACKAGE_VERSION }}"_x64.dmg)" >> $GITHUB_ENV
       - name: Test
         run: ls src-tauri/target/release/bundle/**/**
+      - name: Test
+        run: ls {{ env.FILE_NAME }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "{{ env.FILE_NAME }}"
