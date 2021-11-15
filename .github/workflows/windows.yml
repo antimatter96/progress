@@ -36,7 +36,7 @@ jobs:
         run : echo $PACKAGE_VERSION_TWO
         shell: bash
       - name: extract filename
-        run : echo "FILE_NAME=$("./src-tauri/target/release/bundle/msi/calc_$PACKAGE_VERSION_TWO_x64.dmg")" >> $GITHUB_ENV
+        run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_${PACKAGE_VERSION_TWO}_x64.dmg" >> $GITHUB_ENV
         shell: bash
       - name: print filename 1
         run : echo $FILE_NAME
