@@ -29,26 +29,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: get version
-        run : echo "$(node -p "require('./src-tauri/tauri.conf.json')")"
-        shell: bash
-      - name: get version
-        run : echo "$(node -p "require('./src-tauri/tauri.conf.json').package")"
-        shell: bash
-
-      - name: get version
-        run : echo "$(node -p "require('./src-tauri/tauri.conf.json').package.version")"
-        shell: bash
-      - name: get version
+      - name: extract version
         run : echo "PACKAGE_VERSION_TWO=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
         shell: bash
-      - name: get version 1
+      - name: print version 1
         run : echo $PACKAGE_VERSION_TWO
         shell: bash
-      - name: get filename
-        run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_$PACKAGE_VERSION_TWO_x64.dmg" >> $GITHUB_ENV
+      - name: extract filename
+        run : echo "FILE_NAME=$("./src-tauri/target/release/bundle/msi/calc_$PACKAGE_VERSION_TWO_x64.dmg")" >> $GITHUB_ENV
         shell: bash
-      - name: get version 1
+      - name: print filename 1
         run : echo $FILE_NAME
         shell: bash
       - name: Release
