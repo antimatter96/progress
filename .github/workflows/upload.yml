@@ -37,7 +37,7 @@ jobs:
           JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
         shell: bash
         run : |
-          curl -u"$JFROG_USERNAME":"$JFROG_TOKEN" "https://arpitjaincalc.jfrog.io/artifactory/progress-generic-local/calc_"$PACKAGE_VERSION_2"_x86.exe" -o "calc_"$PACKAGE_VERSION_2"_x86.exe"
+          curl -u"$JFROG_USERNAME":"$JFROG_TOKEN" "https://arpitjaincalc.jfrog.io/artifactory/progress-generic-local/calc_"$PACKAGE_VERSION_2"_x64.exe" -o "calc_"$PACKAGE_VERSION_2"_x64.exe"
       - name: upload
         uses: softprops/action-gh-release@v1
         with:
