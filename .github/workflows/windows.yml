@@ -29,12 +29,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: install Rust stable
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-      - name: install app dependencies and build it
-        run: yarn
+      - name: get version
+        run : echo "$(node -p "require('./src-tauri/tauri.conf.json')")"
+      - name: get version
+        run : echo "$(node -p "require('./src-tauri/tauri.conf.json').package")"
       - name: get version
         run : echo "PACKAGE_VERSION=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
       - name: get version
