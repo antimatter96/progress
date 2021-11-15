@@ -9,7 +9,7 @@ on:
     inputs:
       tag:
         description: 'tag id'
-        default: 'alpha-0.0.01'
+        default: 'master'
         required: true
         type: string
 
@@ -36,7 +36,11 @@ jobs:
       - name: install packages
         run: yarn
       - name: build
-        run: yarn tauri build
+        run: yarn tauri build >> final_file.txt
+      - name: text stuff
+        run: cat final_file.txt
+      - name: text stuff
+        run: tail -n 1 final_file.txt 
       - name: extract version
         run : echo "PACKAGE_VERSION_TWO=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
         shell: bash
@@ -44,7 +48,7 @@ jobs:
         run : echo $PACKAGE_VERSION_TWO
         shell: bash
       - name: extract filename
-        run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_${PACKAGE_VERSION_TWO}_x64.dmg" >> $GITHUB_ENV
+        run : echo "FILE_NAME=.\src-tauri\target\release\bundle\msi/calc_${PACKAGE_VERSION_TWO}_x64.dmg" >> $GITHUB_ENV
         shell: bash
       - name: print filename
         run : echo $FILE_NAME
