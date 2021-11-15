@@ -48,7 +48,7 @@ jobs:
       - name: get version
         run : echo "${env:GITHUB_ENV}"
       - name: get version
-        run : echo ${{ env:PACKAGE_VERSION_TWO }}
+        run : echo "${{ env:PACKAGE_VERSION_TWO }}"
       - name: get filename
         run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_${{ env.PACKAGE_VERSION }}_x64.dmg" >> $GITHUB_ENV
       - name : tes1
