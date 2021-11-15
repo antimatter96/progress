@@ -1,7 +1,7 @@
 {
   "package": {
     "productName": "calc",
-    "version": "1.5.0"
+    "version": "1.6.0"
   },
   "build": {
     "distDir": "../dist",
@@ -51,25 +51,12 @@
     },
     "allowlist": {
       "fs": {
-        "all": true,
         "readTextFile": true,
-        "readBinaryFile": true,
         "writeFile": true,
-        "writeBinaryFile": true,
         "readDir": true,
-        "copyFile": true,
-        "createDir": true,
-        "removeDir": true,
-        "removeFile": true,
-        "renameFile": true
-      },
-      "os": {
-        "all": true
+        "createDir": true
       },
       "path": {
-        "all": true
-      },
-      "dialog": {
         "all": true
       }
     },

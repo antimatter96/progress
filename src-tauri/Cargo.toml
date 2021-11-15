@@ -1,6 +1,6 @@
 [package]
 name = "app"
-version = "1.5.0"
+version = "1.6.0"
 description = "Progress tracking app"
 authors = [ "antimatter96" ]
 license = ""
@@ -15,7 +15,7 @@ tauri-build = { version = "1.0.0-beta.4" }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = [ "derive" ] }
-tauri = { version = "1.0.0-beta.8", features = ["dialog-all", "fs-all", "os-all", "path-all"] }
+tauri = { version = "1.0.0-beta.8", features = ["dialog-all", "fs-all", "fs-create-dir", "fs-read-binary-file", "fs-read-dir", "fs-read-text-file", "fs-write-binary-file", "fs-write-file", "os-all", "path-all"] }
 
 [features]
 default = [ "custom-protocol" ]
