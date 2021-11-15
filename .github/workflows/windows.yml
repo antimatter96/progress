@@ -36,11 +36,11 @@ jobs:
       - name: get version
         run : echo "$(node -p "require('./src-tauri/tauri.conf.json').package.version")"
       - name: get version
-        run : echo "PACKAGE_VERSION=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
+        run : echo "PACKAGE_VERSION_TWO=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
       - name: get version
-        run : echo "${{ env.PACKAGE_VERSION }}"
+        run : echo "${{ env.PACKAGE_VERSION_TWO }}"
       - name: get version
-        run : echo ${{ env.PACKAGE_VERSION }}
+        run : echo ${{ env.PACKAGE_VERSION_TWO }}
       - name: get filename
         run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_${{ env.PACKAGE_VERSION }}_x64.dmg" >> $GITHUB_ENV
       - name : tes1
