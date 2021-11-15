@@ -34,6 +34,8 @@ jobs:
       - name: get version
         run : echo "$(node -p "require('./src-tauri/tauri.conf.json').package")"
       - name: get version
+        run : echo "$(node -p "require('./src-tauri/tauri.conf.json').package.version")"
+      - name: get version
         run : echo "PACKAGE_VERSION=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
       - name: get version
         run : echo "${{ env.PACKAGE_VERSION }}"
