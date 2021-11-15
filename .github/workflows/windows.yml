@@ -29,16 +29,24 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+      - name: install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: install packages
+        run: yarn
+      - name: build
+        run: yarn tauri dev
       - name: extract version
         run : echo "PACKAGE_VERSION_TWO=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
         shell: bash
-      - name: print version 1
+      - name: print version
         run : echo $PACKAGE_VERSION_TWO
         shell: bash
       - name: extract filename
         run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_${PACKAGE_VERSION_TWO}_x64.dmg" >> $GITHUB_ENV
         shell: bash
-      - name: print filename 1
+      - name: print filename
         run : echo $FILE_NAME
         shell: bash
       - name: Release
