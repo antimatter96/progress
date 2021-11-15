@@ -39,11 +39,13 @@ jobs:
         shell: bash
         run : |
           curl "https://arpitjaincalc.jfrog.io/artifactory/progress-generic-local/calc_"$PACKAGE_VERSION_2"_x86.exe" -o "calc_"$PACKAGE_VERSION_2"_x86.exe"
-      
+      - name: extract version
+        run : ls && ls **
+        shell: bash
       - name: upload
         env:
           PACKAGE_VERSION_2: ${{ env.PACKAGE_VERSION }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.event.inputs.tag }}
-          files: calc_"$PACKAGE_VERSION_2"_x86.exe
+          files: calc_${{ env.PACKAGE_VERSION }}_x86.exe
