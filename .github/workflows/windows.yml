@@ -36,7 +36,7 @@ jobs:
       - name: install packages
         run: yarn
       - name: build
-        run: yarn tauri dev
+        run: yarn tauri build
       - name: extract version
         run : echo "PACKAGE_VERSION_TWO=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
         shell: bash
