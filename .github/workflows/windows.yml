@@ -37,12 +37,14 @@ jobs:
         run: yarn
       - name: get version
         run : echo "PACKAGE_VERSION=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
+      - name: get version
+        run : echo "${{ env.PACKAGE_VERSION }}"
       - name: get filename
         run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_${{ env.PACKAGE_VERSION }}_x64.dmg" >> $GITHUB_ENV
       - name : tes1
-        run : echo ${{ env.FILE_NAME }}
+        run : echo "${{ env.FILE_NAME }}"
       - name : tes1
-        run : echo ${{ env.PACKAGE_VERSION }}
+        run : echo "${{ env.PACKAGE_VERSION }}"
       - name: Test
         run: ls {{ env.FILE_NAME }}
       - name: Release
