@@ -36,18 +36,18 @@ jobs:
       - name: get version
         run : echo "$(node -p "require('./src-tauri/tauri.conf.json').package.version")"
       - name: get version
-        run : echo "PACKAGE_VERSION_TWO=""$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
-      - name: get version
-        run : echo $GITHUB_ENV
+        run : echo "PACKAGE_VERSION_TWO=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
+      - name: get version 1
+        run : echo $PACKAGE_VERSION_TWO
         shell: bash
-      - name: get version
-        run : echo "$GITHUB_ENV"
+      - name: get version 2
+        run : echo "$PACKAGE_VERSION_TWO"
         shell: bash
-      - name: get version
-        run : echo ${env:GITHUB_ENV}
-      - name: get version
-        run : echo "${env:GITHUB_ENV}"
-      - name: get version
+      - name: get version 3
+        run : echo ${env:PACKAGE_VERSION_TWO}
+      - name: get version 4
+        run : echo "${env:PACKAGE_VERSION_TWO}"
+      - name: get version 5
         run : echo "${{ env.PACKAGE_VERSION_TWO }}"
       - name: get filename
         run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_${{ env.PACKAGE_VERSION }}_x64.dmg" >> $GITHUB_ENV
