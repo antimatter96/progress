@@ -34,11 +34,11 @@ jobs:
         with:
           toolchain: stable
       - name: install app dependencies and build it
-        run: yarn && yarn tauri build
+        run: yarn
       - name: get version
         run : echo "PACKAGE_VERSION=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
       - name: get filename
-        run : echo "FILE_NAME=$(./src-tauri/target/release/bundle/msi/calc_"{{ env.PACKAGE_VERSION }}"_x64.dmg)" >> $GITHUB_ENV
+        run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_{{ env.PACKAGE_VERSION }}_x64.dmg" >> $GITHUB_ENV
       - name: Test
         run: ls src-tauri/target/release/bundle/**/**
       - name: Test
