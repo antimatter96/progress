@@ -42,41 +42,15 @@ jobs:
       - name: get version
         run : echo "PACKAGE_VERSION_TWO=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
         shell: bash
-
       - name: get version 1
         run : echo $PACKAGE_VERSION_TWO
         shell: bash
-      - name: get version 2
-        run : echo "$PACKAGE_VERSION_TWO"
-        shell: bash
-      - name: get version 3
-        run : echo ${env:PACKAGE_VERSION_TWO}
-        shell: bash
-
-      - name: get version 4
-        run : echo "${env:PACKAGE_VERSION_TWO}"
-        shell: bash
-
-      - name: get version 5
-        run : echo "${{ env.PACKAGE_VERSION_TWO }}"
-        
-        
-        shell: bash
-
       - name: get filename
-        run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_${{ env.PACKAGE_VERSION }}_x64.dmg" >> $GITHUB_ENV
+        run : echo "FILE_NAME=./src-tauri/target/release/bundle/msi/calc_$PACKAGE_VERSION_TWO_x64.dmg" >> $GITHUB_ENV
         shell: bash
-
-      - name : tes1
-        run : echo "${{ env.FILE_NAME }}"
+      - name: get version 1
+        run : echo $FILE_NAME
         shell: bash
-
-      - name : tes1
-        run : echo "${{ env.PACKAGE_VERSION }}"
-        shell: bash
-
-      - name: Test
-        run: ls ${{ env.FILE_NAME }}
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
