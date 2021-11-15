@@ -44,6 +44,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: "{{ env.FILE_NAME }}"
+          tag_name: ${{ inputs.tag }}
+          files: ${{ env.FILE_NAME }}
       - name: Test
         run: ls src-tauri/target/release/bundle/**/**
