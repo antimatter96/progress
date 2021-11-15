@@ -59,8 +59,8 @@ jobs:
           JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
           FILEPATH: ${{ env.FILE_NAME }}
           PACKAGE_VERSION_2: ${{ env.PACKAGE_VERSION }}
-          shell: bash
-          run : |
-            curl -u"$JFROG_USERNAME":"$JFROG_TOKEN" -T "$FILEPATH" "https://arpitjaincalc.jfrog.io/artifactory/progress-generic-local/calc_"$PACKAGE_VERSION_2"_x86.exe
+        shell: bash
+        run : |
+          curl -u"$JFROG_USERNAME":"$JFROG_TOKEN" -T "$FILEPATH" "https://arpitjaincalc.jfrog.io/artifactory/progress-generic-local/calc_"$PACKAGE_VERSION_2"_x86.exe
       - name: Test
         run: ls src-tauri/target/release/bundle/**/**
