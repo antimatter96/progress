@@ -42,10 +42,10 @@ jobs:
       - name: text stuff
         run: tail -n 1 final_file.txt 
       - name: extract version
-        run : echo "PACKAGE_VERSION_TWO=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
+        run : echo "PACKAGE_VERSION=$(node -p "require('./src-tauri/tauri.conf.json').package.version")" >> $GITHUB_ENV
         shell: bash
       - name: print version
-        run : echo $PACKAGE_VERSION_TWO
+        run : echo $PACKAGE_VERSION
         shell: bash
       - name: extract filename
         run : echo FILE_NAME=$(tail -n 3 final_file.txt | head -n 1 | awk '{$1=$1};1') >> $GITHUB_ENV
@@ -54,9 +54,13 @@ jobs:
         run : echo $FILE_NAME
         shell: bash
       - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.event.inputs.tag }}
-          files: ${{ env.FILE_NAME }}
+        env:
+          JFROG_USERNAME: ${{ secrets.JFROG_USERNAME }}
+          JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
+          FILEPATH: ${{ env.FILE_NAME }}
+          PACKAGE_VERSION_2: ${{ env.PACKAGE_VERSION }}
+          shell: bash
+          run : |
+            curl -u"$SUPER_SECRET":"$SUPER_SECRET" -T "$FILEPATH" "https://arpitjaincalc.jfrog.io/artifactory/progress-generic-local/calc_"$PACKAGE_VERSION_2"_x86.exe
       - name: Test
         run: ls src-tauri/target/release/bundle/**/**
