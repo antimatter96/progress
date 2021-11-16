@@ -42,4 +42,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.event.inputs.tag }}
-          files: calc_${{ env.PACKAGE_VERSION }}_x86.exe
+          files: calc_${{ env.PACKAGE_VERSION }}_x64.exe
