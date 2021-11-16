@@ -12,10 +12,6 @@ on:
         default: 'master'
         required: true
         type: string
-  workflow_run:
-    workflows: ["Build, release"]
-    types:
-      - completed
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
