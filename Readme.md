@@ -46,8 +46,6 @@ yarn tauri dev or yarn tauri build
 
 ## Info
 
-Currently only providing mac builds [Link](https://github.com/antimatter96/progress/releases/latest)
-
 All deletes are soft deletes. Edit the JSON and mark `deleted : false`
 
 The Json for your progress is saved at `~/.tauri_progres/data.json`
