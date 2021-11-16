@@ -139,7 +139,7 @@ export class FormHandler {
 export function formTemplate(visible: boolean) {
   return html`
     <div ?hidden=${!visible} id="form-enclosure" class="container items-center bg-white my-5 better-shadow">
-    <div class="text-blueGray-700 rounded-lg">
+    <div class="rounded-lg">
 
       <div class="py-4 px-5 mx-auto border-b-2 border-gray-600">
         <h2 class="text-2xl font-bold text-black lg:text-x lg:mr-8">Add a new week</h2>

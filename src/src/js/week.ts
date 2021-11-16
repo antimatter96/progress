@@ -409,7 +409,7 @@ export function templateFunc(week: Week) {
 
     solvables.push(html`
     <div class="video-time act-time w-1/5">
-      <h2 class="act-text ${classMap(inProgress)}"><span class="tracking-tight">${data.title}</span> : ${data.done}/${data.total}</h2>
+      <h2 class="act-text ${classMap(inProgress)}">${data.title} : ${data.done}/${data.total}</h2>
       <div class="flex justify-around mt-0.5">
         <button class="solvable-btn mr-0.5 ${classMap(btnUp)}" id="${id}-${data.title.toLowerCase()}-plus">+</button>
         <button class="solvable-btn ml-0.5 ${classMap(btnDown)}" id="${id}-${data.title.toLowerCase()}-minus">-</button>
@@ -427,10 +427,10 @@ export function templateFunc(week: Week) {
 
   return html`
   <div class="container items-center bg-white my-4 better-shadow week-overall ${classMap(animatedBorderClassMap)}">
-    <div class="text-blueGray-700 rounded-lg">
+    <div class="rounded-lg">
 
       <!-- Heading -->
-      <div class="week-heading-draggable pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
+      <div class="week-heading-draggable pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-gray-800">
         <div class="week-heading-draggable w-full border-b-2 border-white justify-between inline-flex">
           <div class="week-heading-draggable inline-flex items-center">
             <h2 class="week-heading-draggable pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">

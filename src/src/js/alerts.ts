@@ -4,16 +4,16 @@ import { classMap } from "lit-html/directives/class-map";
 
 const CSS = {
   'ok': {
-    'heading': { 'text-green-500': true },
-    'bg': { 'bg-green-500': true }
+    'heading': { 'text-lime-500': true },
+    'bg': { 'bg-lime-500': true }
   },
   'error': {
     'heading': { 'text-red-500': true },
     'bg': { 'bg-red-500': true }
   },
   'warning': {
-    'heading': { 'text-yellow-500': true },
-    'bg': { 'bg-yellow-500': true }
+    'heading': { 'text-amber-500': true },
+    'bg': { 'bg-amber-500': true }
   },
   'info': {
     'heading': { 'text-blue-500': true },

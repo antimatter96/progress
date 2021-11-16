@@ -376,10 +376,10 @@ class $d71bce45553af777$export$befdefbdce210f91 {
 const $3c13b93cfbb34482$var$CSS = {
     'ok': {
         'heading': {
-            'text-green-500': true
+            'text-lime-500': true
         },
         'bg': {
-            'bg-green-500': true
+            'bg-lime-500': true
         }
     },
     'error': {
@@ -392,10 +392,10 @@ const $3c13b93cfbb34482$var$CSS = {
     },
     'warning': {
         'heading': {
-            'text-yellow-500': true
+            'text-amber-500': true
         },
         'bg': {
-            'bg-yellow-500': true
+            'bg-amber-500': true
         }
     },
     'info': {
@@ -551,7 +551,7 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
 function $9fdc79397460abda$export$2cbce0dece413a39(visible) {
     return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
     <div ?hidden=${!visible} id="form-enclosure" class="container items-center bg-white my-5 better-shadow">
-    <div class="text-blueGray-700 rounded-lg">
+    <div class="rounded-lg">
 
       <div class="py-4 px-5 mx-auto border-b-2 border-gray-600">
         <h2 class="text-2xl font-bold text-black lg:text-x lg:mr-8">Add a new week</h2>
@@ -1021,7 +1021,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
         };
         solvables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
     <div class="video-time act-time w-1/5">
-      <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}"><span class="tracking-tight">${data.title}</span> : ${data.done}/${data.total}</h2>
+      <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${data.title} : ${data.done}/${data.total}</h2>
       <div class="flex justify-around mt-0.5">
         <button class="solvable-btn mr-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${id}-${data.title.toLowerCase()}-plus">+</button>
         <button class="solvable-btn ml-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${id}-${data.title.toLowerCase()}-minus">-</button>
@@ -1037,10 +1037,10 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     };
     return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
   <div class="container items-center bg-white my-4 better-shadow week-overall ${$6197f1f1b7c083f0$export$56cc687933817664(animatedBorderClassMap)}">
-    <div class="text-blueGray-700 rounded-lg">
+    <div class="rounded-lg">
 
       <!-- Heading -->
-      <div class="week-heading-draggable pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-blueGray-900">
+      <div class="week-heading-draggable pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-gray-800">
         <div class="week-heading-draggable w-full border-b-2 border-white justify-between inline-flex">
           <div class="week-heading-draggable inline-flex items-center">
             <h2 class="week-heading-draggable pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">

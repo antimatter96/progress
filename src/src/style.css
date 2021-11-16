@@ -17,7 +17,7 @@ body {
 }
 
 #nav {
-  @apply bg-white text-blueGray-700 better-shadow sticky top-0 z-50;
+  @apply bg-white better-shadow sticky top-0 z-50;
   border-bottom: 2px white solid;
   border-left: 0px solid white;
   border-right: 0px solid white;
@@ -96,7 +96,7 @@ body {
 }
 
 .btnUp-invalid {
-  @apply bg-trueGray-300 text-gray-800 cursor-not-allowed;
+  @apply bg-gray-300 text-gray-800 cursor-not-allowed;
 }
 
 .btnDown-valid {
@@ -104,7 +104,7 @@ body {
 }
 
 .btnDown-invalid {
-  @apply bg-trueGray-300 text-gray-800 cursor-not-allowed;
+  @apply bg-gray-300 text-gray-800 cursor-not-allowed;
 }
 
 /**/
@@ -135,7 +135,7 @@ body {
 }
 
 .basic-input {
-  @apply block w-full px-4 py-3 leading-tight text-gray-900 bg-white border border-trueGray-400 appearance-none focus:outline-none invalid:border-red-500 focus:border-gray-900;
+  @apply block w-full px-4 py-3 leading-tight text-gray-900 bg-white border border-gray-400 appearance-none focus:outline-none invalid:border-red-500 focus:border-gray-900;
 }
 
 .basic-label {

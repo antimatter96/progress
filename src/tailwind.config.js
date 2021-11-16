@@ -13,8 +13,15 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
-      ...colors,
-      green: colors.lime,
+      transparent: 'transparent',
+      current: 'currentColor',
+      blue: colors.blue,
+      gray: colors.gray,
+      red: colors.red,
+      lime: colors.lime,
+      white: colors.white,
+      black: colors.black,
+      amber: colors.amber,
     },
     extend: {
       fontFamily: {
