@@ -63,7 +63,7 @@
     "windows": [
       {
         "title": "Progress",
-        "width": 800,
+        "width": 900,
         "height": 900,
         "resizable": true,
         "fullscreen": false

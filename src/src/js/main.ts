@@ -62,26 +62,32 @@ class Main {
       let w2 = new Week(ww);
       this.wm.registerWeek(w2);
 
+      ww.videos.push({"m":3,"s":23,"seen":false})
       ww.id = "2"
       ww.name = "2";
-      ww.hidden = true;
+      ww.hidden = false;
 
       let w3 = new Week(ww);
       this.wm.registerWeek(w3);
 
+      ww.videos.push({"m":23,"s":23,"seen":false})
       ww.id = "3"
       ww.name = "3";
-      ww.hidden = true;
+      ww.hidden = false;
 
       let w4 = new Week(ww);
       this.wm.registerWeek(w4);
 
       ww.id = "4"
       ww.name = "4";
-      ww.hidden = true;
+      ww.hidden = false;
 
       let w5 = new Week(ww);
       this.wm.registerWeek(w5);
+      let trial = JSON.parse(`{"id":"1011","name":"Only Act","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":10,"left":10},"tutorials":{"total":0,"left":0},"assignments":{"total":0,"left":0}},"videos":[],"lastChangeTime":1634845763686}`)
+
+      let w6 = new Week(trial);
+      this.wm.registerWeek(w6);
     }
 
     if (window.__TAURI__) {

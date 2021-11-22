@@ -697,17 +697,17 @@ var $300e172487e56da3$export$2e2bcd8739ae039 = $300e172487e56da3$var$v4;
 
 
 const $850e48264ea38c74$var$progress = [
-    "bg-red-500",
-    "bg-red-400",
-    "bg-red-300",
-    "bg-red-200",
-    "bg-amber-400",
-    "bg-amber-300",
-    "bg-amber-200",
-    "bg-lime-200",
-    "bg-lime-300",
-    "bg-lime-400",
-    "bg-lime-500"
+    "text-red-500",
+    "text-orange-700",
+    "text-orange-500",
+    "text-amber-600",
+    "text-amber-500",
+    "text-amber-500",
+    "text-amber-400",
+    "text-yellow-500",
+    "text-yellow-400",
+    "text-lime-400",
+    "text-lime-500"
 ];
 class $850e48264ea38c74$export$fca4f8121099df57 {
     constructor(input){
@@ -870,7 +870,7 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         return m;
     }
     getPercentage(total1, left1) {
-        return 100 * left1 / total1;
+        return Math.min(Math.ceil(100 * left1 / total1), 100);
     }
     isDone() {
         let _projected = this.getTotalMinutes();
@@ -975,17 +975,17 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     let videos = [];
     week.videos.forEach((video, i)=>{
         const btnClass = {
-            'btnDown-valid': video.seen,
-            'btnUp-valid': !video.seen
+            'btn-down': video.seen,
+            'btn-up': !video.seen
         };
         const inProgress = {
             'in-progress': !video.seen,
             'done': video.seen
         };
         videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
-    <div class="video-time px-0">
-      <p class="video-text better-shadow ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
-      <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${id}-video-${i}">${video.seen ? '-' : '+'}</button>
+    <div class="video px-0">
+      <p class="video-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
+      <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${id}-video-${i}">${video.seen ? '－' : '+'}</button>
     </div>
   `);
     });
@@ -1011,38 +1011,33 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
         if (data.total == 0) return;
         const btnUpValid = data.total > data.done;
         const btnDownValid = data.done > 0;
+        const commonClasses = {
+        };
         const btnUp = {
-            [btnUpValid ? 'btnUp-valid' : 'btnUp-invalid']: true
         };
         const btnDown = {
-            [btnDownValid ? 'btnDown-valid' : 'btnDown-invalid']: true
         };
+        if (btnUpValid && btnDownValid) commonClasses['add-margin'] = true;
+        Object.assign(btnUp, commonClasses);
+        Object.assign(btnDown, commonClasses);
         const inProgress = {
             'in-progress': btnUpValid,
             'done': !btnUpValid && btnDownValid
         };
         solvables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
-    <div class="video-time act-time w-1/5">
+    <div class="act-time w-1/5">
       <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${data.title} : ${data.done}/${data.total}</h2>
       <div class="flex justify-around mt-0.5">
-        <button ?hidden=${!btnUpValid} class="solvable-btn mr-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${id}-${data.title.toLowerCase()}-plus">+</button>
-        <button ?hidden=${!btnDownValid} class="solvable-btn ml-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${id}-${data.title.toLowerCase()}-minus">-</button>
+        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${id}-${data.title.toLowerCase()}-plus">+</button>
+        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${id}-${data.title.toLowerCase()}-minus">－</button>
       </div>
     </div>
-
-
-    <div class="video-time act-time w-1/5">
-    <p class="dispay-container">
-      <span class="dispay-label">${data.title}: </span>
-      <span class="dispay-data">${data.done}/${data.total}</span>
-    </p>
-    <div class="flex justify-around mt-0.5">
-      <button ?hidden=${!btnUpValid} class="solvable-btn mr-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${id}-2-${data.title.toLowerCase()}-plus">+</button>
-      <button ?hidden=${!btnDownValid} class="solvable-btn ml-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${id}-2-${data.title.toLowerCase()}-minus">-</button>
-    </div>
-  </div>
   `);
     });
+    // consider max 12 videos overall
+    const max_in_row = 6;
+    if (videos.length > max_in_row) // divide into two
+    videos.splice(Math.ceil(videos.length / 2), 0, $a51c7802bfe1890e$export$c0bb0b647f701bb5`<div class="w-full"></div>`);
     let progressColor = {
         [$850e48264ea38c74$var$progress[Math.floor(_percentage / 10)]]: true
     };
@@ -1063,7 +1058,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
           </div>
           <div class="week-heading-draggable inline-flex items-center move-up">
             <button class="week-heading-draggable rounded-button bg-white" id="${id}-menu">
-              <svg xmlns="http://www.w3.org/2000/svg" class="4-6 w-4" fill="none" viewBox="0 0 24 24" stroke="black">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="black">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
               </svg>
             </button>
@@ -1080,8 +1075,8 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Summary -->
-      <div ?hidden=${week.hidden} class="pt-2 px-10 mx-auto md:items-center md:flex-row justify-between ${$6197f1f1b7c083f0$export$56cc687933817664(progressColor)}">
-        <div class="pb-1 flex justify-between items-center border-b-2 border-gray-600">
+      <div ?hidden=${week.hidden} class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between">
+        <div class="pb-1 px-10 flex justify-between items-center border-b-2 border-gray-600">
           <p class="dispay-container">
             <span class="dispay-label justify-start">Projected:</span>
             <span class="dispay-data">${_projected.toFixed(1)}h</span>
@@ -1094,7 +1089,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
 
           <p class="dispay-container justify-end">
             <span class="dispay-label">Done:</span>
-            <span class="dispay-data">${_percentage.toFixed(2)}%</span>
+            <span class="dispay-data ${$6197f1f1b7c083f0$export$56cc687933817664(progressColor)}">${_percentage.toFixed(2)}%</span>
           </p>
         </div>
       </div>
@@ -1112,9 +1107,9 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Solvable -->
-      <div ?hidden=${week.hidden} class="pt-2 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full">
-          <h2 class="text-xl font-bold text-black lg:text-x lg:mr-8">
+          <h2 class="pb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
             Solvable
           </h2>
 
@@ -3406,29 +3401,42 @@ class $b437cb7ddfb16b51$var$Main {
         $b437cb7ddfb16b51$var$displaceHeader.init("nav");
     }
     async run() {
-        let trial = ()=>{
+        let trial1 = ()=>{
             let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":0},"tutorials":{"total":1,"left":0},"assignments":{"total":2,"left":1}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":true}],"lastChangeTime":1634845763686}`);
             ww.hidden = false;
             let w2 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w2);
+            ww.videos.push({
+                "m": 3,
+                "s": 23,
+                "seen": false
+            });
             ww.id = "2";
             ww.name = "2";
-            ww.hidden = true;
+            ww.hidden = false;
             let w3 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w3);
+            ww.videos.push({
+                "m": 23,
+                "s": 23,
+                "seen": false
+            });
             ww.id = "3";
             ww.name = "3";
-            ww.hidden = true;
+            ww.hidden = false;
             let w4 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w4);
             ww.id = "4";
             ww.name = "4";
-            ww.hidden = true;
+            ww.hidden = false;
             let w5 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w5);
+            let trial = JSON.parse(`{"id":"1011","name":"Only Act","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":10,"left":10},"tutorials":{"total":0,"left":0},"assignments":{"total":0,"left":0}},"videos":[],"lastChangeTime":1634845763686}`);
+            let w6 = new $850e48264ea38c74$export$fca4f8121099df57(trial);
+            this.wm.registerWeek(w6);
         };
         if (window.__TAURI__) ;
-        else trial();
+        else trial1();
         if (window.__TAURI__) try {
             let exists = await $2f25b22e70662204$export$f160779312cf57d5.ensureFileExists();
             console.log(exists);
