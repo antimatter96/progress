@@ -1,7 +1,7 @@
 const colors = require("tailwindcss/colors");
 const plugin = require("tailwindcss/plugin");
 
-const customFonts = ["WorkSans-Regular"];
+const customFonts = ["Inconsolata"];
 
 module.exports = {
   purge: {

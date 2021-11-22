@@ -974,17 +974,17 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     let _percentage = week.getPercentage(_projected, _elasped);
     let videos = [];
     week.videos.forEach((video, i)=>{
-        const textClass = {
-            'bg-red-500': !video.seen,
-            'bg-lime-500': video.seen
-        };
         const btnClass = {
             'btnDown-valid': video.seen,
             'btnUp-valid': !video.seen
         };
+        const inProgress = {
+            'in-progress': !video.seen,
+            'done': video.seen
+        };
         videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
     <div class="video-time px-0">
-      <p class="video-text better-shadow ${$6197f1f1b7c083f0$export$56cc687933817664(textClass)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
+      <p class="video-text better-shadow ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
       <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${id}-video-${i}">${video.seen ? '-' : '+'}</button>
     </div>
   `);
@@ -1009,24 +1009,38 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     let solvables = [];
     solvableData.forEach((data)=>{
         if (data.total == 0) return;
+        const btnUpValid = data.total > data.done;
+        const btnDownValid = data.done > 0;
         const btnUp = {
-            [data.total > data.done ? 'btnUp-valid' : 'btnUp-invalid']: true
+            [btnUpValid ? 'btnUp-valid' : 'btnUp-invalid']: true
         };
         const btnDown = {
-            [data.done > 0 ? 'btnDown-valid' : 'btnDown-invalid']: true
+            [btnDownValid ? 'btnDown-valid' : 'btnDown-invalid']: true
         };
         const inProgress = {
-            'in-progress': data.total > data.done,
-            'done': data.total == data.done
+            'in-progress': btnUpValid,
+            'done': !btnUpValid && btnDownValid
         };
         solvables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
     <div class="video-time act-time w-1/5">
       <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${data.title} : ${data.done}/${data.total}</h2>
       <div class="flex justify-around mt-0.5">
-        <button class="solvable-btn mr-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${id}-${data.title.toLowerCase()}-plus">+</button>
-        <button class="solvable-btn ml-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${id}-${data.title.toLowerCase()}-minus">-</button>
+        <button ?hidden=${!btnUpValid} class="solvable-btn mr-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${id}-${data.title.toLowerCase()}-plus">+</button>
+        <button ?hidden=${!btnDownValid} class="solvable-btn ml-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${id}-${data.title.toLowerCase()}-minus">-</button>
       </div>
     </div>
+
+
+    <div class="video-time act-time w-1/5">
+    <p class="dispay-container">
+      <span class="dispay-label">${data.title}: </span>
+      <span class="dispay-data">${data.done}/${data.total}</span>
+    </p>
+    <div class="flex justify-around mt-0.5">
+      <button ?hidden=${!btnUpValid} class="solvable-btn mr-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnUp)}" id="${id}-2-${data.title.toLowerCase()}-plus">+</button>
+      <button ?hidden=${!btnDownValid} class="solvable-btn ml-0.5 ${$6197f1f1b7c083f0$export$56cc687933817664(btnDown)}" id="${id}-2-${data.title.toLowerCase()}-minus">-</button>
+    </div>
+  </div>
   `);
     });
     let progressColor = {
@@ -1043,7 +1057,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       <div class="week-heading-draggable pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-gray-800">
         <div class="week-heading-draggable w-full border-b-2 border-white justify-between inline-flex">
           <div class="week-heading-draggable inline-flex items-center">
-            <h2 class="week-heading-draggable pb-2 text-2xl font-bold text-white lg:text-x lg:mr-8">
+            <h2 class="week-heading-draggable pb-1 text-2xl font-bold text-white lg:text-x lg:mr-8">
               ${week.name}
             </h2>
           </div>
@@ -1056,8 +1070,8 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
 
             <div ?hidden=${!week.menuVisible}>
               <div class="dropdown-menu absolute w-60 shadow-lg bg-white divide-x divide-gray-100 right-10 grid grid-cols-3">
-                <a class="text-gray-900" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'} </a>
-                <a class="text-gray-900" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
+                <a class="text-gray-900 bg-white" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'} </a>
+                <a class="text-gray-900 bg-white" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
                 <a class="text-white bg-red-800" id="${id}-delete">Delete</a>
               </div>
             </div>
@@ -1066,19 +1080,19 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Summary -->
-      <div ?hidden=${week.hidden} class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between ${$6197f1f1b7c083f0$export$56cc687933817664(progressColor)}">
-        <div class="pb-2 flex justify-between items-center border-b-2 border-gray-600">
+      <div ?hidden=${week.hidden} class="pt-2 px-10 mx-auto md:items-center md:flex-row justify-between ${$6197f1f1b7c083f0$export$56cc687933817664(progressColor)}">
+        <div class="pb-1 flex justify-between items-center border-b-2 border-gray-600">
           <p class="dispay-container">
-            <span class="dispay-label">Projected:</span>
+            <span class="dispay-label justify-start">Projected:</span>
             <span class="dispay-data">${_projected.toFixed(1)}h</span>
           </p>
 
-          <p class="dispay-container">
+          <p class="dispay-container justify-center">
             <span class="dispay-label">Elapsed:</span>
             <span class="dispay-data">${_elasped.toFixed(1)}h</span>
           </p>
 
-          <p class="dispay-container">
+          <p class="dispay-container justify-end">
             <span class="dispay-label">Done:</span>
             <span class="dispay-data">${_percentage.toFixed(2)}%</span>
           </p>
@@ -1086,21 +1100,21 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Videos -->
-      <div ?hidden=${week.hidden} class="pt-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-2 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full border-b-2 border-gray-600">
-          <h2 class="pb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+          <h2 class="text-xl font-bold text-black lg:text-x lg:mr-8">
             Videos
           </h2>
-          <div class="flex justify-evenly flex-wrap">
+          <div class="flex justify-evenly flex-wrap pb-3">
             ${videos}
           </div>
         </div>
       </div>
 
       <!-- Solvable -->
-      <div ?hidden=${week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-2 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full">
-          <h2 class="pb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+          <h2 class="text-xl font-bold text-black lg:text-x lg:mr-8">
             Solvable
           </h2>
 

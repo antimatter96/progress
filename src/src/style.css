@@ -3,7 +3,7 @@
 @import "tailwindcss/utilities";
 @import "../node_modules/dragula/dist/dragula.css";
 
-@import url("./fonts/stylesheet.css");
+@import url("./fonts/incolsolata/style.css");
 
 body {
   @apply font-sans;
