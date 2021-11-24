@@ -16,7 +16,7 @@ body {
 }
 
 .good-shadow {
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); 
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .better-shadow {
@@ -36,11 +36,12 @@ body {
 }
 
 #nav.displaced {
-	border-bottom: 2px transparent solid;
+  border-bottom: 2px transparent solid;
 }
 
 .week-overall {
   border-width: 0px !important;
+  background: rgba(252, 252, 252, 1);
 }
 
 .move-up {
@@ -63,69 +64,46 @@ body {
   @apply mx-0.5 my-1;
   width: 15%;
 
-  @apply flex;
+  @apply flex justify-between;
 
   @apply text-2xl font-bold text-white;
   @apply good-shadow;
 }
 
-.act-time {
-  @apply w-5/12 mx-2 my-2 max-w-md;
-  @apply block;
-
-  @apply p-1;
-  @apply text-2xl font-bold bg-white;
-}
-
 .video-text {
   @apply w-2/3;
-  @apply py-1;
+  @apply py-1.5;
 
   @apply text-center text-lg;
+  @apply font-black;
+  @apply bg-white;
 }
 
-.act-text {
-  @apply w-full;
-  @apply py-3;
-
-  @apply text-center text-lg;
+.video-text.in-progress {
+  @apply text-red-600;
 }
 
-/*
- TODO
- SEPERATE THEM ALL
-
- VIDEO RED ON WHITW
- BLACK ON GREEN
-*/
-
-.video-text.in-progress, .act-text.in-progress  {
-  @apply bg-red-500;
-  @apply text-gray-100;
-}
-
-.video-text.done, .act-text.done {
-  @apply bg-lime-500;
-  @apply text-gray-900;
+.video-text.done {
+  @apply text-lime-600;
 }
 
 .video-btn {
-  @apply w-1/3 ml-0.5;
-  @apply flex justify-center content-center items-center;
+  @apply w-1/3;
+  @apply block;
 
-  @apply text-lg text-center;
+  @apply text-2xl text-center opacity-70;
 
-  @apply focus:outline-none hover:opacity-60;
+  @apply focus:outline-none hover:opacity-40;
 }
 
 .video-btn.btn-up {
-  @apply bg-lime-500 text-gray-900;
-  @apply font-medium;
+  @apply bg-lime-500;
+  @apply font-normal;
 }
 
 .video-btn.btn-down {
-  @apply bg-gray-100 text-red-600;
-  @apply font-black;
+  @apply bg-red-500;
+  @apply font-normal;
 }
 
 .better-button {
@@ -134,16 +112,54 @@ body {
   @apply font-black;
 }
 
+
+.act-time {
+  @apply w-4/12 mx-2 my-2 max-w-md;
+  @apply flex;
+
+  @apply bg-white;
+  @apply good-shadow;
+}
+
+.act-text {
+  @apply w-5/6;
+  @apply py-3.5;
+
+  @apply text-center;
+}
+
+.act-text.in-progress {
+  @apply text-red-600;
+}
+
+.act-text.done {
+  @apply text-lime-600;
+}
+
+.act-time-label {
+  @apply text-black text-xl font-medium;
+  @apply tracking-tight;
+}
+
+.act-time-data {
+  @apply text-2xl font-extrabold;
+  @apply tracking-wider;
+}
+
+.act-btn-parent {
+  @apply w-1/6;
+  @apply flex flex-col;
+}
+
 .solvable-btn {
   @apply better-button;
 
-  @apply w-auto;
+  @apply w-full;
   @apply flex-grow;
 
-  @apply py-1;
-  @apply text-xl font-black;
+  @apply text-sm font-extralight opacity-70;
 
-  @apply focus:outline-none hover:opacity-60;
+  @apply focus:outline-none hover:opacity-40;
 }
 
 .solvable-btn.invalid {
@@ -151,19 +167,11 @@ body {
 }
 
 .solvable-btn.btn-up {
-  @apply bg-lime-500 text-gray-900 ;
+  @apply bg-lime-500 text-gray-900;
 }
 
 .solvable-btn.btn-down {
-  @apply bg-gray-100 text-red-600;
-}
-
-.solvable-btn.btn-up.add-margin {
-  @apply mr-0.5;
-}
-
-.solvable-btn.btn-down.add-margin-left {
-  @apply ml-0.5;
+  @apply text-gray-100 bg-red-500;
 }
 
 
@@ -237,14 +245,14 @@ body {
 /**/
 
 .dropdown-menu {
-  top: 0;
+  top: 4px;
   border: 1px solid #aaaaaa;
   box-shadow: 10px 12px 0.5rem rgb(0 0 0 / 50%);
   @apply justify-end;
 }
 
 .dropdown-menu a {
-  @apply block py-2 text-lg hover:opacity-50 text-center font-bold;
+  @apply block py-1.5 text-lg hover:opacity-40 text-center font-semibold;
 }
 
 /**/

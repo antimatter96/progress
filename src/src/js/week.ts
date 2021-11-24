@@ -1,6 +1,5 @@
-import { html, render } from 'lit-html';
+import { html } from 'lit-html';
 import { classMap } from 'lit-html/directives/class-map';
-
 
 import { v4 as uuid } from "uuid";
 
@@ -11,6 +10,16 @@ const progress = [
   "text-amber-400", "text-yellow-500", "text-yellow-400",
   "text-lime-400",
   "text-lime-500"
+]
+
+const progress_bg = [
+  "bg-red-500",
+  "bg-red-400", "bg-red-400",
+  "bg-red-300", "bg-red-300",
+  "bg-yellow-400", "bg-yellow-400",
+  "bg-amber-300", "bg-amber-300",
+  "bg-lime-400",
+  "bg-lime-500",
 ]
 
 export class Week {
@@ -367,7 +376,7 @@ export function templateFunc(week: Week) {
     videos.push(html`
     <div class="video px-0">
       <p class="video-text ${classMap(inProgress)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
-      <button class="video-btn ${classMap(btnClass)}" id="${id}-video-${i}">${video.seen ? '－' : '+'}</button>
+      <button class="video-btn ${classMap(btnClass)}" id="${id}-video-${i}"></button>
     </div>
   `);
   });
@@ -403,25 +412,14 @@ export function templateFunc(week: Week) {
     const btnUpValid = data.total > data.done;
     const btnDownValid = data.done > 0;
 
-    const commonClasses = {};
-    const btnUp = {}
-    const btnDown = {};
-
-    if (btnUpValid && btnDownValid) {
-      commonClasses['add-margin'] = true;
-    }
-
-    Object.assign(btnUp, commonClasses);
-    Object.assign(btnDown, commonClasses);
-
     const inProgress = { 'in-progress': btnUpValid, 'done': (!btnUpValid && btnDownValid) }
 
     solvables.push(html`
     <div class="act-time w-1/5">
-      <h2 class="act-text ${classMap(inProgress)}">${data.title} : ${data.done}/${data.total}</h2>
-      <div class="flex justify-around mt-0.5">
-        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up ${classMap(btnUp)}" id="${id}-${data.title.toLowerCase()}-plus">+</button>
-        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down ${classMap(btnDown)}" id="${id}-${data.title.toLowerCase()}-minus">－</button>
+      <h2 class="act-text ${classMap(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
+      <div class="act-btn-parent">
+        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-${data.title.toLowerCase()}-plus"></button>
+        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-${data.title.toLowerCase()}-minus"></button>
       </div>
     </div>
   `);
@@ -431,10 +429,10 @@ export function templateFunc(week: Week) {
   const max_in_row = 6;
   if (videos.length > max_in_row) {
     // divide into two
-    videos.splice(Math.ceil(videos.length/2), 0, html`<div class="w-full"></div>`)
+    videos.splice(Math.ceil(videos.length / 2), 0, html`<div class="w-full"></div>`)
   }
 
-  let progressColor = { [progress[(Math.floor(_percentage / 10))]]: true };
+  let progressColorBg = { [progress_bg[Math.floor(_percentage / 10)]]: true };
 
   const animatedBorderClassMap = {
     'gradient-border': (Math.floor(_percentage / 10)) == 10
@@ -463,7 +461,7 @@ export function templateFunc(week: Week) {
               <div class="dropdown-menu absolute w-60 shadow-lg bg-white divide-x divide-gray-100 right-10 grid grid-cols-3">
                 <a class="text-gray-900 bg-white" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'} </a>
                 <a class="text-gray-900 bg-white" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
-                <a class="text-white bg-red-800" id="${id}-delete">Delete</a>
+                <a class="text-white bg-red-600" id="${id}-delete">Delete</a>
               </div>
             </div>
           </div>
@@ -471,7 +469,7 @@ export function templateFunc(week: Week) {
       </div>
 
       <!-- Summary -->
-      <div ?hidden=${week.hidden} class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between ${classMap(progressColorBg)}">
         <div class="pb-1 px-10 flex justify-between items-center border-b-2 border-gray-600">
           <p class="dispay-container">
             <span class="dispay-label justify-start">Projected:</span>
@@ -485,7 +483,7 @@ export function templateFunc(week: Week) {
 
           <p class="dispay-container justify-end">
             <span class="dispay-label">Done:</span>
-            <span class="dispay-data ${classMap(progressColor)}">${_percentage.toFixed(2)}%</span>
+            <span class="dispay-data">${_percentage.toFixed(2)}%</span>
           </p>
         </div>
       </div>
@@ -505,7 +503,7 @@ export function templateFunc(week: Week) {
       <!-- Solvable -->
       <div ?hidden=${week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full">
-          <h2 class="pb-1 text-xl font-bold text-black lg:text-x lg:mr-8">
+          <h2 class="text-xl font-bold text-black lg:text-x lg:mr-8">
             Solvable
           </h2>
 

@@ -1,6 +1,6 @@
 [package]
 name = "app"
-version = "1.6.1"
+version = "2.0.0"
 description = "Progress tracking app"
 authors = [ "antimatter96" ]
 license = ""
