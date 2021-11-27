@@ -2,11 +2,12 @@
   "name": "calc",
   "version": "0.0.1",
   "scripts": {
-    "dev": "parcel",
+    "dev": "parcel --log-level verbose",
     "build": "rm -rf ./../dist && parcel build --dist-dir ./../dist --log-level verbose --no-optimize --no-content-hash --no-source-maps"
   },
   "source": "src/index.html",
   "dependencies": {
+    "@tailwindcss/forms": "^0.3.4",
     "@types/canvas-confetti": "^1.4.2",
     "canvas-confetti": "^1.4.0",
     "dragula": "^3.7.3",

@@ -985,20 +985,24 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     let _projected = week.getTotalMinutes();
     let _elasped = week.getElapsedMinutes();
     let _percentage = week.getPercentage(_projected, _elasped);
+    const max_in_row = 6;
     let videos = [];
     week.videos.forEach((video, i)=>{
+        const firstVideoMargin = {
+            'mb-4': i == 0 && week.videos.length > max_in_row
+        };
         const btnClass = {
-            'btn-down': video.seen,
-            'btn-up': !video.seen
+            'btn-checked': video.seen,
+            'btn-unchecked': !video.seen
         };
         const inProgress = {
             'in-progress': !video.seen,
             'done': video.seen
         };
         videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
-    <div class="video px-0">
+    <div class="video px-0 ${$6197f1f1b7c083f0$export$56cc687933817664(firstVideoMargin)}">
       <p class="video-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
-      <button class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${id}-video-${i}"></button>
+      <input type="checkbox" ? .checked=${video.seen} class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${id}-video-${i}"></button>
     </div>
   `);
     });
@@ -1039,7 +1043,6 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
   `);
     });
     // consider max 12 videos overall
-    const max_in_row = 6;
     if (videos.length > max_in_row) // divide into two
     videos.splice(Math.ceil(videos.length / 2), 0, $a51c7802bfe1890e$export$c0bb0b647f701bb5`<div class="w-full"></div>`);
     let progressColorBg = {
@@ -1047,6 +1050,10 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     };
     const animatedBorderClassMap = {
         'gradient-border': Math.floor(_percentage / 10) == 10
+    };
+    let videosContainerClass = {
+        'pb-3': videos.length > 0,
+        'pb-0': videos.length == 0
     };
     return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
   <div class="container items-center bg-white my-4 better-shadow week-overall ${$6197f1f1b7c083f0$export$56cc687933817664(animatedBorderClassMap)}">
@@ -1101,10 +1108,10 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       <!-- Videos -->
       <div ?hidden=${week.hidden} class="pt-2 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full border-b-2 border-gray-600">
-          <h2 class="text-xl font-bold text-black lg:text-x lg:mr-8">
+          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
             Videos
           </h2>
-          <div class="flex justify-evenly flex-wrap pb-3">
+          <div class="video-container flex justify-evenly flex-wrap ${$6197f1f1b7c083f0$export$56cc687933817664(videosContainerClass)}">
             ${videos}
           </div>
         </div>
@@ -1113,7 +1120,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       <!-- Solvable -->
       <div ?hidden=${week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
         <div class="w-full">
-          <h2 class="text-xl font-bold text-black lg:text-x lg:mr-8">
+          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
             Solvable
           </h2>
 
