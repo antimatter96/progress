@@ -696,445 +696,6 @@ var $300e172487e56da3$export$2e2bcd8739ae039 = $300e172487e56da3$var$v4;
 
 
 
-const $850e48264ea38c74$var$progress = [
-    "text-red-500",
-    "text-orange-700",
-    "text-orange-500",
-    "text-amber-600",
-    "text-amber-500",
-    "text-amber-500",
-    "text-amber-400",
-    "text-yellow-500",
-    "text-yellow-400",
-    "text-lime-400",
-    "text-lime-500"
-];
-const $850e48264ea38c74$var$progress_bg = [
-    "bg-red-500",
-    "bg-red-400",
-    "bg-red-400",
-    "bg-red-300",
-    "bg-red-300",
-    "bg-yellow-400",
-    "bg-yellow-400",
-    "bg-amber-300",
-    "bg-amber-300",
-    "bg-lime-400",
-    "bg-lime-500", 
-];
-class $850e48264ea38c74$export$fca4f8121099df57 {
-    constructor(input){
-        this.id = 'uuid';
-        this.name = "Sample Week 1";
-        this.factor = 1;
-        this.solvableTime = 20;
-        this.solvable = {
-            activities: {
-                total: 3,
-                left: 3
-            },
-            tutorials: {
-                total: 2,
-                left: 2
-            },
-            assignments: {
-                total: 1,
-                left: 1
-            }
-        };
-        this.videos = [
-            {
-                m: 40,
-                s: 10,
-                seen: false
-            }
-        ];
-        this.lastChangeTime = 123123;
-        this.id = input.hasOwnProperty('id') ? input.id : $300e172487e56da3$export$2e2bcd8739ae039();
-        this.name = input.name;
-        this.factor = parseFloat(input.factor);
-        this.solvableTime = input.solvableTime;
-        this.videos = [];
-        this.videos = input.videos.map((video)=>{
-            return {
-                m: parseInt(video.m, 10),
-                s: parseInt(video.s, 10),
-                seen: Boolean(video.seen)
-            };
-        });
-        this.solvable = {
-            activities: {
-                total: parseInt(input.solvable.activities.total, 10),
-                left: parseInt(input.solvable.activities.left, 10)
-            },
-            tutorials: {
-                total: parseInt(input.solvable.tutorials.total, 10),
-                left: parseInt(input.solvable.tutorials.left, 10)
-            },
-            assignments: {
-                total: parseInt(input.solvable.assignments.total, 10),
-                left: parseInt(input.solvable.assignments.left, 10)
-            }
-        };
-        this.hidden = input.hasOwnProperty('hidden') ? input.hidden : false;
-        this.locked = input.hasOwnProperty('locked') ? input.locked : false;
-        this.deleted = input.hasOwnProperty('deleted') ? input.deleted : false;
-        this.menuVisible = false;
-        this.updateLastChangeTime(false);
-        console.log(this);
-    }
-    setUpdateFunction(fn) {
-        this.updateMe = fn;
-    }
-    setAlertFunction(fn1) {
-        this.alertUser = fn1;
-    }
-    setDeleteFunction(fn2) {
-        this.deleteMe = fn2;
-    }
-    updateLastChangeTime(someProgress) {
-        this.lastChangeTime = Date.now();
-        if (this.updateMe) this.updateMe(someProgress && this.isDone());
-    }
-    flipVideo(i3) {
-        if (this.videos[i3].seen) this.markVideoLeft(i3);
-        else this.markVideoSeen(i3);
-    }
-    markVideoSeen(i1) {
-        if (this.locked) {
-            this.alertUser('error', "Please unlock before making any changes");
-            return;
-        }
-        if (this.videos[i1].seen) {
-            this.alertUser('error', "Already done");
-            return;
-        }
-        this.videos[i1].seen = true;
-        this.updateLastChangeTime(true);
-    }
-    markVideoLeft(i2) {
-        if (this.locked) {
-            this.alertUser('error', "Please unlock before making any changes");
-            return;
-        }
-        if (!this.videos[i2].seen) {
-            this.alertUser('error', "Already done");
-            return;
-        }
-        this.videos[i2].seen = false;
-        this.updateLastChangeTime(false);
-    }
-    markSolvableDone(type2) {
-        if (this.locked) {
-            this.alertUser('error', "Please unlock before making any changes");
-            return;
-        }
-        if (this.solvable[type2].left <= 0) {
-            this.alertUser('error', "Already done");
-            return;
-        }
-        this.solvable[type2].left -= 1;
-        this.updateLastChangeTime(true);
-    }
-    markSolvableNotDone(type1) {
-        if (this.locked) {
-            this.alertUser('error', "Please unlock before making any changes");
-            return;
-        }
-        if (this.solvable[type1].left + 1 > this.solvable[type1].total) {
-            this.alertUser('error', "Already done");
-            return;
-        }
-        this.solvable[type1].left += 1;
-        this.updateLastChangeTime(false);
-    }
-    validateSelf() {
-    }
-    getTotalMinutes() {
-        let m = 0;
-        let s = 0;
-        this.videos.forEach((video)=>{
-            m += video.m;
-            s += video.s;
-        });
-        m += s / 60;
-        let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
-            return prev + data.total;
-        }, 0);
-        m += this.solvableTime * solvableCount;
-        m /= this.factor * 60;
-        return m;
-    }
-    getElapsedMinutes() {
-        let m = 0;
-        let s = 0;
-        this.videos.forEach((video)=>{
-            if (video.seen) {
-                m += video.m;
-                s += video.s;
-            }
-        });
-        m += s / 60;
-        let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
-            return prev + (data.total - data.left);
-        }, 0);
-        m += this.solvableTime * solvableCount;
-        m /= this.factor * 60;
-        return m;
-    }
-    getPercentage(total1, left1) {
-        return Math.min(Math.ceil(100 * left1 / total1), 100);
-    }
-    isDone() {
-        let _projected = this.getTotalMinutes();
-        let _elasped = this.getElapsedMinutes();
-        let _percentage = this.getPercentage(_projected, _elasped);
-        return Math.floor(_percentage / 10) == 10;
-    }
-    addEventListeners() {
-        let titles = [
-            'Activities',
-            'Tutorials',
-            'Assignments'
-        ];
-        titles.forEach((type)=>{
-            let ttype = type.toLowerCase();
-            if (this.solvable[ttype].total == 0) return;
-            let downBtn = document.getElementById(`${this.id}-${ttype}-minus`);
-            let upBtn = document.getElementById(`${this.id}-${ttype}-plus`);
-            upBtn.addEventListener('click', ()=>{
-                this.markSolvableDone(ttype);
-            });
-            downBtn.addEventListener('click', ()=>{
-                this.markSolvableNotDone(ttype);
-            });
-        });
-        document.getElementById(`${this.id}-menu`).addEventListener('click', ()=>{
-            clearTimeout(this.hideMenuTimer);
-            this.menuVisible = !this.menuVisible;
-            this.updateLastChangeTime(false);
-            if (this.menuVisible) this.hideMenuTimer = setTimeout(()=>{
-                this.menuVisible = !this.menuVisible;
-                this.updateLastChangeTime(false);
-            }, 5000);
-        });
-        document.getElementById(`${this.id}-hide`).addEventListener('click', ()=>{
-            clearTimeout(this.hideMenuTimer);
-            this.menuVisible = !this.menuVisible;
-            this.hidden = !this.hidden;
-            this.updateLastChangeTime(false);
-        });
-        document.getElementById(`${this.id}-lock`).addEventListener('click', ()=>{
-            clearTimeout(this.hideMenuTimer);
-            this.menuVisible = !this.menuVisible;
-            this.locked = !this.locked;
-            this.updateLastChangeTime(false);
-        });
-        document.getElementById(`${this.id}-delete`).addEventListener('click', async ()=>{
-            clearTimeout(this.hideMenuTimer);
-            this.menuVisible = !this.menuVisible;
-            if (this.locked) {
-                this.alertUser('error', "Please unlock before making any changes");
-                return;
-            }
-            let promise = window.confirm("Do you really want to delete this ?");
-            let confirmed = await promise;
-            if (confirmed) {
-                this.deleted = true;
-                this.deleteMe();
-            } else this.alertUser('warning', "Please be careful");
-        });
-        this.videos.forEach((_video, i)=>{
-            let btn = document.getElementById(`${this.id}-video-${i}`);
-            btn.addEventListener('click', ()=>{
-                this.flipVideo(i);
-            });
-        });
-    }
-    static Validate(input1) {
-        if (!input1.id || !input1.name) throw new Error(`${input1.id} ${input1.name}`);
-        if (!Number.isFinite(input1.factor) || !Number.isInteger(input1.solvableTime)) throw new Error();
-        input1.videos.forEach((video)=>{
-            if (!Number.isInteger(video.m) || !Number.isInteger(video.s)) throw new Error();
-            if (video.s < 0 || video.s >= 60) throw new Error();
-            if (video.m < 0) throw new Error();
-        });
-        [
-            "activities",
-            "tutorials",
-            "assignments"
-        ].forEach((key)=>{
-            let total = input1.solvable[key].total;
-            let left = input1.solvable[key].left;
-            if (!Number.isInteger(total) || !Number.isInteger(left)) throw new Error();
-            if (total < 0 || left < 0 || left > total) throw new Error();
-        });
-    }
-    static Parse(input2) {
-        try {
-            $850e48264ea38c74$export$fca4f8121099df57.Validate(input2);
-            return new $850e48264ea38c74$export$fca4f8121099df57(input2);
-        } catch (e) {
-            return null;
-        }
-    }
-}
-function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
-    if (week.deleted) return $a51c7802bfe1890e$export$c0bb0b647f701bb5``;
-    let id = week.id;
-    let _projected = week.getTotalMinutes();
-    let _elasped = week.getElapsedMinutes();
-    let _percentage = week.getPercentage(_projected, _elasped);
-    const max_in_row = 6;
-    let videos = [];
-    week.videos.forEach((video, i)=>{
-        const firstVideoMargin = {
-            'mb-4': i == 0 && week.videos.length > max_in_row
-        };
-        const btnClass = {
-            'btn-checked': video.seen,
-            'btn-unchecked': !video.seen
-        };
-        const inProgress = {
-            'in-progress': !video.seen,
-            'done': video.seen
-        };
-        videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
-    <div class="video px-0 ${$6197f1f1b7c083f0$export$56cc687933817664(firstVideoMargin)}">
-      <p class="video-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
-      <input type="checkbox" ? .checked=${video.seen} class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${id}-video-${i}"></button>
-    </div>
-  `);
-    });
-    let _solvable = week.solvable;
-    let solvableData = [];
-    solvableData.push({
-        title: 'Activities',
-        done: _solvable.activities.total - _solvable.activities.left,
-        total: _solvable.activities.total
-    });
-    solvableData.push({
-        title: 'Tutorials',
-        done: _solvable.tutorials.total - _solvable.tutorials.left,
-        total: _solvable.tutorials.total
-    });
-    solvableData.push({
-        title: 'Assignments',
-        done: _solvable.assignments.total - _solvable.assignments.left,
-        total: _solvable.assignments.total
-    });
-    let solvables = [];
-    solvableData.forEach((data)=>{
-        if (data.total == 0) return;
-        const btnUpValid = data.total > data.done;
-        const btnDownValid = data.done > 0;
-        const inProgress = {
-            'in-progress': btnUpValid,
-            'done': !btnUpValid && btnDownValid
-        };
-        solvables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
-    <div class="act-time w-1/5">
-      <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
-      <div class="act-btn-parent">
-        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-${data.title.toLowerCase()}-plus"></button>
-        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-${data.title.toLowerCase()}-minus"></button>
-      </div>
-    </div>
-  `);
-    });
-    // consider max 12 videos overall
-    if (videos.length > max_in_row) // divide into two
-    videos.splice(Math.ceil(videos.length / 2), 0, $a51c7802bfe1890e$export$c0bb0b647f701bb5`<div class="w-full"></div>`);
-    let progressColorBg = {
-        [$850e48264ea38c74$var$progress_bg[Math.floor(_percentage / 10)]]: true
-    };
-    const animatedBorderClassMap = {
-        'gradient-border': Math.floor(_percentage / 10) == 10
-    };
-    let videosContainerClass = {
-        'pb-3': videos.length > 0,
-        'pb-0': videos.length == 0
-    };
-    return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
-  <div class="container items-center bg-white my-4 better-shadow week-overall ${$6197f1f1b7c083f0$export$56cc687933817664(animatedBorderClassMap)}">
-    <div class="rounded-lg">
-
-      <!-- Heading -->
-      <div class="week-heading-draggable pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-gray-800">
-        <div class="week-heading-draggable w-full border-b-2 border-white justify-between inline-flex">
-          <div class="week-heading-draggable inline-flex items-center">
-            <h2 class="week-heading-draggable pb-1 text-2xl font-bold text-white lg:text-x lg:mr-8">
-              ${week.name}
-            </h2>
-          </div>
-          <div class="week-heading-draggable inline-flex items-center move-up">
-            <button class="week-heading-draggable rounded-button bg-white" id="${id}-menu">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="black">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-              </svg>
-            </button>
-
-            <div ?hidden=${!week.menuVisible}>
-              <div class="dropdown-menu absolute w-60 shadow-lg bg-white divide-x divide-gray-100 right-10 grid grid-cols-3">
-                <a class="text-gray-900 bg-white" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'} </a>
-                <a class="text-gray-900 bg-white" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
-                <a class="text-white bg-red-600" id="${id}-delete">Delete</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Summary -->
-      <div ?hidden=${week.hidden} class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between ${$6197f1f1b7c083f0$export$56cc687933817664(progressColorBg)}">
-        <div class="pb-1 px-10 flex justify-between items-center border-b-2 border-gray-600">
-          <p class="dispay-container">
-            <span class="dispay-label justify-start">Projected:</span>
-            <span class="dispay-data">${_projected.toFixed(1)}h</span>
-          </p>
-
-          <p class="dispay-container justify-center">
-            <span class="dispay-label">Elapsed:</span>
-            <span class="dispay-data">${_elasped.toFixed(1)}h</span>
-          </p>
-
-          <p class="dispay-container justify-end">
-            <span class="dispay-label">Done:</span>
-            <span class="dispay-data">${_percentage.toFixed(2)}%</span>
-          </p>
-        </div>
-      </div>
-
-      <!-- Videos -->
-      <div ?hidden=${week.hidden} class="pt-2 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
-        <div class="w-full border-b-2 border-gray-600">
-          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
-            Videos
-          </h2>
-          <div class="video-container flex justify-evenly flex-wrap ${$6197f1f1b7c083f0$export$56cc687933817664(videosContainerClass)}">
-            ${videos}
-          </div>
-        </div>
-      </div>
-
-      <!-- Solvable -->
-      <div ?hidden=${week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
-        <div class="w-full">
-          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
-            Solvable
-          </h2>
-
-          <div class="flex justify-around px-5">
-            ${solvables}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  `;
-}
-
-
 /** @ignore */ function $58a29a379dbc9264$var$uid() {
     const length = new Int8Array(1);
     window.crypto.getRandomValues(length);
@@ -1926,6 +1487,517 @@ async function $877b126e36883e53$export$e434c7255acda994(path) {
         }
     });
 }
+
+
+async function $4b2c437b8a34aefc$export$5e650096d9f7c4ee(message) {
+    if (window.__TAURI__) return window.confirm("Do you really want to delete this ?");
+    else return window.go.main.App.ConfirmDelete();
+}
+async function $4b2c437b8a34aefc$export$e620933a198f7bc(data) {
+    if (window.__TAURI__) try {
+        let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
+        let path = homeDir + $4b2c437b8a34aefc$var$DATA_FILE_NAME;
+        let text = await $61d50d698abff50d$export$552bfb764b5cd2b4({
+            contents: JSON.stringify(data, null, 2),
+            path: path
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+async function $4b2c437b8a34aefc$export$9f183916f445c495() {
+    if (window.__TAURI__) {
+        let text;
+        try {
+            let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
+            let file = homeDir + $4b2c437b8a34aefc$var$DATA_FILE_NAME;
+            text = await $61d50d698abff50d$export$177308921a610223(file);
+            console.log(text);
+        } catch (e) {
+            throw e;
+        }
+        return text;
+    }
+}
+const $4b2c437b8a34aefc$var$TAURI_BASE_DIR = ".tauri_progres";
+const $4b2c437b8a34aefc$var$DATA_FILE_NAME = $4b2c437b8a34aefc$var$TAURI_BASE_DIR + "/data.json";
+async function $4b2c437b8a34aefc$export$39989cb38ffcc5d7() {
+    if (window.__TAURI__) {
+        let homeDir;
+        try {
+            homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
+            let dataDir = homeDir + $4b2c437b8a34aefc$var$TAURI_BASE_DIR;
+            let created = await $61d50d698abff50d$export$8ffa162de829532c(dataDir);
+            console.log("Created", created);
+        } catch (e) {
+            console.log(e);
+            if (typeof e == 'string' && e.includes("os error 17")) ;
+            else throw e;
+        }
+        // Folder now exists
+        try {
+            let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
+            let file = homeDir + $4b2c437b8a34aefc$var$DATA_FILE_NAME;
+            let text = await $61d50d698abff50d$export$177308921a610223(file);
+            console.log(text);
+        } catch (e1) {
+            console.log(e1);
+            if (typeof e1 == 'string' && e1.includes("os error 2")) // no file exists, create now
+            try {
+                let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
+                let path = homeDir + $4b2c437b8a34aefc$var$DATA_FILE_NAME;
+                let text = await $61d50d698abff50d$export$552bfb764b5cd2b4({
+                    contents: "{}",
+                    path: path
+                });
+                console.log(">>>>>>>>>>>>>>>", "EXISTING", text);
+            } catch (error) {
+                throw error;
+            }
+            else throw e1;
+        }
+    }
+}
+
+
+const $850e48264ea38c74$var$progress = [
+    "text-red-500",
+    "text-orange-700",
+    "text-orange-500",
+    "text-amber-600",
+    "text-amber-500",
+    "text-amber-500",
+    "text-amber-400",
+    "text-yellow-500",
+    "text-yellow-400",
+    "text-lime-400",
+    "text-lime-500"
+];
+const $850e48264ea38c74$var$progress_bg = [
+    "bg-red-500",
+    "bg-red-400",
+    "bg-red-400",
+    "bg-red-300",
+    "bg-red-300",
+    "bg-yellow-400",
+    "bg-yellow-400",
+    "bg-amber-300",
+    "bg-amber-300",
+    "bg-lime-400",
+    "bg-lime-500", 
+];
+class $850e48264ea38c74$export$fca4f8121099df57 {
+    constructor(input){
+        this.id = 'uuid';
+        this.name = "Sample Week 1";
+        this.factor = 1;
+        this.solvableTime = 20;
+        this.solvable = {
+            activities: {
+                total: 3,
+                left: 3
+            },
+            tutorials: {
+                total: 2,
+                left: 2
+            },
+            assignments: {
+                total: 1,
+                left: 1
+            }
+        };
+        this.videos = [
+            {
+                m: 40,
+                s: 10,
+                seen: false
+            }
+        ];
+        this.lastChangeTime = 123123;
+        this.id = input.hasOwnProperty('id') ? input.id : $300e172487e56da3$export$2e2bcd8739ae039();
+        this.name = input.name;
+        this.factor = parseFloat(input.factor);
+        this.solvableTime = input.solvableTime;
+        this.videos = [];
+        this.videos = input.videos.map((video)=>{
+            return {
+                m: parseInt(video.m, 10),
+                s: parseInt(video.s, 10),
+                seen: Boolean(video.seen)
+            };
+        });
+        this.solvable = {
+            activities: {
+                total: parseInt(input.solvable.activities.total, 10),
+                left: parseInt(input.solvable.activities.left, 10)
+            },
+            tutorials: {
+                total: parseInt(input.solvable.tutorials.total, 10),
+                left: parseInt(input.solvable.tutorials.left, 10)
+            },
+            assignments: {
+                total: parseInt(input.solvable.assignments.total, 10),
+                left: parseInt(input.solvable.assignments.left, 10)
+            }
+        };
+        this.hidden = input.hasOwnProperty('hidden') ? input.hidden : false;
+        this.locked = input.hasOwnProperty('locked') ? input.locked : false;
+        this.deleted = input.hasOwnProperty('deleted') ? input.deleted : false;
+        this.menuVisible = false;
+        this.updateLastChangeTime(false);
+        console.log(this);
+    }
+    setUpdateFunction(fn) {
+        this.updateMe = fn;
+    }
+    setAlertFunction(fn1) {
+        this.alertUser = fn1;
+    }
+    setDeleteFunction(fn2) {
+        this.deleteMe = fn2;
+    }
+    updateLastChangeTime(someProgress) {
+        this.lastChangeTime = Date.now();
+        if (this.updateMe) this.updateMe(someProgress && this.isDone());
+    }
+    flipVideo(i3) {
+        if (this.videos[i3].seen) this.markVideoLeft(i3);
+        else this.markVideoSeen(i3);
+    }
+    markVideoSeen(i1) {
+        if (this.locked) {
+            this.alertUser('error', "Please unlock before making any changes");
+            return;
+        }
+        if (this.videos[i1].seen) {
+            this.alertUser('error', "Already done");
+            return;
+        }
+        this.videos[i1].seen = true;
+        this.updateLastChangeTime(true);
+    }
+    markVideoLeft(i2) {
+        if (this.locked) {
+            this.alertUser('error', "Please unlock before making any changes");
+            return;
+        }
+        if (!this.videos[i2].seen) {
+            this.alertUser('error', "Already done");
+            return;
+        }
+        this.videos[i2].seen = false;
+        this.updateLastChangeTime(false);
+    }
+    markSolvableDone(type2) {
+        if (this.locked) {
+            this.alertUser('error', "Please unlock before making any changes");
+            return;
+        }
+        if (this.solvable[type2].left <= 0) {
+            this.alertUser('error', "Already done");
+            return;
+        }
+        this.solvable[type2].left -= 1;
+        this.updateLastChangeTime(true);
+    }
+    markSolvableNotDone(type1) {
+        if (this.locked) {
+            this.alertUser('error', "Please unlock before making any changes");
+            return;
+        }
+        if (this.solvable[type1].left + 1 > this.solvable[type1].total) {
+            this.alertUser('error', "Already done");
+            return;
+        }
+        this.solvable[type1].left += 1;
+        this.updateLastChangeTime(false);
+    }
+    validateSelf() {
+    }
+    getTotalMinutes() {
+        let m = 0;
+        let s = 0;
+        this.videos.forEach((video)=>{
+            m += video.m;
+            s += video.s;
+        });
+        m += s / 60;
+        let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
+            return prev + data.total;
+        }, 0);
+        m += this.solvableTime * solvableCount;
+        m /= this.factor * 60;
+        return m;
+    }
+    getElapsedMinutes() {
+        let m = 0;
+        let s = 0;
+        this.videos.forEach((video)=>{
+            if (video.seen) {
+                m += video.m;
+                s += video.s;
+            }
+        });
+        m += s / 60;
+        let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
+            return prev + (data.total - data.left);
+        }, 0);
+        m += this.solvableTime * solvableCount;
+        m /= this.factor * 60;
+        return m;
+    }
+    getPercentage(total1, left1) {
+        return Math.min(Math.ceil(100 * left1 / total1), 100);
+    }
+    isDone() {
+        let _projected = this.getTotalMinutes();
+        let _elasped = this.getElapsedMinutes();
+        let _percentage = this.getPercentage(_projected, _elasped);
+        return Math.floor(_percentage / 10) == 10;
+    }
+    addEventListeners() {
+        let titles = [
+            'Activities',
+            'Tutorials',
+            'Assignments'
+        ];
+        titles.forEach((type)=>{
+            let ttype = type.toLowerCase();
+            if (this.solvable[ttype].total == 0) return;
+            let downBtn = document.getElementById(`${this.id}-${ttype}-minus`);
+            let upBtn = document.getElementById(`${this.id}-${ttype}-plus`);
+            upBtn.addEventListener('click', ()=>{
+                this.markSolvableDone(ttype);
+            });
+            downBtn.addEventListener('click', ()=>{
+                this.markSolvableNotDone(ttype);
+            });
+        });
+        document.getElementById(`${this.id}-menu`).addEventListener('click', ()=>{
+            clearTimeout(this.hideMenuTimer);
+            this.menuVisible = !this.menuVisible;
+            this.updateLastChangeTime(false);
+            if (this.menuVisible) this.hideMenuTimer = setTimeout(()=>{
+                this.menuVisible = !this.menuVisible;
+                this.updateLastChangeTime(false);
+            }, 5000);
+        });
+        document.getElementById(`${this.id}-hide`).addEventListener('click', ()=>{
+            clearTimeout(this.hideMenuTimer);
+            this.menuVisible = !this.menuVisible;
+            this.hidden = !this.hidden;
+            this.updateLastChangeTime(false);
+        });
+        document.getElementById(`${this.id}-lock`).addEventListener('click', ()=>{
+            clearTimeout(this.hideMenuTimer);
+            this.menuVisible = !this.menuVisible;
+            this.locked = !this.locked;
+            this.updateLastChangeTime(false);
+        });
+        document.getElementById(`${this.id}-delete`).addEventListener('click', async ()=>{
+            clearTimeout(this.hideMenuTimer);
+            this.menuVisible = !this.menuVisible;
+            if (this.locked) {
+                this.alertUser('error', "Please unlock before making any changes");
+                return;
+            }
+            let confirmed = await $4b2c437b8a34aefc$export$5e650096d9f7c4ee("Do you really want to delete this ?");
+            if (confirmed) {
+                this.deleted = true;
+                this.deleteMe();
+            } else this.alertUser('warning', "Please be careful");
+        });
+        this.videos.forEach((_video, i)=>{
+            let btn = document.getElementById(`${this.id}-video-${i}`);
+            btn.addEventListener('click', ()=>{
+                this.flipVideo(i);
+            });
+        });
+    }
+    static Validate(input1) {
+        if (!input1.id || !input1.name) throw new Error(`${input1.id} ${input1.name}`);
+        if (!Number.isFinite(input1.factor) || !Number.isInteger(input1.solvableTime)) throw new Error();
+        input1.videos.forEach((video)=>{
+            if (!Number.isInteger(video.m) || !Number.isInteger(video.s)) throw new Error();
+            if (video.s < 0 || video.s >= 60) throw new Error();
+            if (video.m < 0) throw new Error();
+        });
+        [
+            "activities",
+            "tutorials",
+            "assignments"
+        ].forEach((key)=>{
+            let total = input1.solvable[key].total;
+            let left = input1.solvable[key].left;
+            if (!Number.isInteger(total) || !Number.isInteger(left)) throw new Error();
+            if (total < 0 || left < 0 || left > total) throw new Error();
+        });
+    }
+    static Parse(input2) {
+        try {
+            $850e48264ea38c74$export$fca4f8121099df57.Validate(input2);
+            return new $850e48264ea38c74$export$fca4f8121099df57(input2);
+        } catch (e) {
+            return null;
+        }
+    }
+}
+function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
+    if (week.deleted) return $a51c7802bfe1890e$export$c0bb0b647f701bb5``;
+    let id = week.id;
+    let _projected = week.getTotalMinutes();
+    let _elasped = week.getElapsedMinutes();
+    let _percentage = week.getPercentage(_projected, _elasped);
+    const max_in_row = 6;
+    let videos = [];
+    week.videos.forEach((video, i)=>{
+        const firstVideoMargin = {
+            'mb-4': i == 0 && week.videos.length > max_in_row
+        };
+        const btnClass = {
+            'btn-checked': video.seen,
+            'btn-unchecked': !video.seen
+        };
+        const inProgress = {
+            'in-progress': !video.seen,
+            'done': video.seen
+        };
+        videos.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
+    <div class="video px-0 ${$6197f1f1b7c083f0$export$56cc687933817664(firstVideoMargin)}">
+      <p class="video-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}">${video.m.toFixed(0).padStart(2, "0")}:${video.s.toFixed(0).padStart(2, "0")}</p>
+      <input type="checkbox" ? .checked=${video.seen} class="video-btn ${$6197f1f1b7c083f0$export$56cc687933817664(btnClass)}" id="${id}-video-${i}"></button>
+    </div>
+  `);
+    });
+    let _solvable = week.solvable;
+    let solvableData = [];
+    solvableData.push({
+        title: 'Activities',
+        done: _solvable.activities.total - _solvable.activities.left,
+        total: _solvable.activities.total
+    });
+    solvableData.push({
+        title: 'Tutorials',
+        done: _solvable.tutorials.total - _solvable.tutorials.left,
+        total: _solvable.tutorials.total
+    });
+    solvableData.push({
+        title: 'Assignments',
+        done: _solvable.assignments.total - _solvable.assignments.left,
+        total: _solvable.assignments.total
+    });
+    let solvables = [];
+    solvableData.forEach((data)=>{
+        if (data.total == 0) return;
+        const btnUpValid = data.total > data.done;
+        const btnDownValid = data.done > 0;
+        const inProgress = {
+            'in-progress': btnUpValid,
+            'done': !btnUpValid && btnDownValid
+        };
+        solvables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
+    <div class="act-time w-1/5">
+      <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
+      <div class="act-btn-parent">
+        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-${data.title.toLowerCase()}-plus"></button>
+        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-${data.title.toLowerCase()}-minus"></button>
+      </div>
+    </div>
+  `);
+    });
+    // consider max 12 videos overall
+    if (videos.length > max_in_row) // divide into two
+    videos.splice(Math.ceil(videos.length / 2), 0, $a51c7802bfe1890e$export$c0bb0b647f701bb5`<div class="w-full"></div>`);
+    let progressColorBg = {
+        [$850e48264ea38c74$var$progress_bg[Math.floor(_percentage / 10)]]: true
+    };
+    const animatedBorderClassMap = {
+        'gradient-border': Math.floor(_percentage / 10) == 10
+    };
+    let videosContainerClass = {
+        'pb-3': videos.length > 0,
+        'pb-0': videos.length == 0
+    };
+    return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
+  <div class="container items-center bg-white my-4 better-shadow week-overall ${$6197f1f1b7c083f0$export$56cc687933817664(animatedBorderClassMap)}">
+    <div class="rounded-lg">
+
+      <!-- Heading -->
+      <div class="week-heading-draggable pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-gray-800">
+        <div class="week-heading-draggable w-full border-b-2 border-white justify-between inline-flex">
+          <div class="week-heading-draggable inline-flex items-center">
+            <h2 class="week-heading-draggable pb-1 text-2xl font-bold text-white lg:text-x lg:mr-8">
+              ${week.name}
+            </h2>
+          </div>
+          <div class="week-heading-draggable inline-flex items-center move-up">
+            <button class="week-heading-draggable rounded-button bg-white" id="${id}-menu">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="black">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+              </svg>
+            </button>
+
+            <div ?hidden=${!week.menuVisible}>
+              <div class="dropdown-menu absolute w-60 shadow-lg bg-white divide-x divide-gray-100 right-10 grid grid-cols-3">
+                <a class="text-gray-900 bg-white" id="${id}-lock"> ${week.locked ? 'Unlock' : 'Lock'} </a>
+                <a class="text-gray-900 bg-white" id="${id}-hide"> ${week.hidden ? 'Unhide' : 'Hide'} </a>
+                <a class="text-white bg-red-600" id="${id}-delete">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div ?hidden=${week.hidden} class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between ${$6197f1f1b7c083f0$export$56cc687933817664(progressColorBg)}">
+        <div class="pb-1 px-10 flex justify-between items-center border-b-2 border-gray-600">
+          <p class="dispay-container">
+            <span class="dispay-label justify-start">Projected:</span>
+            <span class="dispay-data">${_projected.toFixed(1)}h</span>
+          </p>
+
+          <p class="dispay-container justify-center">
+            <span class="dispay-label">Elapsed:</span>
+            <span class="dispay-data">${_elasped.toFixed(1)}h</span>
+          </p>
+
+          <p class="dispay-container justify-end">
+            <span class="dispay-label">Done:</span>
+            <span class="dispay-data">${_percentage.toFixed(2)}%</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Videos -->
+      <div ?hidden=${week.hidden} class="pt-2 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+        <div class="w-full border-b-2 border-gray-600">
+          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
+            Videos
+          </h2>
+          <div class="video-container flex justify-evenly flex-wrap ${$6197f1f1b7c083f0$export$56cc687933817664(videosContainerClass)}">
+            ${videos}
+          </div>
+        </div>
+      </div>
+
+      <!-- Solvable -->
+      <div ?hidden=${week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+        <div class="w-full">
+          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
+            Solvable
+          </h2>
+
+          <div class="flex justify-around px-5">
+            ${solvables}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
+}
+
+
 
 
 
@@ -3201,6 +3273,7 @@ $e5681fb9ff8b31c4$export$2e2bcd8739ae039 = $e5681fb9ff8b31c4$var$module.exports;
 var $e5681fb9ff8b31c4$export$185802fd694ee1f5 = $e5681fb9ff8b31c4$var$module.exports.create;
 
 
+
 const $2f25b22e70662204$var$BASE_DIR = ".tauri_progres";
 const $2f25b22e70662204$var$DATA_FILE_NAME = $2f25b22e70662204$var$BASE_DIR + "/data.json";
 class $2f25b22e70662204$export$f160779312cf57d5 {
@@ -3325,57 +3398,15 @@ class $2f25b22e70662204$export$f160779312cf57d5 {
         }
     }
     async loadLocal() {
-        let text;
-        try {
-            let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
-            let file = homeDir + $2f25b22e70662204$var$DATA_FILE_NAME;
-            text = await $61d50d698abff50d$export$177308921a610223(file);
-            console.log(text);
-        } catch (e) {
-            throw e;
-        }
+        let text = await $4b2c437b8a34aefc$export$9f183916f445c495();
         let weeks = JSON.parse(text);
-        console.log("weeks", weeks);
         for(let i = weeks.length - 1; i > -1; i--){
             console.log("week", weeks[i]);
             this.createNewWeek(weeks[i]);
         }
     }
     static async ensureFileExists() {
-        // Create or read folder
-        let homeDir;
-        try {
-            homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
-            let dataDir = homeDir + $2f25b22e70662204$var$BASE_DIR;
-            let created = await $61d50d698abff50d$export$8ffa162de829532c(dataDir);
-            console.log("Created", created);
-        } catch (e) {
-            console.log(e);
-            if (typeof e == 'string' && e.includes("os error 17")) ;
-            else throw e;
-        }
-        // Folder now exists
-        try {
-            let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
-            let file = homeDir + $2f25b22e70662204$var$DATA_FILE_NAME;
-            let text = await $61d50d698abff50d$export$177308921a610223(file);
-            console.log(text);
-        } catch (e1) {
-            console.log(e1);
-            if (typeof e1 == 'string' && e1.includes("os error 2")) // no file exists, create now
-            try {
-                let homeDir = await $877b126e36883e53$export$e401803eb3bf9d2f();
-                let path = homeDir + $2f25b22e70662204$var$DATA_FILE_NAME;
-                let text = await $61d50d698abff50d$export$552bfb764b5cd2b4({
-                    contents: "{}",
-                    path: path
-                });
-                console.log(">>>>>>>>>>>>>>>", "EXISTING", text);
-            } catch (error) {
-                throw error;
-            }
-            else throw e1;
-        }
+        await $4b2c437b8a34aefc$export$39989cb38ffcc5d7();
     }
 }
 
@@ -3446,9 +3477,9 @@ class $b437cb7ddfb16b51$var$Main {
             let w6 = new $850e48264ea38c74$export$fca4f8121099df57(trial);
             this.wm.registerWeek(w6);
         };
-        if (window.__TAURI__) ;
+        if (window.__TAURI__ || window.go) ;
         else trial1();
-        if (window.__TAURI__) try {
+        if (window.__TAURI__ || window.go) try {
             let exists = await $2f25b22e70662204$export$f160779312cf57d5.ensureFileExists();
             console.log(exists);
             this.wm.loadLocal();

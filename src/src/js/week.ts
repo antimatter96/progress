@@ -2,6 +2,7 @@ import { html } from 'lit-html';
 import { classMap } from 'lit-html/directives/class-map';
 
 import { v4 as uuid } from "uuid";
+import { customConfirm } from './framework';
 
 const progress = [
   "text-red-500",
@@ -286,8 +287,7 @@ export class Week {
         return;
       }
 
-      let promise = window.confirm("Do you really want to delete this ?");
-      let confirmed = await promise;
+      let confirmed = await customConfirm("Do you really want to delete this ?");
 
       if (confirmed) {
         this.deleted = true;

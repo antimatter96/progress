@@ -90,13 +90,13 @@ class Main {
       this.wm.registerWeek(w6);
     }
 
-    if (window.__TAURI__) {
+    if (window.__TAURI__ || window.go) {
 
     } else {
       trial();
     }
 
-    if (window.__TAURI__) {
+    if (window.__TAURI__ || window.go) {
       try {
         let exists = await WeekManager.ensureFileExists();
         console.log(exists);

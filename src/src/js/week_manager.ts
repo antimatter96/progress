@@ -9,6 +9,7 @@ import { templateFunc, Week } from "./week";
 import { AlertHandler } from './alerts'
 import dragula from "dragula";
 import confetti from "canvas-confetti"
+import { ensureFileExists, loadLocal } from "./framework";
 
 const BASE_DIR = ".tauri_progres"
 const DATA_FILE_NAME = BASE_DIR + "/data.json"
@@ -163,19 +164,8 @@ export class WeekManager {
   }
 
   async loadLocal() {
-    let text;
-    try {
-      let homeDir = await _homeDir();
-      let file = homeDir + DATA_FILE_NAME;
-
-      text = await _read(file);
-      console.log(text);
-    } catch (e) {
-      throw e;
-    }
-
+    let text = await loadLocal()
     let weeks = JSON.parse(text);
-    console.log("weeks", weeks);
     for (let i = weeks.length - 1; i > -1; i--) {
       console.log("week", weeks[i]);
 
@@ -184,50 +174,6 @@ export class WeekManager {
   }
 
   static async ensureFileExists() {
-    // Create or read folder
-
-    let homeDir;
-    try {
-      homeDir = await _homeDir();
-      let dataDir = homeDir + BASE_DIR;
-      let created = await _createDir(dataDir);
-      console.log("Created", created);
-    } catch (e) {
-      console.log(e);
-      if (typeof e == 'string' && e.includes("os error 17")) {
-        // already exists
-      } else {
-        throw e;
-      }
-    }
-
-    // Folder now exists
-    try {
-      let homeDir = await _homeDir();
-      let file = homeDir + DATA_FILE_NAME;
-
-      let text = await _read(file);
-      console.log(text);
-    } catch (e) {
-      console.log(e);
-      if (typeof e == 'string' && e.includes("os error 2")) {
-        // no file exists, create now
-        try {
-          let homeDir = await _homeDir();
-          let path = homeDir + DATA_FILE_NAME;
-
-          let text = await _write({
-            contents: "{}",
-            path,
-          });
-
-          console.log(">>>>>>>>>>>>>>>", "EXISTING", text);
-        } catch (error) {
-          throw error;
-        }
-      } else {
-        throw e;
-      }
-    }
+    await ensureFileExists()
   }
 }
