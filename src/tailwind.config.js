@@ -1,8 +1,6 @@
 const colors = require("tailwindcss/colors");
 const plugin = require("tailwindcss/plugin");
 
-const customFonts = ["Inconsolata"];
-
 module.exports = {
   purge: {
     content: ["*.html", "**/*.html", "*.ts", "**/*.ts"],
@@ -28,9 +26,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: customFonts,
-        serif: customFonts,
-        "sans-serif": customFonts,
+        sans: ["Inconsolata", "sans-serif"],
+        serif: ["Inconsolata", "serif"],
       },
     },
   },
