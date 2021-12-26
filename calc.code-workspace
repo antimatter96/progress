@@ -12,5 +12,10 @@
 			"**/*.code-search": true,
 			"dist/" : true,
 		}
+	},
+	"extensions": {
+		"recommendations": [
+			"bradlc.vscode-tailwindcss"
+		]
 	}
 }

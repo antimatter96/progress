@@ -2,12 +2,7 @@ const colors = require("tailwindcss/colors");
 const plugin = require("tailwindcss/plugin");
 
 module.exports = {
-  purge: {
-    content: ["*.html", "**/*.html", "*.ts", "**/*.ts"],
-    options: {
-      fontFace: true,
-    },
-  },
+  content: ["*.html", "**/*.html", "*.ts", "**/*.ts"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
@@ -30,10 +25,6 @@ module.exports = {
         serif: ["Inconsolata", "serif"],
       },
     },
-  },
-  variants: {
-    backgroundColor: ({ after }) => after(["invalid"]),
-    borderColor: ({ after }) => after(["invalid"]),
   },
   plugins: [
     plugin(function ({ addVariant, e }) {

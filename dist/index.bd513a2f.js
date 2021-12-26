@@ -77,7 +77,7 @@ class $a51c7802bfe1890e$var$P {
                                 index: r,
                                 name: i[2],
                                 strings: t,
-                                ctor: "." === i[1] ? $a51c7802bfe1890e$var$M : "?" === i[1] ? $a51c7802bfe1890e$var$k : "@" === i[1] ? $a51c7802bfe1890e$var$H : $a51c7802bfe1890e$var$S
+                                ctor: "." === i[1] ? $a51c7802bfe1890e$var$M : "?" === i[1] ? $a51c7802bfe1890e$var$H : "@" === i[1] ? $a51c7802bfe1890e$var$I : $a51c7802bfe1890e$var$S
                             });
                         } else c.push({
                             type: 6,
@@ -143,7 +143,7 @@ class $a51c7802bfe1890e$var$E {
         for(; void 0 !== d;){
             if (h === d.index) {
                 let i;
-                2 === d.type ? i = new $a51c7802bfe1890e$var$N(n, n.nextSibling, this, t3) : 1 === d.type ? i = new d.ctor(n, d.name, d.strings, this, t3) : 6 === d.type && (i = new $a51c7802bfe1890e$var$I(n, this, t3)), this.v.push(i), d = e[++r];
+                2 === d.type ? i = new $a51c7802bfe1890e$var$N(n, n.nextSibling, this, t3) : 1 === d.type ? i = new d.ctor(n, d.name, d.strings, this, t3) : 6 === d.type && (i = new $a51c7802bfe1890e$var$L(n, this, t3)), this.v.push(i), d = e[++r];
             }
             h !== (null == d ? void 0 : d.index) && (n = $a51c7802bfe1890e$var$A.nextNode(), h++);
         }
@@ -251,15 +251,16 @@ class $a51c7802bfe1890e$var$M extends $a51c7802bfe1890e$var$S {
         this.element[this.name] = t18 === $a51c7802bfe1890e$export$45b790e32b2810ee ? void 0 : t18;
     }
 }
-class $a51c7802bfe1890e$var$k extends $a51c7802bfe1890e$var$S {
+const $a51c7802bfe1890e$var$k = $a51c7802bfe1890e$var$i ? $a51c7802bfe1890e$var$i.emptyScript : "";
+class $a51c7802bfe1890e$var$H extends $a51c7802bfe1890e$var$S {
     constructor(){
         super(...arguments), this.type = 4;
     }
     k(t19) {
-        t19 && t19 !== $a51c7802bfe1890e$export$45b790e32b2810ee ? this.element.setAttribute(this.name, "") : this.element.removeAttribute(this.name);
+        t19 && t19 !== $a51c7802bfe1890e$export$45b790e32b2810ee ? this.element.setAttribute(this.name, $a51c7802bfe1890e$var$k) : this.element.removeAttribute(this.name);
     }
 }
-class $a51c7802bfe1890e$var$H extends $a51c7802bfe1890e$var$S {
+class $a51c7802bfe1890e$var$I extends $a51c7802bfe1890e$var$S {
     constructor(t20, i10, s4, e3, o1){
         super(t20, i10, s4, e3, o1), this.type = 5;
     }
@@ -274,7 +275,7 @@ class $a51c7802bfe1890e$var$H extends $a51c7802bfe1890e$var$S {
         "function" == typeof this._$AH ? this._$AH.call(null !== (s = null === (i = this.options) || void 0 === i ? void 0 : i.host) && void 0 !== s ? s : this.element, t22) : this._$AH.handleEvent(t22);
     }
 }
-class $a51c7802bfe1890e$var$I {
+class $a51c7802bfe1890e$var$L {
     constructor(t23, i12, s5){
         this.element = t23, this.type = 6, this._$AN = void 0, this._$AM = i12, this.options = s5;
     }
@@ -296,12 +297,12 @@ const $a51c7802bfe1890e$export$8613d1ca9052b22e = {
     j: $a51c7802bfe1890e$var$V,
     H: $a51c7802bfe1890e$var$N,
     O: $a51c7802bfe1890e$var$S,
-    F: $a51c7802bfe1890e$var$k,
-    B: $a51c7802bfe1890e$var$H,
+    F: $a51c7802bfe1890e$var$H,
+    B: $a51c7802bfe1890e$var$I,
     W: $a51c7802bfe1890e$var$M,
-    Z: $a51c7802bfe1890e$var$I
-}, $a51c7802bfe1890e$var$R = window.litHtmlPolyfillSupport;
-null == $a51c7802bfe1890e$var$R || $a51c7802bfe1890e$var$R($a51c7802bfe1890e$var$P, $a51c7802bfe1890e$var$N), (null !== ($a51c7802bfe1890e$var$t = globalThis.litHtmlVersions) && void 0 !== $a51c7802bfe1890e$var$t ? $a51c7802bfe1890e$var$t : globalThis.litHtmlVersions = []).push("2.0.1");
+    Z: $a51c7802bfe1890e$var$L
+}, $a51c7802bfe1890e$var$z = window.litHtmlPolyfillSupport;
+null == $a51c7802bfe1890e$var$z || $a51c7802bfe1890e$var$z($a51c7802bfe1890e$var$P, $a51c7802bfe1890e$var$N), (null !== ($a51c7802bfe1890e$var$t = globalThis.litHtmlVersions) && void 0 !== $a51c7802bfe1890e$var$t ? $a51c7802bfe1890e$var$t : globalThis.litHtmlVersions = []).push("2.0.2");
 
 
 
