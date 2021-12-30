@@ -8,8 +8,10 @@ import { homeDir as _homeDir } from "@tauri-apps/api/path";
 export async function customConfirm(message: string) : Promise<boolean> {
   if(window.__TAURI__) {
     return window.confirm("Do you really want to delete this ?");
-  } else {
+  } else if (window.go){
     return window.go.main.App.ConfirmDelete();
+  } else {
+    return confirm("Do you really want to delete this ?");
   }
 }
 

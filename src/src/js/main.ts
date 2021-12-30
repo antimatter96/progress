@@ -57,7 +57,13 @@ class Main {
 
   async run() {
     let trial = () => {
-      let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":0},"tutorials":{"total":1,"left":0},"assignments":{"total":2,"left":1}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":true}],"lastChangeTime":1634845763686}`)
+      let sampleJSON = {
+        "id":"1","name":"1","factor":0.70,
+        "solvableTime":10,"solvable":{"activities":{"total":1,"left":0},"tutorials":{"total":1,"left":0},"assignments":{"total":2,"left":1}},
+        "hasProgrammable" : true, "programmableTime" : 20, programmable : { "practice" : {"total":1,"left":0}, "graded" : {"total":1,"left":0} },
+        "videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":true}],
+        "lastChangeTime":1634845763686}
+      let ww = JSON.parse(JSON.stringify(sampleJSON))
       ww.hidden = false;
       let w2 = new Week(ww);
       this.wm.registerWeek(w2);
@@ -84,10 +90,34 @@ class Main {
 
       let w5 = new Week(ww);
       this.wm.registerWeek(w5);
-      let trial = JSON.parse(`{"id":"1011","name":"Only Act","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":10,"left":10},"tutorials":{"total":0,"left":0},"assignments":{"total":0,"left":0}},"videos":[],"lastChangeTime":1634845763686}`)
 
+
+      let trial = {
+        "id":"101","name":"1","factor":0.70,
+        "solvableTime":45,"solvable":{"activities":{"total":1,"left":0},"tutorials":{"total":1,"left":0},"assignments":{"total":2,"left":1}},
+        "hasProgrammable" : true, "programmableTime" : 20, programmable : { "practice" : {"total":1,"left":0}, "graded" : {"total":1,"left":0} },
+        "videos":[],
+        "lastChangeTime":1634845763686}
       let w6 = new Week(trial);
       this.wm.registerWeek(w6);
+
+      let trial2 = {
+        "id":"102","name":"1","factor":0.70,
+        "solvableTime":45,"solvable":{"activities":{"total":0,"left":0},"tutorials":{"total":0,"left":0},"assignments":{"total":0,"left":0}},
+        "hasProgrammable" : true, "programmableTime" : 20, programmable : { "practice" : {"total":1,"left":0}, "graded" : {"total":1,"left":0} },
+        "videos":[],
+        "lastChangeTime":1634845763686}
+      let w7 = new Week(trial2);
+      this.wm.registerWeek(w7);
+
+      let trial3 = {
+        "id":"103","name":"1","factor":0.70,
+        "solvableTime": 45,"solvable":{"activities":{"total":1,"left":0},"tutorials":{"total":1,"left":0},"assignments":{"total":2,"left":1}},
+        "hasProgrammable" : false, "programmableTime" : 20, programmable : { "practice" : {"total":0,"left":0}, "graded" : {"total":0,"left":0} },
+        "videos":[],
+        "lastChangeTime":1634845763686}
+      let w8 = new Week(trial3);
+      this.wm.registerWeek(w8);
     }
 
     if (window.__TAURI__ || window.go) {

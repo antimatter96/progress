@@ -15,6 +15,11 @@ export class FormHandler {
 
   videos: HTMLInputElement;
 
+  hasProgrammable: HTMLInputElement;
+  programmingGraded: HTMLInputElement;
+  programmingPractice: HTMLInputElement;
+  programmingTime: HTMLInputElement;
+
   constructor() { }
 
   validate() {
@@ -29,13 +34,22 @@ export class FormHandler {
 
     this.videos = document.getElementById("input-videos") as HTMLInputElement;
 
+    this.hasProgrammable = document.getElementById("input-hasProgrammable") as HTMLInputElement;
+    this.programmingGraded = document.getElementById("input-programming-graded") as HTMLInputElement;
+    this.programmingPractice = document.getElementById("input-programming-practice") as HTMLInputElement;
+    this.programmingTime = document.getElementById("input-programming-time") as HTMLInputElement;
+
     console.log(
       this.titleInput,
       this.activities,
       this.tutorials,
       this.assignments,
       this.factor,
-      this.videos
+      this.videos,
+      this.hasProgrammable,
+      this.programmingGraded,
+      this.programmingPractice,
+      this.programmingTime,
     );
 
     let errors = [];
@@ -47,6 +61,10 @@ export class FormHandler {
     console.log("factor", this.factor.value);
     console.log("videos", this.videos.value);
     console.log("assignmentTime", this.assignmentTime.value);
+    console.log("hasProgrammable", this.hasProgrammable.checked);
+    console.log("programmingGraded", this.programmingGraded.value);
+    console.log("programmingPractice", this.programmingPractice.value);
+    console.log("programmingTime", this.programmingTime.value);
 
     [this.titleInput].forEach((ele) => {
       let title = ele.value;
@@ -72,6 +90,16 @@ export class FormHandler {
       }
     });
 
+    if(this.hasProgrammable.checked) {
+      [this.programmingGraded, this.programmingPractice, this.programmingTime].forEach((ele) => {
+        let val = parseInt(ele.value, 10);
+        if (Number.isInteger(val) && val >= 0) {
+        } else {
+          errors.push(`- '${ele.dataset.name}' should be a non-negative integer`);
+        }
+      });
+    }
+
     let value = this.videos.value;
     let arr = value.trim().split(/\s/ig);
 
@@ -96,6 +124,14 @@ export class FormHandler {
       graded: { total: 1, left: 1 },
     };
 
+    programmable = {
+      practice: { total: 1, left: 1 },
+      graded: { total: 1, left: 1 },
+    };
+
+    hasProgrammable = true;
+    programmingTime = 20;
+
     videos = [{ m: 40, s: 10, seen: false }];
    */
   submit() {
@@ -110,12 +146,30 @@ export class FormHandler {
         assignments: { total: parseInt(this.assignments.value, 10), left: 1 },
       },
 
+      programmable: {
+        graded: { total: parseInt(this.programmingGraded.value, 10), left: 3 },
+        practice: { total: parseInt(this.programmingPractice.value, 10), left: 2 },
+      },
+
       videos: [],
+
+      hasProgrammable: false,
+      programmableTime : 0,
     }
 
     Object.keys(input.solvable).forEach((key) => {
       input.solvable[key].left = input.solvable[key].total;
     })
+
+    if(this.hasProgrammable.checked) {
+      input.hasProgrammable = true;
+
+      input.programmableTime = parseInt(this.programmingTime.value, 10);
+
+      Object.keys(input.programmable).forEach((key) => {
+        input.programmable[key].left = input.programmable[key].total;
+      });
+    }
 
     let value = this.videos.value;
     let arr = value.trim().split(/\s/ig);
@@ -138,76 +192,119 @@ export class FormHandler {
 
 export function formTemplate(visible: boolean) {
   return html`
-    <div ?hidden=${!visible} id="form-enclosure" class="container items-center bg-white my-5 better-shadow">
+    <div ?hidden=${!visible} id="form-enclosure" class="container items-center bg-white my-4 better-shadow">
     <div class="rounded-lg">
 
-      <div class="py-4 px-5 mx-auto border-b-2 border-gray-600">
-        <h2 class="text-2xl font-bold text-black lg:text-x lg:mr-8">Add a new week</h2>
+      <div class="py-2 px-5 mx-auto border-b-2 border-gray-600">
+        <h2 class="text-2xl font-bold text-black">Add a new week</h2>
       </div>
 
-      <form id="add-form" class="w-full px-10 pt-2">
-        <div class="w-full p-4 pb-6 mx-auto">
-          <div class="flex flex-wrap -mx-3">
-            <div class="w-full px-3 mb-3">
+      <form id="add-form" class="w-full px-12 pt-4 pb-5">
+        <div class="w-full mx-auto">
+
+          <div class="flex flex-wrap mb-2 p-4">
+
+            <div class="px-1 w-4/5">
               <label class="basic-label tracking-wide text-left" for="input-title">
                 Title
               </label>
-              <input id='input-title' required class="mb-3 basic-input" type="text" placeholder="Maths Week 1">
+              <input id='input-title' required class="basic-input" type="text" placeholder="Maths Week 1">
             </div>
+
+            <div class="px-1 w-1/5">
+              <label class="basic-label text-center" for="input-factor">
+                Factor
+              </label>
+              <input id='input-factor' data-name='Factor' required class="text-center basic-input"
+                type="number" min="0.05" step="0.05" placeholder="0.75">
+            </div>
+
           </div>
 
-          <div class="flex justify-evenly mb-6 flex-wrap">
-            <div class="px-1 w-1/3">
+          <div class="flex justify-between flex-wrap mb-2 p-4">
+
+            <div class="px-1 w-1/5">
               <label class="basic-label text-center" for="input-activities">
                 Activities
               </label>
               <input id='input-activities' data-name='Activities' required class="text-center basic-input"
-                id="grid-first-name" type="number" min="0" step="1" placeholder="1">
+                type="number" min="0" step="1" placeholder="1">
             </div>
 
-            <div class="px-1 w-1/3">
+            <div class="px-1 w-1/5">
               <label class="basic-label text-center" for="input-tutorials">
                 Tutorials
               </label>
               <input id='input-tutorials' data-name='Tutorials' required class="text-center basic-input"
-                id="grid-first-name" type="number" min="0" step="1" placeholder="1">
+                type="number" min="0" step="1" placeholder="1">
             </div>
 
-            <div class="px-1 w-1/3">
+            <div class="px-1 w-1/5">
               <label class="basic-label text-center" for="input-assignments">
                 Assignments
               </label>
               <input id='input-assignments' data-name='Assignments' required class="text-center basic-input"
-                id="grid-first-name" type="number" min="0" step="1" placeholder="2">
+                type="number" min="0" step="1" placeholder="2">
             </div>
 
-            <div class="px-1 w-1/2">
-              <label class="basic-label text-center" for="input-factor">
-                Factor
-              </label>
-              <input id='input-factor' data-name='Factor' required class="text-center basic-input" id="grid-first-name"
-                type="number" min="0.05" step="0.05" placeholder="0.75">
-            </div>
-
-            <div class="px-1 w-1/2">
+            <div class="px-1 w-2/5">
               <label class="basic-label text-center" for="input-assignment-time">
                 Time per Assignment
               </label>
               <input id='input-assignment-time' data-name='Assignment Time' required class="text-center basic-input"
-                id="grid-first-name" type="number" min="0" step="5" placeholder="30">
+                type="number" min="0" step="5" placeholder="30">
             </div>
+
           </div>
 
-          <label>
-            <span class="block mb-2 text-xd font-bold tracking-wide text-gray-700 uppercase">Video Lengths</span>
-            <textarea id='input-videos' class="basic-input mt-1 mb-3 form-textarea" rows="4"
-              placeholder="10:59  12:22"></textarea>
-          </label>
+          <div class="flex justify-between flex-wrap mb-2 p-4">
 
-          <div class="text-center">
+            <div class="px-1 w-1/5">
+              <label class="basic-label text-center" for="input-hasProgrammable">
+                Programming
+              </label>
+              <div class="w-full h-4"></div>
+              <input id="input-hasProgrammable" type="checkbox" class="mx-auto w-1/5 block" />
+            </div>
+
+            <div class="px-1 w-1/5">
+              <label class="basic-label text-center" for="input-programming-practice">
+                Practice
+              </label>
+              <input id='input-programming-practice' data-name='Programming Practice' required class="text-center basic-input"
+                type="number" min="0" step="1" placeholder="2">
+            </div>
+
+            <div class="px-1 w-1/5">
+              <label class="basic-label text-center" for="input-programming-graded">
+                Graded
+              </label>
+              <input id='input-programming-graded' data-name='Programming Graded' required class="text-center basic-input"
+                type="number" min="0" step="1" placeholder="2">
+            </div>
+
+            <div class="px-1 w-2/5">
+              <label class="basic-label text-center" for="input-programming-time">
+                Time per program
+              </label>
+              <input id='input-programming-time' data-name='Programming Time' required class="text-center basic-input"
+                type="number" min="0" step="5" placeholder="30">
+            </div>
+
+          </div>
+
+          <div class="p-4">
+            <label class="basic-label">
+              Video Lengths
+            </label>
+              <textarea id='input-videos' class="basic-input" rows="4"
+                placeholder="10:59  12:22"></textarea>
+          </div>
+
+          <div class="mt-4 shadow-md">
             <button type="submit"
-              class="w-full px-6 py-3 text-base font-medium leading-6 text-white bg-lime-500 better-button">
-              Add
+              class="w-full py-3 font-semibold leading-none text-white bg-lime-500 text-xl">
+              ADD
             </button>
           </div>
         </div>

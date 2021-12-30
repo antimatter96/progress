@@ -2,7 +2,7 @@
   "name": "calc",
   "version": "0.0.1",
   "scripts": {
-    "dev": "parcel --log-level verbose",
+    "dev": "parcel",
     "build": "rm -rf ./../dist && parcel build --dist-dir ./../dist --log-level verbose --no-optimize --no-content-hash --no-source-maps"
   },
   "source": "src/index.html",

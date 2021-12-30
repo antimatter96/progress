@@ -35,6 +35,13 @@ export class Week {
     assignments: { total: 1, left: 1 },
   };
 
+  hasProgrammable = false;
+  programmableTime = 0;
+  programmable = {
+    practice: { total: 1, left: 1 },
+    graded: { total: 1, left: 1 },
+  };
+
   videos = [{ m: 40, s: 10, seen: false }];
 
   lastChangeTime = 123123;
@@ -78,6 +85,22 @@ export class Week {
         left: parseInt(input.solvable.assignments.left, 10),
       },
     };
+
+    if (input.hasProgrammable) {
+      this.hasProgrammable = input.hasProgrammable;
+      this.programmableTime = input.programmableTime;
+
+      this.programmable = {
+        practice: {
+          total: parseInt(input.programmable.practice.total, 10),
+          left: parseInt(input.programmable.practice.left, 10),
+        },
+        graded: {
+          total: parseInt(input.programmable.graded.total, 10),
+          left: parseInt(input.programmable.graded.left, 10),
+        },
+      };
+    }
 
     this.hidden = input.hasOwnProperty('hidden') ? input.hidden : false
     this.locked = input.hasOwnProperty('locked') ? input.locked : false
@@ -167,6 +190,31 @@ export class Week {
     this.updateLastChangeTime(false);
   }
 
+  markProgrammableDone(type): void {
+    if (this.locked) {
+      this.alertUser('error', "Please unlock before making any changes");
+      return;
+    }
+    if (this.programmable[type].left <= 0) {
+      this.alertUser('error', "Already done");
+      return;
+    }
+    this.programmable[type].left -= 1;
+    this.updateLastChangeTime(true);
+  }
+  markProgrammableNotDone(type): void {
+    if (this.locked) {
+      this.alertUser('error', "Please unlock before making any changes");
+      return;
+    }
+    if (this.programmable[type].left + 1 > this.programmable[type].total) {
+      this.alertUser('error', "Already done");
+      return;
+    }
+    this.programmable[type].left += 1;
+    this.updateLastChangeTime(false);
+  }
+
   validateSelf() { }
 
   getTotalMinutes(): number {
@@ -186,7 +234,19 @@ export class Week {
       0
     );
 
+    let programmableCount = 0;
+    if (this.hasProgrammable) {
+      programmableCount = Object.entries(this.programmable).reduce(
+        (prev, [_key, data]) => {
+          return prev + data.total;
+        },
+        0
+      );
+    }
+
     m += this.solvableTime * solvableCount;
+    m += this.programmableTime * programmableCount;
+
     m /= this.factor * 60;
 
     return m;
@@ -211,7 +271,19 @@ export class Week {
       0
     );
 
+    let programmableCount = 0;
+    if (this.hasProgrammable) {
+      programmableCount = Object.entries(this.programmable).reduce(
+        (prev, [_key, data]) => {
+          return prev + (data.total - data.left);
+        },
+        0
+      );
+    }
+
     m += this.solvableTime * solvableCount;
+    m += this.programmableTime * programmableCount;
+
     m /= this.factor * 60;
 
     return m;
@@ -239,8 +311,8 @@ export class Week {
         return;
       }
 
-      let downBtn = document.getElementById(`${this.id}-${ttype}-minus`);
-      let upBtn = document.getElementById(`${this.id}-${ttype}-plus`);
+      let downBtn = document.getElementById(`${this.id}-solvables-${ttype}-minus`);
+      let upBtn = document.getElementById(`${this.id}-solvables-${ttype}-plus`);
 
       upBtn.addEventListener('click', () => {
         this.markSolvableDone(ttype);
@@ -248,6 +320,27 @@ export class Week {
 
       downBtn.addEventListener('click', () => {
         this.markSolvableNotDone(ttype);
+      });
+    });
+
+    titles = ['Graded', 'Practice'];
+
+    titles.forEach((type) => {
+      let ttype = type.toLowerCase();
+
+      if (this.programmable[ttype].total == 0) {
+        return;
+      }
+
+      let downBtn = document.getElementById(`${this.id}-programmables-${ttype}-minus`);
+      let upBtn = document.getElementById(`${this.id}-programmables-${ttype}-plus`);
+
+      upBtn.addEventListener('click', () => {
+        this.markProgrammableDone(ttype);
+      });
+
+      downBtn.addEventListener('click', () => {
+        this.markProgrammableNotDone(ttype);
       });
     });
 
@@ -341,6 +434,21 @@ export class Week {
         throw new Error();
       }
     });
+
+    if (input.hasProgrammable) {
+      ["graded", "practice"].forEach((key) => {
+        let total = input.programmable[key].total;
+        let left = input.programmable[key].left;
+
+        if (!Number.isInteger(total) || !Number.isInteger(left)) {
+          throw new Error();
+        }
+
+        if (total < 0 || left < 0 || left > total) {
+          throw new Error();
+        }
+      });
+    }
   }
 
   static Parse(input): Week {
@@ -367,7 +475,7 @@ export function templateFunc(week: Week) {
   const max_in_row = 6;
   let videos = [];
   week.videos.forEach((video, i) => {
-    const firstVideoMargin = { 'mb-4' : i == 0 && week.videos.length > max_in_row }
+    const firstVideoMargin = { 'mb-4': i == 0 && week.videos.length > max_in_row };
     const btnClass = {
       'btn-checked': video.seen,
       'btn-unchecked': !video.seen
@@ -384,8 +492,9 @@ export function templateFunc(week: Week) {
   });
 
 
-  let _solvable = week.solvable;
+  let solvables = [];
 
+  let _solvable = week.solvable;
   let solvableData = [];
 
   solvableData.push({
@@ -404,8 +513,6 @@ export function templateFunc(week: Week) {
     total: _solvable.assignments.total
   })
 
-  let solvables = [];
-
   solvableData.forEach((data) => {
     if (data.total == 0) {
       return;
@@ -420,8 +527,46 @@ export function templateFunc(week: Week) {
     <div class="act-time w-1/5">
       <h2 class="act-text ${classMap(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
       <div class="act-btn-parent">
-        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-${data.title.toLowerCase()}-plus"></button>
-        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-${data.title.toLowerCase()}-minus"></button>
+        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-solvables-${data.title.toLowerCase()}-plus"></button>
+        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-solvables-${data.title.toLowerCase()}-minus"></button>
+      </div>
+    </div>
+  `);
+  })
+
+
+  let programmables = [];
+
+  let _programmable = week.programmable;
+  let programmableData = [];
+
+  programmableData.push({
+    title: 'Practice',
+    done: _programmable.practice.total - _programmable.practice.left,
+    total: _programmable.practice.total,
+  })
+  programmableData.push({
+    title: 'Graded',
+    done: _programmable.graded.total - _programmable.graded.left,
+    total: _programmable.graded.total,
+  })
+
+  programmableData.forEach((data) => {
+    if (data.total == 0) {
+      return;
+    }
+
+    const btnUpValid = data.total > data.done;
+    const btnDownValid = data.done > 0;
+
+    const inProgress = { 'in-progress': btnUpValid, 'done': (!btnUpValid && btnDownValid) }
+
+    programmables.push(html`
+    <div class="act-time w-1/5">
+      <h2 class="act-text ${classMap(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
+      <div class="act-btn-parent">
+        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-programmables-${data.title.toLowerCase()}-plus"></button>
+        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-programmables-${data.title.toLowerCase()}-minus"></button>
       </div>
     </div>
   `);
@@ -439,7 +584,8 @@ export function templateFunc(week: Week) {
     'gradient-border': (Math.floor(_percentage / 10)) == 10
   }
 
-  let videosContainerClass = { 'pb-3' : videos.length > 0 , 'pb-0' : videos.length == 0}
+  let videosContainerClass = { 'pb-3': videos.length > 0, 'pb-0': videos.length == 0 };
+  let solvableContainerBorderBottom = { 'border-b-2' : (week.hasProgrammable && programmables.length > 0), 'border-gray-600' : (week.hasProgrammable && programmables.length > 0)};
 
   return html`
   <div class="container items-center bg-white my-4 better-shadow week-overall ${classMap(animatedBorderClassMap)}">
@@ -504,17 +650,31 @@ export function templateFunc(week: Week) {
       </div>
 
       <!-- Solvable -->
-      <div ?hidden=${week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
-        <div class="w-full">
+      <div ?hidden=${solvables.length == 0 || week.hidden} class="pt-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+        <div class="w-full ${classMap(solvableContainerBorderBottom)}">
           <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
             Solvable
           </h2>
 
-          <div class="flex justify-around px-5">
+          <div class="flex justify-around px-5 pb-3">
             ${solvables}
           </div>
         </div>
       </div>
+
+      <div ?hidden=${!week.hasProgrammable || week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+        <div class="w-full">
+          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
+            Programming
+          </h2>
+
+          <div class="flex justify-around px-5">
+            ${programmables}
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </div>
   `

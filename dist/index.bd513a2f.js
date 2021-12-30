@@ -461,7 +461,11 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
         this.factor = document.getElementById("input-factor");
         this.assignmentTime = document.getElementById("input-assignment-time");
         this.videos = document.getElementById("input-videos");
-        console.log(this.titleInput, this.activities, this.tutorials, this.assignments, this.factor, this.videos);
+        this.hasProgrammable = document.getElementById("input-hasProgrammable");
+        this.programmingGraded = document.getElementById("input-programming-graded");
+        this.programmingPractice = document.getElementById("input-programming-practice");
+        this.programmingTime = document.getElementById("input-programming-time");
+        console.log(this.titleInput, this.activities, this.tutorials, this.assignments, this.factor, this.videos, this.hasProgrammable, this.programmingGraded, this.programmingPractice, this.programmingTime);
         let errors = [];
         console.log("titleInput", this.titleInput.value);
         console.log("activities", this.activities.value);
@@ -470,6 +474,10 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
         console.log("factor", this.factor.value);
         console.log("videos", this.videos.value);
         console.log("assignmentTime", this.assignmentTime.value);
+        console.log("hasProgrammable", this.hasProgrammable.checked);
+        console.log("programmingGraded", this.programmingGraded.value);
+        console.log("programmingPractice", this.programmingPractice.value);
+        console.log("programmingTime", this.programmingTime.value);
         [
             this.titleInput
         ].forEach((ele)=>{
@@ -493,6 +501,15 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
             if (Number.isFinite(val) && val >= 0) ;
             else errors.push(`- '${ele.dataset.name}' should be a non-negative number`);
         });
+        if (this.hasProgrammable.checked) [
+            this.programmingGraded,
+            this.programmingPractice,
+            this.programmingTime
+        ].forEach((ele)=>{
+            let val = parseInt(ele.value, 10);
+            if (Number.isInteger(val) && val >= 0) ;
+            else errors.push(`- '${ele.dataset.name}' should be a non-negative integer`);
+        });
         let value = this.videos.value;
         let arr = value.trim().split(/\s/ig);
         for(let i = 0; i < arr.length; i++)if (arr[i].length > 0 && !arr[i].match($9fdc79397460abda$var$minuteSeconds)) errors.push(`- '${arr[i]}' is not a valid video time`);
@@ -509,6 +526,14 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
       practice: { total: 1, left: 1 },
       graded: { total: 1, left: 1 },
     };
+
+    programmable = {
+      practice: { total: 1, left: 1 },
+      graded: { total: 1, left: 1 },
+    };
+
+    hasProgrammable = true;
+    programmingTime = 20;
 
     videos = [{ m: 40, s: 10, seen: false }];
    */ submit() {
@@ -530,11 +555,30 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
                     left: 1
                 }
             },
-            videos: []
+            programmable: {
+                graded: {
+                    total: parseInt(this.programmingGraded.value, 10),
+                    left: 3
+                },
+                practice: {
+                    total: parseInt(this.programmingPractice.value, 10),
+                    left: 2
+                }
+            },
+            videos: [],
+            hasProgrammable: false,
+            programmableTime: 0
         };
         Object.keys(input.solvable).forEach((key)=>{
             input.solvable[key].left = input.solvable[key].total;
         });
+        if (this.hasProgrammable.checked) {
+            input.hasProgrammable = true;
+            input.programmableTime = parseInt(this.programmingTime.value, 10);
+            Object.keys(input.programmable).forEach((key)=>{
+                input.programmable[key].left = input.programmable[key].total;
+            });
+        }
         let value = this.videos.value;
         let arr = value.trim().split(/\s/ig);
         for(let i = 0; i < arr.length; i++){
@@ -551,76 +595,119 @@ class $9fdc79397460abda$export$ca95ea95faa89f36 {
 }
 function $9fdc79397460abda$export$2cbce0dece413a39(visible) {
     return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
-    <div ?hidden=${!visible} id="form-enclosure" class="container items-center bg-white my-5 better-shadow">
+    <div ?hidden=${!visible} id="form-enclosure" class="container items-center bg-white my-4 better-shadow">
     <div class="rounded-lg">
 
-      <div class="py-4 px-5 mx-auto border-b-2 border-gray-600">
-        <h2 class="text-2xl font-bold text-black lg:text-x lg:mr-8">Add a new week</h2>
+      <div class="py-2 px-5 mx-auto border-b-2 border-gray-600">
+        <h2 class="text-2xl font-bold text-black">Add a new week</h2>
       </div>
 
-      <form id="add-form" class="w-full px-10 pt-2">
-        <div class="w-full p-4 pb-6 mx-auto">
-          <div class="flex flex-wrap -mx-3">
-            <div class="w-full px-3 mb-3">
+      <form id="add-form" class="w-full px-12 pt-4 pb-5">
+        <div class="w-full mx-auto">
+
+          <div class="flex flex-wrap mb-2 p-4">
+
+            <div class="px-1 w-4/5">
               <label class="basic-label tracking-wide text-left" for="input-title">
                 Title
               </label>
-              <input id='input-title' required class="mb-3 basic-input" type="text" placeholder="Maths Week 1">
+              <input id='input-title' required class="basic-input" type="text" placeholder="Maths Week 1">
             </div>
+
+            <div class="px-1 w-1/5">
+              <label class="basic-label text-center" for="input-factor">
+                Factor
+              </label>
+              <input id='input-factor' data-name='Factor' required class="text-center basic-input"
+                type="number" min="0.05" step="0.05" placeholder="0.75">
+            </div>
+
           </div>
 
-          <div class="flex justify-evenly mb-6 flex-wrap">
-            <div class="px-1 w-1/3">
+          <div class="flex justify-between flex-wrap mb-2 p-4">
+
+            <div class="px-1 w-1/5">
               <label class="basic-label text-center" for="input-activities">
                 Activities
               </label>
               <input id='input-activities' data-name='Activities' required class="text-center basic-input"
-                id="grid-first-name" type="number" min="0" step="1" placeholder="1">
+                type="number" min="0" step="1" placeholder="1">
             </div>
 
-            <div class="px-1 w-1/3">
+            <div class="px-1 w-1/5">
               <label class="basic-label text-center" for="input-tutorials">
                 Tutorials
               </label>
               <input id='input-tutorials' data-name='Tutorials' required class="text-center basic-input"
-                id="grid-first-name" type="number" min="0" step="1" placeholder="1">
+                type="number" min="0" step="1" placeholder="1">
             </div>
 
-            <div class="px-1 w-1/3">
+            <div class="px-1 w-1/5">
               <label class="basic-label text-center" for="input-assignments">
                 Assignments
               </label>
               <input id='input-assignments' data-name='Assignments' required class="text-center basic-input"
-                id="grid-first-name" type="number" min="0" step="1" placeholder="2">
+                type="number" min="0" step="1" placeholder="2">
             </div>
 
-            <div class="px-1 w-1/2">
-              <label class="basic-label text-center" for="input-factor">
-                Factor
-              </label>
-              <input id='input-factor' data-name='Factor' required class="text-center basic-input" id="grid-first-name"
-                type="number" min="0.05" step="0.05" placeholder="0.75">
-            </div>
-
-            <div class="px-1 w-1/2">
+            <div class="px-1 w-2/5">
               <label class="basic-label text-center" for="input-assignment-time">
                 Time per Assignment
               </label>
               <input id='input-assignment-time' data-name='Assignment Time' required class="text-center basic-input"
-                id="grid-first-name" type="number" min="0" step="5" placeholder="30">
+                type="number" min="0" step="5" placeholder="30">
             </div>
+
           </div>
 
-          <label>
-            <span class="block mb-2 text-xd font-bold tracking-wide text-gray-700 uppercase">Video Lengths</span>
-            <textarea id='input-videos' class="basic-input mt-1 mb-3 form-textarea" rows="4"
-              placeholder="10:59  12:22"></textarea>
-          </label>
+          <div class="flex justify-between flex-wrap mb-2 p-4">
 
-          <div class="text-center">
+            <div class="px-1 w-1/5">
+              <label class="basic-label text-center" for="input-hasProgrammable">
+                Programming
+              </label>
+              <div class="w-full h-4"></div>
+              <input id="input-hasProgrammable" type="checkbox" class="mx-auto w-1/5 block" />
+            </div>
+
+            <div class="px-1 w-1/5">
+              <label class="basic-label text-center" for="input-programming-practice">
+                Practice
+              </label>
+              <input id='input-programming-practice' data-name='Programming Practice' required class="text-center basic-input"
+                type="number" min="0" step="1" placeholder="2">
+            </div>
+
+            <div class="px-1 w-1/5">
+              <label class="basic-label text-center" for="input-programming-graded">
+                Graded
+              </label>
+              <input id='input-programming-graded' data-name='Programming Graded' required class="text-center basic-input"
+                type="number" min="0" step="1" placeholder="2">
+            </div>
+
+            <div class="px-1 w-2/5">
+              <label class="basic-label text-center" for="input-programming-time">
+                Time per program
+              </label>
+              <input id='input-programming-time' data-name='Programming Time' required class="text-center basic-input"
+                type="number" min="0" step="5" placeholder="30">
+            </div>
+
+          </div>
+
+          <div class="p-4">
+            <label class="basic-label">
+              Video Lengths
+            </label>
+              <textarea id='input-videos' class="basic-input" rows="4"
+                placeholder="10:59  12:22"></textarea>
+          </div>
+
+          <div class="mt-4 shadow-md">
             <button type="submit"
-              class="w-full px-6 py-3 text-base font-medium leading-6 text-white bg-lime-500 better-button">
-              Add
+              class="w-full py-3 font-semibold leading-none text-white bg-lime-500 text-xl">
+              ADD
             </button>
           </div>
         </div>
@@ -1492,7 +1579,8 @@ async function $877b126e36883e53$export$e434c7255acda994(path) {
 
 async function $4b2c437b8a34aefc$export$5e650096d9f7c4ee(message) {
     if (window.__TAURI__) return window.confirm("Do you really want to delete this ?");
-    else return window.go.main.App.ConfirmDelete();
+    else if (window.go) return window.go.main.App.ConfirmDelete();
+    else return confirm("Do you really want to delete this ?");
 }
 async function $4b2c437b8a34aefc$export$e620933a198f7bc(data) {
     if (window.__TAURI__) try {
@@ -1607,6 +1695,18 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
                 left: 1
             }
         };
+        this.hasProgrammable = false;
+        this.programmableTime = 0;
+        this.programmable = {
+            practice: {
+                total: 1,
+                left: 1
+            },
+            graded: {
+                total: 1,
+                left: 1
+            }
+        };
         this.videos = [
             {
                 m: 40,
@@ -1641,6 +1741,20 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
                 left: parseInt(input.solvable.assignments.left, 10)
             }
         };
+        if (input.hasProgrammable) {
+            this.hasProgrammable = input.hasProgrammable;
+            this.programmableTime = input.programmableTime;
+            this.programmable = {
+                practice: {
+                    total: parseInt(input.programmable.practice.total, 10),
+                    left: parseInt(input.programmable.practice.left, 10)
+                },
+                graded: {
+                    total: parseInt(input.programmable.graded.total, 10),
+                    left: parseInt(input.programmable.graded.left, 10)
+                }
+            };
+        }
         this.hidden = input.hasOwnProperty('hidden') ? input.hidden : false;
         this.locked = input.hasOwnProperty('locked') ? input.locked : false;
         this.deleted = input.hasOwnProperty('deleted') ? input.deleted : false;
@@ -1689,16 +1803,16 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         this.videos[i2].seen = false;
         this.updateLastChangeTime(false);
     }
-    markSolvableDone(type2) {
+    markSolvableDone(type4) {
         if (this.locked) {
             this.alertUser('error', "Please unlock before making any changes");
             return;
         }
-        if (this.solvable[type2].left <= 0) {
+        if (this.solvable[type4].left <= 0) {
             this.alertUser('error', "Already done");
             return;
         }
-        this.solvable[type2].left -= 1;
+        this.solvable[type4].left -= 1;
         this.updateLastChangeTime(true);
     }
     markSolvableNotDone(type1) {
@@ -1711,6 +1825,30 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             return;
         }
         this.solvable[type1].left += 1;
+        this.updateLastChangeTime(false);
+    }
+    markProgrammableDone(type2) {
+        if (this.locked) {
+            this.alertUser('error', "Please unlock before making any changes");
+            return;
+        }
+        if (this.programmable[type2].left <= 0) {
+            this.alertUser('error', "Already done");
+            return;
+        }
+        this.programmable[type2].left -= 1;
+        this.updateLastChangeTime(true);
+    }
+    markProgrammableNotDone(type3) {
+        if (this.locked) {
+            this.alertUser('error', "Please unlock before making any changes");
+            return;
+        }
+        if (this.programmable[type3].left + 1 > this.programmable[type3].total) {
+            this.alertUser('error', "Already done");
+            return;
+        }
+        this.programmable[type3].left += 1;
         this.updateLastChangeTime(false);
     }
     validateSelf() {
@@ -1726,7 +1864,12 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
             return prev + data.total;
         }, 0);
+        let programmableCount = 0;
+        if (this.hasProgrammable) programmableCount = Object.entries(this.programmable).reduce((prev, [_key, data])=>{
+            return prev + data.total;
+        }, 0);
         m += this.solvableTime * solvableCount;
+        m += this.programmableTime * programmableCount;
         m /= this.factor * 60;
         return m;
     }
@@ -1743,7 +1886,12 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         let solvableCount = Object.entries(this.solvable).reduce((prev, [_key, data])=>{
             return prev + (data.total - data.left);
         }, 0);
+        let programmableCount = 0;
+        if (this.hasProgrammable) programmableCount = Object.entries(this.programmable).reduce((prev, [_key, data])=>{
+            return prev + (data.total - data.left);
+        }, 0);
         m += this.solvableTime * solvableCount;
+        m += this.programmableTime * programmableCount;
         m /= this.factor * 60;
         return m;
     }
@@ -1765,13 +1913,29 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
         titles.forEach((type)=>{
             let ttype = type.toLowerCase();
             if (this.solvable[ttype].total == 0) return;
-            let downBtn = document.getElementById(`${this.id}-${ttype}-minus`);
-            let upBtn = document.getElementById(`${this.id}-${ttype}-plus`);
+            let downBtn = document.getElementById(`${this.id}-solvables-${ttype}-minus`);
+            let upBtn = document.getElementById(`${this.id}-solvables-${ttype}-plus`);
             upBtn.addEventListener('click', ()=>{
                 this.markSolvableDone(ttype);
             });
             downBtn.addEventListener('click', ()=>{
                 this.markSolvableNotDone(ttype);
+            });
+        });
+        titles = [
+            'Graded',
+            'Practice'
+        ];
+        titles.forEach((type)=>{
+            let ttype = type.toLowerCase();
+            if (this.programmable[ttype].total == 0) return;
+            let downBtn = document.getElementById(`${this.id}-programmables-${ttype}-minus`);
+            let upBtn = document.getElementById(`${this.id}-programmables-${ttype}-plus`);
+            upBtn.addEventListener('click', ()=>{
+                this.markProgrammableDone(ttype);
+            });
+            downBtn.addEventListener('click', ()=>{
+                this.markProgrammableNotDone(ttype);
             });
         });
         document.getElementById(`${this.id}-menu`).addEventListener('click', ()=>{
@@ -1833,6 +1997,15 @@ class $850e48264ea38c74$export$fca4f8121099df57 {
             if (!Number.isInteger(total) || !Number.isInteger(left)) throw new Error();
             if (total < 0 || left < 0 || left > total) throw new Error();
         });
+        if (input1.hasProgrammable) [
+            "graded",
+            "practice"
+        ].forEach((key)=>{
+            let total = input1.programmable[key].total;
+            let left = input1.programmable[key].left;
+            if (!Number.isInteger(total) || !Number.isInteger(left)) throw new Error();
+            if (total < 0 || left < 0 || left > total) throw new Error();
+        });
     }
     static Parse(input2) {
         try {
@@ -1870,6 +2043,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     </div>
   `);
     });
+    let solvables = [];
     let _solvable = week.solvable;
     let solvableData = [];
     solvableData.push({
@@ -1887,7 +2061,6 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
         done: _solvable.assignments.total - _solvable.assignments.left,
         total: _solvable.assignments.total
     });
-    let solvables = [];
     solvableData.forEach((data)=>{
         if (data.total == 0) return;
         const btnUpValid = data.total > data.done;
@@ -1900,8 +2073,39 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     <div class="act-time w-1/5">
       <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
       <div class="act-btn-parent">
-        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-${data.title.toLowerCase()}-plus"></button>
-        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-${data.title.toLowerCase()}-minus"></button>
+        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-solvables-${data.title.toLowerCase()}-plus"></button>
+        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-solvables-${data.title.toLowerCase()}-minus"></button>
+      </div>
+    </div>
+  `);
+    });
+    let programmables = [];
+    let _programmable = week.programmable;
+    let programmableData = [];
+    programmableData.push({
+        title: 'Practice',
+        done: _programmable.practice.total - _programmable.practice.left,
+        total: _programmable.practice.total
+    });
+    programmableData.push({
+        title: 'Graded',
+        done: _programmable.graded.total - _programmable.graded.left,
+        total: _programmable.graded.total
+    });
+    programmableData.forEach((data)=>{
+        if (data.total == 0) return;
+        const btnUpValid = data.total > data.done;
+        const btnDownValid = data.done > 0;
+        const inProgress = {
+            'in-progress': btnUpValid,
+            'done': !btnUpValid && btnDownValid
+        };
+        programmables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
+    <div class="act-time w-1/5">
+      <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
+      <div class="act-btn-parent">
+        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-programmables-${data.title.toLowerCase()}-plus"></button>
+        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-programmables-${data.title.toLowerCase()}-minus"></button>
       </div>
     </div>
   `);
@@ -1918,6 +2122,10 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     let videosContainerClass = {
         'pb-3': videos.length > 0,
         'pb-0': videos.length == 0
+    };
+    let solvableContainerBorderBottom = {
+        'border-b-2': week.hasProgrammable && programmables.length > 0,
+        'border-gray-600': week.hasProgrammable && programmables.length > 0
     };
     return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
   <div class="container items-center bg-white my-4 better-shadow week-overall ${$6197f1f1b7c083f0$export$56cc687933817664(animatedBorderClassMap)}">
@@ -1982,17 +2190,31 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Solvable -->
-      <div ?hidden=${week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
-        <div class="w-full">
+      <div ?hidden=${solvables.length == 0 || week.hidden} class="pt-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+        <div class="w-full ${$6197f1f1b7c083f0$export$56cc687933817664(solvableContainerBorderBottom)}">
           <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
             Solvable
           </h2>
 
-          <div class="flex justify-around px-5">
+          <div class="flex justify-around px-5 pb-3">
             ${solvables}
           </div>
         </div>
       </div>
+
+      <div ?hidden=${!week.hasProgrammable || week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+        <div class="w-full">
+          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
+            Programming
+          </h2>
+
+          <div class="flex justify-around px-5">
+            ${programmables}
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </div>
   `;
@@ -3445,7 +3667,77 @@ class $b437cb7ddfb16b51$var$Main {
     }
     async run() {
         let trial1 = ()=>{
-            let ww = JSON.parse(`{"id":"1","name":"1","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":1,"left":0},"tutorials":{"total":1,"left":0},"assignments":{"total":2,"left":1}},"videos":[{"m":33,"s":3,"seen":true}, {"m":3,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":33,"s":23,"seen":true},{"m":12,"s":12,"seen":true}],"lastChangeTime":1634845763686}`);
+            let sampleJSON = {
+                "id": "1",
+                "name": "1",
+                "factor": 0.7,
+                "solvableTime": 10,
+                "solvable": {
+                    "activities": {
+                        "total": 1,
+                        "left": 0
+                    },
+                    "tutorials": {
+                        "total": 1,
+                        "left": 0
+                    },
+                    "assignments": {
+                        "total": 2,
+                        "left": 1
+                    }
+                },
+                "hasProgrammable": true,
+                "programmableTime": 20,
+                programmable: {
+                    "practice": {
+                        "total": 1,
+                        "left": 0
+                    },
+                    "graded": {
+                        "total": 1,
+                        "left": 0
+                    }
+                },
+                "videos": [
+                    {
+                        "m": 33,
+                        "s": 3,
+                        "seen": true
+                    },
+                    {
+                        "m": 3,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 33,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 33,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 33,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 33,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 12,
+                        "s": 12,
+                        "seen": true
+                    }
+                ],
+                "lastChangeTime": 1634845763686
+            };
+            let ww = JSON.parse(JSON.stringify(sampleJSON));
             ww.hidden = false;
             let w2 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w2);
@@ -3474,9 +3766,114 @@ class $b437cb7ddfb16b51$var$Main {
             ww.hidden = false;
             let w5 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
             this.wm.registerWeek(w5);
-            let trial = JSON.parse(`{"id":"1011","name":"Only Act","factor":0.05,"solvableTime":5,"solvable":{"activities":{"total":10,"left":10},"tutorials":{"total":0,"left":0},"assignments":{"total":0,"left":0}},"videos":[],"lastChangeTime":1634845763686}`);
+            let trial = {
+                "id": "101",
+                "name": "1",
+                "factor": 0.7,
+                "solvableTime": 45,
+                "solvable": {
+                    "activities": {
+                        "total": 1,
+                        "left": 0
+                    },
+                    "tutorials": {
+                        "total": 1,
+                        "left": 0
+                    },
+                    "assignments": {
+                        "total": 2,
+                        "left": 1
+                    }
+                },
+                "hasProgrammable": true,
+                "programmableTime": 20,
+                programmable: {
+                    "practice": {
+                        "total": 1,
+                        "left": 0
+                    },
+                    "graded": {
+                        "total": 1,
+                        "left": 0
+                    }
+                },
+                "videos": [],
+                "lastChangeTime": 1634845763686
+            };
             let w6 = new $850e48264ea38c74$export$fca4f8121099df57(trial);
             this.wm.registerWeek(w6);
+            let trial2 = {
+                "id": "102",
+                "name": "1",
+                "factor": 0.7,
+                "solvableTime": 45,
+                "solvable": {
+                    "activities": {
+                        "total": 0,
+                        "left": 0
+                    },
+                    "tutorials": {
+                        "total": 0,
+                        "left": 0
+                    },
+                    "assignments": {
+                        "total": 0,
+                        "left": 0
+                    }
+                },
+                "hasProgrammable": true,
+                "programmableTime": 20,
+                programmable: {
+                    "practice": {
+                        "total": 1,
+                        "left": 0
+                    },
+                    "graded": {
+                        "total": 1,
+                        "left": 0
+                    }
+                },
+                "videos": [],
+                "lastChangeTime": 1634845763686
+            };
+            let w7 = new $850e48264ea38c74$export$fca4f8121099df57(trial2);
+            this.wm.registerWeek(w7);
+            let trial3 = {
+                "id": "103",
+                "name": "1",
+                "factor": 0.7,
+                "solvableTime": 45,
+                "solvable": {
+                    "activities": {
+                        "total": 1,
+                        "left": 0
+                    },
+                    "tutorials": {
+                        "total": 1,
+                        "left": 0
+                    },
+                    "assignments": {
+                        "total": 2,
+                        "left": 1
+                    }
+                },
+                "hasProgrammable": false,
+                "programmableTime": 20,
+                programmable: {
+                    "practice": {
+                        "total": 0,
+                        "left": 0
+                    },
+                    "graded": {
+                        "total": 0,
+                        "left": 0
+                    }
+                },
+                "videos": [],
+                "lastChangeTime": 1634845763686
+            };
+            let w8 = new $850e48264ea38c74$export$fca4f8121099df57(trial3);
+            this.wm.registerWeek(w8);
         };
         if (window.__TAURI__ || window.go) ;
         else trial1();
