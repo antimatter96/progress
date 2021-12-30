@@ -1,12 +1,12 @@
 [package]
 name = "app"
-version = "2.1.0"
+version = "3.0.1"
 description = "Progress tracking app"
 authors = [ "antimatter96" ]
 license = ""
 repository = "https://github.com/antimatter96/progress"
 default-run = "app"
-edition = "2018"
+edition = "2021"
 build = "src/build.rs"
 
 [build-dependencies]

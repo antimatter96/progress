@@ -988,7 +988,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }.act-time {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-  margin-top: 0.5rem;
+  margin-top: 0px;
   margin-bottom: 0.25rem;
   width: 33.333333%;
   max-width: 28rem;
