@@ -585,7 +585,7 @@ export function templateFunc(week: Week) {
   }
 
   let videosContainerClass = { 'pb-3': videos.length > 0, 'pb-0': videos.length == 0 };
-  let solvableContainerBorderBottom = { 'border-b-2' : (week.hasProgrammable && programmables.length > 0), 'border-gray-600' : (week.hasProgrammable && programmables.length > 0)};
+  let solvableContainerBorderBottom = { 'border-b-2': (week.hasProgrammable && programmables.length > 0), 'border-gray-600': (week.hasProgrammable && programmables.length > 0) };
 
   return html`
   <div class="container items-center bg-white my-4 better-shadow week-overall ${classMap(animatedBorderClassMap)}">

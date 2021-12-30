@@ -5,10 +5,10 @@ import {
 } from "@tauri-apps/api/fs";
 import { homeDir as _homeDir } from "@tauri-apps/api/path";
 
-export async function customConfirm(message: string) : Promise<boolean> {
-  if(window.__TAURI__) {
+export async function customConfirm(message: string): Promise<boolean> {
+  if (window.__TAURI__) {
     return window.confirm("Do you really want to delete this ?");
-  } else if (window.go){
+  } else if (window.go) {
     return window.go.main.App.ConfirmDelete();
   } else {
     return confirm("Do you really want to delete this ?");
@@ -16,7 +16,7 @@ export async function customConfirm(message: string) : Promise<boolean> {
 }
 
 export async function saveFile(data) {
-  if(window.__TAURI__) {
+  if (window.__TAURI__) {
     try {
       let homeDir = await _homeDir();
       let path = homeDir + DATA_FILE_NAME;
@@ -34,7 +34,7 @@ export async function saveFile(data) {
 }
 
 export async function loadLocal() {
-  if(window.__TAURI__) {
+  if (window.__TAURI__) {
     let text;
     try {
       let homeDir = await _homeDir();
@@ -56,7 +56,7 @@ const TAURI_BASE_DIR = ".tauri_progres"
 const DATA_FILE_NAME = TAURI_BASE_DIR + "/data.json"
 
 export async function ensureFileExists() {
-  if(window.__TAURI__) {
+  if (window.__TAURI__) {
     let homeDir;
     try {
       homeDir = await _homeDir();

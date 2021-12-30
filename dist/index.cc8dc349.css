@@ -21,54 +21,55 @@
   filter: alpha(opacity=20);
 }
 
-/*!
- *  Hack typeface https://github.com/source-foundry/Hack
- *  License: https://github.com/source-foundry/Hack/blob/master/LICENSE.md
- */
-/* FONT PATHS
- * -------------------------- */
 @font-face {
   font-family: "Inconsolata";
   src: url("Inconsolata-ExtraLight.8652b4c8.otf") format("opentype");
   font-weight: 200;
   font-style: normal;
 }
+
 @font-face {
   font-family: "Inconsolata";
   src: url("Inconsolata-Light.e4a2b32f.otf") format("opentype");
   font-weight: 300;
   font-style: normal;
 }
+
 @font-face {
   font-family: "Inconsolata";
   src: url("Inconsolata-Regular.519c1a30.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
 }
+
 @font-face {
   font-family: "Inconsolata";
   src: url("Inconsolata-Medium.32f3f469.otf") format("opentype");
   font-weight: 500;
   font-style: normal;
 }
+
 @font-face {
   font-family: "Inconsolata";
   src: url("Inconsolata-SemiBold.7c023274.otf") format("opentype");
   font-weight: 600;
   font-style: normal;
 }
+
 @font-face {
   font-family: "Inconsolata";
   src: url("Inconsolata-Bold.6ab6b3d9.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
 }
+
 @font-face {
   font-family: "Inconsolata";
   src: url("Inconsolata-ExtraBold.eacf20b5.otf") format("opentype");
   font-weight: 800;
   font-style: normal;
 }
+
 @font-face {
   font-family: "Inconsolata";
   src: url("Inconsolata-Black.ffe30750.otf") format("opentype");

@@ -90,7 +90,7 @@ export class FormHandler {
       }
     });
 
-    if(this.hasProgrammable.checked) {
+    if (this.hasProgrammable.checked) {
       [this.programmingGraded, this.programmingPractice, this.programmingTime].forEach((ele) => {
         let val = parseInt(ele.value, 10);
         if (Number.isInteger(val) && val >= 0) {
@@ -154,14 +154,14 @@ export class FormHandler {
       videos: [],
 
       hasProgrammable: false,
-      programmableTime : 0,
+      programmableTime: 0,
     }
 
     Object.keys(input.solvable).forEach((key) => {
       input.solvable[key].left = input.solvable[key].total;
     })
 
-    if(this.hasProgrammable.checked) {
+    if (this.hasProgrammable.checked) {
       input.hasProgrammable = true;
 
       input.programmableTime = parseInt(this.programmingTime.value, 10);
