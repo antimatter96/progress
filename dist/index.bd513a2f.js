@@ -2132,10 +2132,10 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     <div class="rounded-lg">
 
       <!-- Heading -->
-      <div class="week-heading-draggable pt-2 px-5 mx-auto md:items-center md:flex-row justify-between bg-gray-800">
+      <div class="week-heading-draggable pt-2 px-5 mx-auto justify-between bg-gray-800">
         <div class="week-heading-draggable w-full border-b-2 border-white justify-between inline-flex">
           <div class="week-heading-draggable inline-flex items-center">
-            <h2 class="week-heading-draggable pb-1 text-2xl font-bold text-white lg:text-x lg:mr-8">
+            <h2 class="week-heading-draggable pb-1 text-2xl font-bold text-white">
               ${week.name}
             </h2>
           </div>
@@ -2158,7 +2158,7 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Summary -->
-      <div ?hidden=${week.hidden} class="pt-1 px-5 mx-auto md:items-center md:flex-row justify-between ${$6197f1f1b7c083f0$export$56cc687933817664(progressColorBg)}">
+      <div ?hidden=${week.hidden} class="pt-1 px-5 mx-auto justify-between ${$6197f1f1b7c083f0$export$56cc687933817664(progressColorBg)}">
         <div class="pb-1 px-10 flex justify-between items-center border-b-2 border-gray-600">
           <p class="dispay-container">
             <span class="dispay-label justify-start">Projected:</span>
@@ -2178,9 +2178,9 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Videos -->
-      <div ?hidden=${week.hidden} class="pt-2 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${week.hidden} class="pt-2 bt-5 px-5 mx-auto justify-between">
         <div class="w-full border-b-2 border-gray-600">
-          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
+          <h2 class="text-xl font-extrabold mb-2 text-black">
             Videos
           </h2>
           <div class="video-container flex justify-evenly flex-wrap ${$6197f1f1b7c083f0$export$56cc687933817664(videosContainerClass)}">
@@ -2190,9 +2190,9 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Solvable -->
-      <div ?hidden=${solvables.length == 0 || week.hidden} class="pt-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${solvables.length == 0 || week.hidden} class="pt-3 bt-5 px-5 mx-auto justify-between">
         <div class="w-full ${$6197f1f1b7c083f0$export$56cc687933817664(solvableContainerBorderBottom)}">
-          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
+          <h2 class="text-xl font-extrabold mb-2 text-black">
             Solvable
           </h2>
 
@@ -2202,9 +2202,9 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
         </div>
       </div>
 
-      <div ?hidden=${!week.hasProgrammable || week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto md:items-center md:flex-row justify-between">
+      <div ?hidden=${!week.hasProgrammable || week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto justify-between">
         <div class="w-full">
-          <h2 class="text-xl font-extrabold mb-2 text-black lg:text-x lg:mr-8">
+          <h2 class="text-xl font-extrabold mb-2 text-black">
             Programming
           </h2>
 
