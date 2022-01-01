@@ -537,40 +537,42 @@ export function templateFunc(week: Week) {
 
   let programmables = [];
 
-  let _programmable = week.programmable;
-  let programmableData = [];
+  if (week.hasProgrammable) {
+    let _programmable = week.programmable;
+    let programmableData = [];
 
-  programmableData.push({
-    title: 'Practice',
-    done: _programmable.practice.total - _programmable.practice.left,
-    total: _programmable.practice.total,
-  })
-  programmableData.push({
-    title: 'Graded',
-    done: _programmable.graded.total - _programmable.graded.left,
-    total: _programmable.graded.total,
-  })
+    programmableData.push({
+      title: 'Practice',
+      done: _programmable.practice.total - _programmable.practice.left,
+      total: _programmable.practice.total,
+    })
+    programmableData.push({
+      title: 'Graded',
+      done: _programmable.graded.total - _programmable.graded.left,
+      total: _programmable.graded.total,
+    })
 
-  programmableData.forEach((data) => {
-    if (data.total == 0) {
-      return;
-    }
+    programmableData.forEach((data) => {
+      if (data.total == 0) {
+        return;
+      }
 
-    const btnUpValid = data.total > data.done;
-    const btnDownValid = data.done > 0;
+      const btnUpValid = data.total > data.done;
+      const btnDownValid = data.done > 0;
 
-    const inProgress = { 'in-progress': btnUpValid, 'done': (!btnUpValid && btnDownValid) }
+      const inProgress = { 'in-progress': btnUpValid, 'done': (!btnUpValid && btnDownValid) }
 
-    programmables.push(html`
-    <div class="act-time w-1/5">
-      <h2 class="act-text ${classMap(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
-      <div class="act-btn-parent">
-        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-programmables-${data.title.toLowerCase()}-plus"></button>
-        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-programmables-${data.title.toLowerCase()}-minus"></button>
+      programmables.push(html`
+      <div class="act-time w-1/5">
+        <h2 class="act-text ${classMap(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
+        <div class="act-btn-parent">
+          <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-programmables-${data.title.toLowerCase()}-plus"></button>
+          <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-programmables-${data.title.toLowerCase()}-minus"></button>
+        </div>
       </div>
-    </div>
-  `);
-  })
+    `);
+    })
+  }
 
   // consider max 12 videos overall
   if (videos.length > max_in_row) {
@@ -584,12 +586,19 @@ export function templateFunc(week: Week) {
     'gradient-border': (Math.floor(_percentage / 10)) == 10
   }
 
+  let solvableHeading = "Solvable"
+
+  if (solvables.length > 0 && solvables.length < 3 && programmables.length > 0 && programmables.length < 3) {
+    solvableHeading = "Solvable + Programming"
+    solvables.push(programmables.shift(), programmables.shift())
+  }
+
   let videosContainerClass = { 'pb-3': videos.length > 0, 'pb-0': videos.length == 0 };
-  let solvableContainerBorderBottom = { 'border-b-2': (week.hasProgrammable && programmables.length > 0), 'border-gray-600': (week.hasProgrammable && programmables.length > 0) };
+  let solvableContainerBorderBottom = { 'border-b-2': (programmables.length > 0), 'border-gray-600': (programmables.length > 0) };
 
   return html`
   <div class="container items-center bg-white my-4 better-shadow week-overall ${classMap(animatedBorderClassMap)}">
-    <div class="rounded-lg">
+    <div>
 
       <!-- Heading -->
       <div class="week-heading-draggable pt-2 px-5 mx-auto justify-between bg-gray-800">
@@ -650,19 +659,19 @@ export function templateFunc(week: Week) {
       </div>
 
       <!-- Solvable -->
-      <div ?hidden=${solvables.length == 0 || week.hidden} class="pt-3 bt-5 px-5 mx-auto justify-between">
+      <div ?hidden=${solvables.length == 0 || week.hidden} class="pt-2 bt-5 px-5 mx-auto justify-between">
         <div class="w-full ${classMap(solvableContainerBorderBottom)}">
           <h2 class="text-xl font-extrabold mb-2 text-black">
-            Solvable
+            ${solvableHeading}
           </h2>
 
-          <div class="flex justify-around px-5 pb-3">
+          <div class="flex justify-around px-5 ${classMap({"pb-3": programmables.length > 0, "pb-4": programmables.length == 0})}">
             ${solvables}
           </div>
         </div>
       </div>
 
-      <div ?hidden=${!week.hasProgrammable || week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto justify-between">
+      <div ?hidden=${programmables.length == 0 || week.hidden} class="pt-2 pb-3 bt-5 px-5 mx-auto justify-between">
         <div class="w-full">
           <h2 class="text-xl font-extrabold mb-2 text-black">
             Programming

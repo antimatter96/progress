@@ -2080,36 +2080,38 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
   `);
     });
     let programmables = [];
-    let _programmable = week.programmable;
-    let programmableData = [];
-    programmableData.push({
-        title: 'Practice',
-        done: _programmable.practice.total - _programmable.practice.left,
-        total: _programmable.practice.total
-    });
-    programmableData.push({
-        title: 'Graded',
-        done: _programmable.graded.total - _programmable.graded.left,
-        total: _programmable.graded.total
-    });
-    programmableData.forEach((data)=>{
-        if (data.total == 0) return;
-        const btnUpValid = data.total > data.done;
-        const btnDownValid = data.done > 0;
-        const inProgress = {
-            'in-progress': btnUpValid,
-            'done': !btnUpValid && btnDownValid
-        };
-        programmables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
-    <div class="act-time w-1/5">
-      <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
-      <div class="act-btn-parent">
-        <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-programmables-${data.title.toLowerCase()}-plus"></button>
-        <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-programmables-${data.title.toLowerCase()}-minus"></button>
+    if (week.hasProgrammable) {
+        let _programmable = week.programmable;
+        let programmableData = [];
+        programmableData.push({
+            title: 'Practice',
+            done: _programmable.practice.total - _programmable.practice.left,
+            total: _programmable.practice.total
+        });
+        programmableData.push({
+            title: 'Graded',
+            done: _programmable.graded.total - _programmable.graded.left,
+            total: _programmable.graded.total
+        });
+        programmableData.forEach((data)=>{
+            if (data.total == 0) return;
+            const btnUpValid = data.total > data.done;
+            const btnDownValid = data.done > 0;
+            const inProgress = {
+                'in-progress': btnUpValid,
+                'done': !btnUpValid && btnDownValid
+            };
+            programmables.push($a51c7802bfe1890e$export$c0bb0b647f701bb5`
+      <div class="act-time w-1/5">
+        <h2 class="act-text ${$6197f1f1b7c083f0$export$56cc687933817664(inProgress)}"><span class="act-time-label">${data.title} : </span><br><span class="act-time-data">${data.done}/${data.total}</span></h2>
+        <div class="act-btn-parent">
+          <button ?hidden=${!btnUpValid} class="solvable-btn btn-up" id="${id}-programmables-${data.title.toLowerCase()}-plus"></button>
+          <button ?hidden=${!btnDownValid} class="solvable-btn btn-down" id="${id}-programmables-${data.title.toLowerCase()}-minus"></button>
+        </div>
       </div>
-    </div>
-  `);
-    });
+    `);
+        });
+    }
     // consider max 12 videos overall
     if (videos.length > max_in_row) // divide into two
     videos.splice(Math.ceil(videos.length / 2), 0, $a51c7802bfe1890e$export$c0bb0b647f701bb5`<div class="w-full"></div>`);
@@ -2119,17 +2121,22 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
     const animatedBorderClassMap = {
         'gradient-border': Math.floor(_percentage / 10) == 10
     };
+    let solvableHeading = "Solvable";
+    if (solvables.length > 0 && solvables.length < 3 && programmables.length > 0 && programmables.length < 3) {
+        solvableHeading = "Solvable + Programming";
+        solvables.push(programmables.shift(), programmables.shift());
+    }
     let videosContainerClass = {
         'pb-3': videos.length > 0,
         'pb-0': videos.length == 0
     };
     let solvableContainerBorderBottom = {
-        'border-b-2': week.hasProgrammable && programmables.length > 0,
-        'border-gray-600': week.hasProgrammable && programmables.length > 0
+        'border-b-2': programmables.length > 0,
+        'border-gray-600': programmables.length > 0
     };
     return $a51c7802bfe1890e$export$c0bb0b647f701bb5`
   <div class="container items-center bg-white my-4 better-shadow week-overall ${$6197f1f1b7c083f0$export$56cc687933817664(animatedBorderClassMap)}">
-    <div class="rounded-lg">
+    <div>
 
       <!-- Heading -->
       <div class="week-heading-draggable pt-2 px-5 mx-auto justify-between bg-gray-800">
@@ -2190,19 +2197,22 @@ function $850e48264ea38c74$export$b93cec6dd11b1714(week) {
       </div>
 
       <!-- Solvable -->
-      <div ?hidden=${solvables.length == 0 || week.hidden} class="pt-3 bt-5 px-5 mx-auto justify-between">
+      <div ?hidden=${solvables.length == 0 || week.hidden} class="pt-2 bt-5 px-5 mx-auto justify-between">
         <div class="w-full ${$6197f1f1b7c083f0$export$56cc687933817664(solvableContainerBorderBottom)}">
           <h2 class="text-xl font-extrabold mb-2 text-black">
-            Solvable
+            ${solvableHeading}
           </h2>
 
-          <div class="flex justify-around px-5 pb-3">
+          <div class="flex justify-around px-5 ${$6197f1f1b7c083f0$export$56cc687933817664({
+        "pb-3": programmables.length > 0,
+        "pb-4": programmables.length == 0
+    })}">
             ${solvables}
           </div>
         </div>
       </div>
 
-      <div ?hidden=${!week.hasProgrammable || week.hidden} class="pt-3 pb-3 bt-5 px-5 mx-auto justify-between">
+      <div ?hidden=${programmables.length == 0 || week.hidden} class="pt-2 pb-3 bt-5 px-5 mx-auto justify-between">
         <div class="w-full">
           <h2 class="text-xl font-extrabold mb-2 text-black">
             Programming
@@ -3764,25 +3774,25 @@ class $b437cb7ddfb16b51$var$Main {
             ww.id = "4";
             ww.name = "4";
             ww.hidden = false;
-            let w5 = new $850e48264ea38c74$export$fca4f8121099df57(ww);
-            this.wm.registerWeek(w5);
-            let trial = {
-                "id": "101",
-                "name": "1",
+            // let w5 = new Week(ww);
+            // this.wm.registerWeek(w5);
+            let trial2 = {
+                "id": "102",
+                "name": "102",
                 "factor": 0.7,
                 "solvableTime": 45,
                 "solvable": {
                     "activities": {
-                        "total": 1,
+                        "total": 0,
                         "left": 0
                     },
                     "tutorials": {
-                        "total": 1,
+                        "total": 0,
                         "left": 0
                     },
                     "assignments": {
                         "total": 2,
-                        "left": 1
+                        "left": 2
                     }
                 },
                 "hasProgrammable": true,
@@ -3797,59 +3807,111 @@ class $b437cb7ddfb16b51$var$Main {
                         "left": 0
                     }
                 },
-                "videos": [],
-                "lastChangeTime": 1634845763686
-            };
-            let w6 = new $850e48264ea38c74$export$fca4f8121099df57(trial);
-            this.wm.registerWeek(w6);
-            let trial2 = {
-                "id": "102",
-                "name": "1",
-                "factor": 0.7,
-                "solvableTime": 45,
-                "solvable": {
-                    "activities": {
-                        "total": 0,
-                        "left": 0
+                "videos": [
+                    {
+                        "m": 33,
+                        "s": 3,
+                        "seen": true
                     },
-                    "tutorials": {
-                        "total": 0,
-                        "left": 0
+                    {
+                        "m": 3,
+                        "s": 23,
+                        "seen": true
                     },
-                    "assignments": {
-                        "total": 0,
-                        "left": 0
-                    }
-                },
-                "hasProgrammable": true,
-                "programmableTime": 20,
-                programmable: {
-                    "practice": {
-                        "total": 1,
-                        "left": 0
-                    },
-                    "graded": {
-                        "total": 1,
-                        "left": 0
-                    }
-                },
-                "videos": [],
+                    {
+                        "m": 33,
+                        "s": 23,
+                        "seen": true
+                    }, 
+                ],
                 "lastChangeTime": 1634845763686
             };
             let w7 = new $850e48264ea38c74$export$fca4f8121099df57(trial2);
             this.wm.registerWeek(w7);
-            let trial3 = {
-                "id": "103",
-                "name": "1",
+            let trial = {
+                "id": "101",
+                "name": "101",
                 "factor": 0.7,
                 "solvableTime": 45,
                 "solvable": {
                     "activities": {
-                        "total": 1,
+                        "total": 0,
                         "left": 0
                     },
                     "tutorials": {
+                        "total": 0,
+                        "left": 1
+                    },
+                    "assignments": {
+                        "total": 2,
+                        "left": 1
+                    }
+                },
+                "hasProgrammable": true,
+                "programmableTime": 20,
+                programmable: {
+                    "practice": {
                         "total": 1,
+                        "left": 0
+                    },
+                    "graded": {
+                        "total": 1,
+                        "left": 0
+                    }
+                },
+                "videos": [
+                    {
+                        "m": 33,
+                        "s": 3,
+                        "seen": true
+                    },
+                    {
+                        "m": 3,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 33,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 33,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 33,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 33,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 12,
+                        "s": 12,
+                        "seen": true
+                    }
+                ],
+                "lastChangeTime": 1634845763686
+            };
+            let w6 = new $850e48264ea38c74$export$fca4f8121099df57(trial);
+            this.wm.registerWeek(w6);
+            let trial3 = {
+                "id": "103",
+                "name": "103",
+                "factor": 0.7,
+                "solvableTime": 45,
+                "solvable": {
+                    "activities": {
+                        "total": 0,
+                        "left": 0
+                    },
+                    "tutorials": {
+                        "total": 0,
                         "left": 0
                     },
                     "assignments": {
@@ -3857,19 +3919,35 @@ class $b437cb7ddfb16b51$var$Main {
                         "left": 1
                     }
                 },
-                "hasProgrammable": false,
+                "hasProgrammable": true,
                 "programmableTime": 20,
                 programmable: {
                     "practice": {
-                        "total": 0,
-                        "left": 0
+                        "total": 2,
+                        "left": 2
                     },
                     "graded": {
-                        "total": 0,
-                        "left": 0
+                        "total": 2,
+                        "left": 2
                     }
                 },
-                "videos": [],
+                "videos": [
+                    {
+                        "m": 33,
+                        "s": 3,
+                        "seen": true
+                    },
+                    {
+                        "m": 3,
+                        "s": 23,
+                        "seen": true
+                    },
+                    {
+                        "m": 33,
+                        "s": 23,
+                        "seen": true
+                    }, 
+                ],
                 "lastChangeTime": 1634845763686
             };
             let w8 = new $850e48264ea38c74$export$fca4f8121099df57(trial3);

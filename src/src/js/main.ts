@@ -65,6 +65,7 @@ class Main {
         "lastChangeTime": 1634845763686
       }
       let ww = JSON.parse(JSON.stringify(sampleJSON))
+
       ww.hidden = false;
       let w2 = new Week(ww);
       this.wm.registerWeek(w2);
@@ -89,35 +90,35 @@ class Main {
       ww.name = "4";
       ww.hidden = false;
 
-      let w5 = new Week(ww);
-      this.wm.registerWeek(w5);
-
-
-      let trial = {
-        "id": "101", "name": "1", "factor": 0.70,
-        "solvableTime": 45, "solvable": { "activities": { "total": 1, "left": 0 }, "tutorials": { "total": 1, "left": 0 }, "assignments": { "total": 2, "left": 1 } },
-        "hasProgrammable": true, "programmableTime": 20, programmable: { "practice": { "total": 1, "left": 0 }, "graded": { "total": 1, "left": 0 } },
-        "videos": [],
-        "lastChangeTime": 1634845763686
-      }
-      let w6 = new Week(trial);
-      this.wm.registerWeek(w6);
+      // let w5 = new Week(ww);
+      // this.wm.registerWeek(w5);
 
       let trial2 = {
-        "id": "102", "name": "1", "factor": 0.70,
-        "solvableTime": 45, "solvable": { "activities": { "total": 0, "left": 0 }, "tutorials": { "total": 0, "left": 0 }, "assignments": { "total": 0, "left": 0 } },
+        "id": "102", "name": "102", "factor": 0.70,
+        "solvableTime": 45, "solvable": { "activities": { "total": 0, "left": 0 }, "tutorials": { "total": 0, "left": 0 }, "assignments": { "total": 2, "left": 2 } },
         "hasProgrammable": true, "programmableTime": 20, programmable: { "practice": { "total": 1, "left": 0 }, "graded": { "total": 1, "left": 0 } },
-        "videos": [],
+        "videos": [{ "m": 33, "s": 3, "seen": true }, { "m": 3, "s": 23, "seen": true }, { "m": 33, "s": 23, "seen": true }, ],
         "lastChangeTime": 1634845763686
       }
       let w7 = new Week(trial2);
       this.wm.registerWeek(w7);
 
+      let trial = {
+        "id": "101", "name": "101", "factor": 0.70,
+        "solvableTime": 45, "solvable": { "activities": { "total": 0, "left": 0 }, "tutorials": { "total": 0, "left": 1 }, "assignments": { "total": 2, "left": 1 } },
+        "hasProgrammable": true, "programmableTime": 20, programmable: { "practice": { "total": 1, "left": 0 }, "graded": { "total": 1, "left": 0 } },
+        "videos": [{ "m": 33, "s": 3, "seen": true }, { "m": 3, "s": 23, "seen": true }, { "m": 33, "s": 23, "seen": true }, { "m": 33, "s": 23, "seen": true }, { "m": 33, "s": 23, "seen": true }, { "m": 33, "s": 23, "seen": true }, { "m": 12, "s": 12, "seen": true }],
+        "lastChangeTime": 1634845763686
+      }
+      let w6 = new Week(trial);
+      this.wm.registerWeek(w6);
+
+
       let trial3 = {
-        "id": "103", "name": "1", "factor": 0.70,
-        "solvableTime": 45, "solvable": { "activities": { "total": 1, "left": 0 }, "tutorials": { "total": 1, "left": 0 }, "assignments": { "total": 2, "left": 1 } },
-        "hasProgrammable": false, "programmableTime": 20, programmable: { "practice": { "total": 0, "left": 0 }, "graded": { "total": 0, "left": 0 } },
-        "videos": [],
+        "id": "103", "name": "103", "factor": 0.70,
+        "solvableTime": 45, "solvable": { "activities": { "total": 0, "left": 0 }, "tutorials": { "total": 0, "left": 0 }, "assignments": { "total": 2, "left": 1 } },
+        "hasProgrammable": true, "programmableTime": 20, programmable: { "practice": { "total": 2, "left": 2 }, "graded": { "total": 2, "left": 2 } },
+        "videos": [{ "m": 33, "s": 3, "seen": true }, { "m": 3, "s": 23, "seen": true }, { "m": 33, "s": 23, "seen": true }, ],
         "lastChangeTime": 1634845763686
       }
       let w8 = new Week(trial3);

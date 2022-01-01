@@ -159,7 +159,7 @@ body {
 }
 
 .act-time {
-  @apply w-4/12 mx-2 mt-0 mb-1 max-w-md;
+  @apply w-4/12 mx-2 mt-0 mb-0 max-w-md;
   @apply flex;
 
   @apply bg-white;
