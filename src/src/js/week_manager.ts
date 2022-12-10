@@ -155,7 +155,7 @@ export class WeekManager {
       let path = homeDir + DATA_FILE_NAME;
 
       let text = await _write({
-        contents: JSON.stringify(this.weeks, null, 2),
+        contents: JSON.stringify(this.weeks, null, 1),
         path,
       });
     } catch (e) {
